@@ -1,0 +1,19 @@
+# Files stuff
+.coverage
+make.bat
+Makefile
+
+# Folders stuff
+.idea/
+.tox/
+
+# Setuptools stuff
+build/
+dist/
+bip38.egg-info/
+
+# Python stuff
+__pycache__/
+
+# py.test stuff
+.pytest_cache/
