@@ -5,7 +5,6 @@ from typing import (
 )
 
 import hashlib
-import unicodedata
 
 from .libs.ripemd160 import ripemd160 as r160
 
@@ -16,24 +15,7 @@ except ImportError:
     from typing_extensions import Literal  # type: ignore # noqa: F401
 
 
-def get_hex_string(data: AnyStr):
-
-    if not data:
-        return ''
-
-    try:
-        bytes.fromhex(data)
-        return data
-    except (ValueError, TypeError):
-        pass
-
-    if not isinstance(data, bytes):
-        data = bytes(data, 'utf-8')
-    return data.hex()
-
-
 def get_bytes(data: AnyStr, unhexlify: bool = True) -> bytes:
-
     if not data:
         return b''
     if isinstance(data, bytes):
@@ -51,6 +33,19 @@ def bytes_reverse(data: bytes) -> bytes:
     tmp = bytearray(data)
     tmp.reverse()
     return bytes(tmp)
+
+
+def bytes_to_string(data: AnyStr):
+    if not data:
+        return ''
+    try:
+        bytes.fromhex(data)
+        return data
+    except (ValueError, TypeError):
+        pass
+    if not isinstance(data, bytes):
+        data = bytes(data, 'utf-8')
+    return data.hex()
 
 
 def bytes_to_integer(data: bytes, endianness: Literal["little", "big"] = "big", signed: bool = False) -> int:
