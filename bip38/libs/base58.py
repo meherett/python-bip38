@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+from binascii import (
+    hexlify, unhexlify
+)
+
 import hashlib
 import six
 
-__base58_alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-__base58_alphabet_bytes = b"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-__base58_radix = len(__base58_alphabet)
+base58_alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
 
 def string_to_int(data):
@@ -27,17 +29,32 @@ def ensure_string(data):
     return data
 
 
-def encode(data):
-    enc = ""
-    val = string_to_int(data)
-    while val >= __base58_radix:
-        val, mod = divmod(val, __base58_radix)
-        enc = __base58_alphabet[mod] + enc
-    if val:
-        enc = __base58_alphabet[val] + enc
+def encode(data: bytes) -> str:
+    """Encode bytes to a base58-encoded string"""
 
-    n = len(data) - len(data.lstrip(b"\0"))
-    return __base58_alphabet[0] * n + enc
+    # Convert big-endian bytes to integer
+    n = int('0x0' + hexlify(data).decode('utf8'), 16)
+
+    # Divide that integer into bas58
+    res = []
+    while n > 0:
+        n, r = divmod(n, 58)
+        res.append(base58_alphabet[r])
+    res = ''.join(res[::-1])
+
+    # Encode leading zeros as base58 zeros
+    import sys
+    czero = b'\x00'
+    if sys.version > '3':
+        # In Python3 indexing a bytes returns numbers, not characters.
+        czero = 0
+    pad = 0
+    for c in data:
+        if c == czero:
+            pad += 1
+        else:
+            break
+    return base58_alphabet[0] * pad + res
 
 
 def check_encode(raw):
@@ -45,25 +62,34 @@ def check_encode(raw):
     return encode(raw + chk)
 
 
-def decode(data):
-    if bytes != str:
-        data = bytes(data, "ascii")
+def decode(data: str) -> bytes:
+    """Decode a base58-encoding string, returning bytes"""
+    if not data:
+        return b''
 
-    val = 0
-    prefix = 0
+    # Convert the string to an integer
+    n = 0
     for c in data:
-        val = (val * __base58_radix) + __base58_alphabet_bytes.find(c)
-        if val == 0:
-            prefix += 1
+        n *= 58
+        if c not in base58_alphabet:
+            raise ValueError('Character %r is not a valid base58 character' % c)
+        digit = base58_alphabet.index(c)
+        n += digit
 
-    dec = bytearray()
-    while val > 0:
-        val, mod = divmod(val, 256)
-        dec.append(mod)
+    # Convert the integer to bytes
+    h = '%x' % n
+    if len(h) % 2:
+        h = '0' + h
+    res = unhexlify(h.encode('utf8'))
 
-    dec.extend(bytearray(prefix))
-
-    return bytes(dec[::-1])
+    # Add padding back.
+    pad = 0
+    for c in data[:-1]:
+        if c == base58_alphabet[0]:
+            pad += 1
+        else:
+            break
+    return b'\x00' * pad + res
 
 
 def check_decode(enc):
