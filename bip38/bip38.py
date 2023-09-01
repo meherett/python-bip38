@@ -1,5 +1,27 @@
 #!/usr/bin/env python3
 
+# The MIT License (MIT)
+#
+# Copyright © 2023, Meheret Tesfaye Batu <meherett.batu@gmail.com> or <meherett@qtum.info>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 from typing import (
     Tuple, Union, Optional, List, Dict
 )
@@ -14,7 +36,6 @@ try:
 except ImportError:
     # Literal not supported by Python 3.7
     from typing_extensions import Literal  # type: ignore # noqa: F401
-
 
 from .utils import (
     integer_to_bytes, bytes_to_integer, bytes_to_string, get_bytes, double_sha256, hash160
@@ -63,7 +84,7 @@ ODD_COMPRESSED_PUBLIC_KEY_PREFIX: int = 0x03
 UNCOMPRESSED_PUBLIC_KEY_PREFIX: int = 0x04
 # Checksum byte length
 CHECKSUM_BYTE_LENGTH: int = 4
-# Flag lists
+# List of compression, lot_and_sequence, non_ec, ec, & illegal flags
 FLAGS: Dict[str, List[int]] = {
     "compression": [
         MAGIC_NON_LOT_AND_SEQUENCE_COMPRESSED_FLAG, MAGIC_LOT_AND_SEQUENCE_COMPRESSED_FLAG,
@@ -320,13 +341,13 @@ def intermediate_code(
             raise ValueError(f"Invalid lot, (expected 0 <= sequence <= 4095, got {sequence!r})")
 
         owner_salt: bytes = get_bytes(owner_salt)
-        pre_factor: bytes = scrypt.hash(unicodedata.normalize('NFC', passphrase), owner_salt[:4], 16384, 8, 8, 32)
+        pre_factor: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), owner_salt[:4], 16384, 8, 8, 32)
         owner_entropy: bytes = owner_salt[:4] + integer_to_bytes((lot * 4096 + sequence), 4)
         pass_factor: bytes = double_sha256(pre_factor + owner_entropy)
         magic: bytes = integer_to_bytes(MAGIC_LOT_AND_SEQUENCE)
     else:
         owner_salt: bytes = get_bytes(owner_salt)
-        pass_factor: bytes = scrypt.hash(unicodedata.normalize('NFC', passphrase), owner_salt, 16384, 8, 8, 32)
+        pass_factor: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), owner_salt, 16384, 8, 8, 32)
         magic: bytes = integer_to_bytes(MAGIC_NON_LOT_AND_SEQUENCE)
         owner_entropy: bytes = owner_salt
 
@@ -357,7 +378,7 @@ def bip38_encrypt(wif: str, passphrase: str) -> str:
     )
     address: str = public_key_to_addresses(public_key=public_key)
     address_hash: bytes = get_checksum(get_bytes(address, unhexlify=False))
-    key: bytes = scrypt.hash(unicodedata.normalize('NFC', passphrase), address_hash, 16384, 8, 8)
+    key: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), address_hash, 16384, 8, 8)
     message_half_1, message_half_2 = key[0:32], key[32:64]
 
     aes: AESModeOfOperationECB = AESModeOfOperationECB(message_half_2)
@@ -482,7 +503,7 @@ def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) 
     else:
         owner_salt: bytes = owner_entropy
 
-    pass_factor: bytes = scrypt.hash(unicodedata.normalize('NFC', passphrase), owner_salt, 16384, 8, 8, 32)
+    pass_factor: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), owner_salt, 16384, 8, 8, 32)
     if lot_and_sequence:
         pass_factor: bytes = double_sha256(pass_factor + owner_entropy)
     if bytes_to_integer(pass_factor) == 0 or bytes_to_integer(pass_factor) >= N:
@@ -560,7 +581,7 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
                 f"{bytes_to_string(integer_to_bytes(BIP38_NON_EC_WIF_COMPRESSED_FLAG))!r}, got {bytes_to_string(flag)!r})"
             )
 
-        key: bytes = scrypt.hash(unicodedata.normalize('NFC', passphrase), address_hash, 16384, 8, 8)
+        key: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), address_hash, 16384, 8, 8)
         derived_half_1, derived_half_2 = key[0:32], key[32:64]
         encrypted_half_1: bytes = encrypted_wif_decode[7:23]
         encrypted_half_2: bytes = encrypted_wif_decode[23:39]
@@ -610,7 +631,7 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
         else:
             owner_salt: bytes = owner_entropy
 
-        pass_factor: bytes = scrypt.hash(unicodedata.normalize('NFC', passphrase), owner_salt, 16384, 8, 8, 32)
+        pass_factor: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), owner_salt, 16384, 8, 8, 32)
         if lot_and_sequence:
             pass_factor: bytes = double_sha256(pass_factor + owner_entropy)
         if bytes_to_integer(pass_factor) == 0 or bytes_to_integer(pass_factor) >= N:
