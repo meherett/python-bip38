@@ -1,0 +1,53 @@
+{
+    "bip38": {
+        "bip38_encrypt": [
+            {"wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR", "passphrase": "TestingOneTwoThree", "encrypted_wif":  "6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg"},
+            {"wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", "passphrase": "TestingOneTwoThree", "encrypted_wif":  "6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo"}
+        ],
+        "bip38_decrypt": [
+            {"encrypted_wif": "6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg", "passphrase": "TestingOneTwoThree", "wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif", "public_key": "04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4", "public_key_type": "uncompressed", "address": "1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PRNFFkZc2NZ6dJqFfhRoFNMR9Lnyj7dYGrzdgXXVMXcxoKTePPX1dWByq", "passphrase": "Satoshi", "wif": "5HtasZ6ofTHP6HCwTqTkLDuLQisYPah7aUnSKfC7h4hMUVw2gi5", "private_key": "09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae", "wif_type": "wif", "public_key": "0463b600a0bb6a2f2bef7bb9648222c3593a6ef5f7c2d81433c5193bf84b9f862b940e55da162aeca6293cde138bcc18ba978fae399f14f258afa4f799ee61adcb", "public_key_type": "uncompressed", "address": "1AvKt49sui9zfzGeo8EyL8ypvAhtR2KwbL", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo", "passphrase": "TestingOneTwoThree", "wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif-compressed", "public_key": "02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e", "public_key_type": "compressed", "address": "164MQi977u9GUteHr4EPH27VkkdxmfCvGW", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PYLtMnXvfG3oJde97zRyLYFZCYizPU5T3LwgdYJz1fRhh16bU7u6PPmY7", "passphrase": "Satoshi", "wif": "KwYgW8gcxj1JWJXhPSu4Fqwzfhp5Yfi42mdYmMa4XqK7NJxXUSK7", "private_key": "09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae", "wif_type": "wif-compressed", "public_key": "0363b600a0bb6a2f2bef7bb9648222c3593a6ef5f7c2d81433c5193bf84b9f862b", "public_key_type": "compressed", "address": "1HmPbwsvG5qJ3KJfxzsZRZWhbm1xBMuS8B", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PfQu77ygVyJLZjfvMLyhLMQbYnu5uguoJJ4kMCLqWwPEdfpwANVS76gTX", "passphrase": "TestingOneTwoThree", "wif": "5K4caxezwjGCGfnoPTZ8tMcJBLB7Jvyjv4xxeacadhq8nLisLR2", "private_key": "a43a940577f4e97f5c4d39eb14ff083a98187c64ea7c99ef7ce460833959a519", "wif_type": "wif", "public_key": "04afb614bab3285fe4a9f618daa0720a1baf94f1c4e31c7983031e72051c52cadd6b10c647fd7e7f5612d40fbe909f834ee00a309333fa8d06fa5ea37a1a802919", "public_key_type": "uncompressed", "address": "1PE6TQi6HTVNz5DLwB1LcpMBALubfuN2z2", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PfLGnQs6VZnrNpmVKfjotbnQuaJK4KZoPFrAjx1JMJUa1Ft8gnf5WxfKd", "passphrase": "Satoshi", "wif": "5KJ51SgxWaAYR13zd9ReMhJpwrcX47xTJh2D3fGPG9CM8vkv5sH", "private_key": "c2c8036df268f498099350718c4a3ef3984d2be84618c2650f5171dcc5eb660a", "wif_type": "wif", "public_key": "0411a2ee331b6dd3c906e5db7c308a1004b97853ce84ca4ffd6874d300fde7e857aaab17e3bfbb2da7a23fbb4053999baa413df0bf37c2a1b43041c6dc98abfe11", "public_key_type": "uncompressed", "address": "1CqzrtZC6mXSAhoxtFwVjz8LtwLJjDYU3V", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PgNBNNzDkKdhkT6uJntUXwwzQV8Rr2tZcbkDcuC9DZRsS6AtHts4Ypo1j", "passphrase": "MOLON LABE", "wif": "5JLdxTtcTHcfYcmJsNVy1v2PMDx432JPoYcBTVVRHpPaxUrdtf8", "private_key": "44ea95afbf138356a05ea32110dfd627232d0f2991ad221187be356f19fa8190", "wif_type": "wif", "public_key": "04e20f3b812f630d0374eefe776e983549d5cdde87780be45cb9def7ee339dfed47dd64392855f31a7d1beb48b6a643e997e49168f883107ada1d321fed28c061b", "public_key_type": "uncompressed", "address": "1Jscj8ALrYu2y9TD8NrpvDBugPedmbj4Yh", "lot": 263183, "sequence": 1},
+            {"encrypted_wif": "6PgGWtx25kUg8QWvwuJAgorN6k9FbE25rv5dMRwu5SKMnfpfVe5mar2ngH", "passphrase": "ΜΟΛΩΝ ΛΑΒΕ", "wif": "5KMKKuUmAkiNbA3DazMQiLfDq47qs8MAEThm4yL8R2PhV1ov33D", "private_key": "ca2759aa4adb0f96c414f36abeb8db59342985be9fa50faac228c8e7d90e3006", "wif_type": "wif", "public_key": "0415fb4e4e62fcec936920dbda69e83facfe2cc5e152fafcf474c8fa0dcf5023f39392712103c03b3c79ae871134ba3cfeafd98787614e52e54c59888c23a3d1c4", "public_key_type": "uncompressed", "address": "1Lurmih3KruL4xDB5FmHof38yawNtP9oGf", "lot": 806938, "sequence": 1},
+
+            {"encrypted_wif": "6PnQDk5XngQugiy1Fi2kzzgKAQrxZrtQDGNFiQTMamjiJcjBT4LhXdnhNf", "passphrase": "MOLON LABE", "wif": "KwoUVBtaYkT7x3ypLfULUVowcYhSUY36KNw9qwCe5QBpoSTsifsK", "private_key": "115e909828274f860da87d5d92ed65e3a909e9ff64ee77e05341a25d71698930", "wif_type": "wif-compressed", "public_key": "0348ca8b4e7c0c75ecfd4b437535d186a12f3027be0c29d2125e9c0dec48677caa", "public_key_type": "compressed", "address": "16uZsrjjENCVsXwJqw2kMWGwWbDKQ12a1h", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PgRAPfrPWjPXfC6x9XB139RHzUP8GFcVen5Ju3qJDhRP69Q4Vd8Wbct6B", "passphrase": "MOLON LABE", "wif": "5KPBrbGWGAmbRgS5qAKCHb1Hot6DoFsctGuBcXvjzsMZCqg4R1H", "private_key": "ce6708e8336b4051eeb2d4e3aa4cef2e73677d43f5a4ff75e91bcfbc5fd30bd7", "wif_type": "wif", "public_key": "04597967956e7f4c0e13ed7cd98baa9d7697a7f685d4347168e4a011c5fe6ba628e06ef89587c17afb55044336e44648dfa944ca85a4af0a7b28c29d4eefd0da92", "public_key_type": "uncompressed", "address": "1KRg2YJxuHiNcqfp9gVpkgRFhcvALy1zgk", "lot": 100000, "sequence": 1}
+        ],
+        "intermediate_code": [
+            {"passphrase": "MOLON LABE", "lot": null, "sequence": null, "owner_salt": "d7ebe42cf42a79f4", "intermediate_passphrase": "passphraserDFxboKK9cTkBQMb73vdzgsXB5L6cCMFCzTVoMTpMWYD8SJXv3jcKyHbRWBcza"},
+            {"passphrase": "MOLON LABE", "lot": 100000, "sequence": 1, "owner_salt": "d7ebe42cf42a79f4", "intermediate_passphrase": "passphrasedYVZ6EdRqSmcHHsYWmJ7wzWcWYuDQmf9EGH9Pnrv67eHy4qswaAGGc8Et3eeGp"},
+            {"passphrase": "MOLON LABE", "lot": 100000, "sequence": 1, "owner_salt": "d7ebe42c", "intermediate_passphrase": "passphrasedYVZ6EdRqSmcHHsYWmJ7wzWcWYuDQmf9EGH9Pnrv67eHy4qswaAGGc8Et3eeGp"}
+        ],
+        "create_new_encrypted_private_key": [
+            {"intermediate_passphrase": "passphraserDFxboKK9cTkBQMb73vdzgsXB5L6cCMFCzTVoMTpMWYD8SJXv3jcKyHbRWBcza", "seed_b": "9b6cad86daddae99ac3b76c1e47e61bc7f4665d02e10c290", "encrypted_wif": "6PnQDk5XngQugiy1Fi2kzzgKAQrxZrtQDGNFiQTMamjiJcjBT4LhXdnhNf", "confirmation_code": "cfrm38VUF9PjRxQojZERDySt9Q7Z9FSdhQkMP5RFsouS4y3Emf2YD2CXXMCypQvv94dJujaPTfq", "public_key": "0348ca8b4e7c0c75ecfd4b437535d186a12f3027be0c29d2125e9c0dec48677caa", "public_key_type": "compressed", "address": "16uZsrjjENCVsXwJqw2kMWGwWbDKQ12a1h"},
+            {"intermediate_passphrase": "passphrasedYVZ6EdRqSmcHHsYWmJ7wzWcWYuDQmf9EGH9Pnrv67eHy4qswaAGGc8Et3eeGp", "seed_b": "9b6cad86daddae99ac3b76c1e47e61bc7f4665d02e10c290", "encrypted_wif": "6PgRAPfrPWjPXfC6x9XB139RHzUP8GFcVen5Ju3qJDhRP69Q4Vd8Wbct6B", "confirmation_code": "cfrm38V8kEzECGczWJmEoGuYfkoamcmVij3tHUhD6DEEquSRXp61HzhnT8jwQwBBZiKs9Jg4LXZ", "public_key": "04597967956e7f4c0e13ed7cd98baa9d7697a7f685d4347168e4a011c5fe6ba628e06ef89587c17afb55044336e44648dfa944ca85a4af0a7b28c29d4eefd0da92", "public_key_type": "uncompressed", "address": "1KRg2YJxuHiNcqfp9gVpkgRFhcvALy1zgk"}
+        ],
+        "confirm_code": [
+            {"passphrase": "MOLON LABE", "confirmation_code": "cfrm38VUF9PjRxQojZERDySt9Q7Z9FSdhQkMP5RFsouS4y3Emf2YD2CXXMCypQvv94dJujaPTfq", "public_key": "0348ca8b4e7c0c75ecfd4b437535d186a12f3027be0c29d2125e9c0dec48677caa", "public_key_type": "compressed", "address": "16uZsrjjENCVsXwJqw2kMWGwWbDKQ12a1h", "lot": null, "sequence": null},
+            {"passphrase": "MOLON LABE", "confirmation_code": "cfrm38V8kEzECGczWJmEoGuYfkoamcmVij3tHUhD6DEEquSRXp61HzhnT8jwQwBBZiKs9Jg4LXZ", "public_key": "04597967956e7f4c0e13ed7cd98baa9d7697a7f685d4347168e4a011c5fe6ba628e06ef89587c17afb55044336e44648dfa944ca85a4af0a7b28c29d4eefd0da92", "public_key_type": "uncompressed", "address": "1KRg2YJxuHiNcqfp9gVpkgRFhcvALy1zgk", "lot": 100000, "sequence": 1}
+        ]
+    },
+    "other": {
+        "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5",
+        "uncompressed": {
+            "wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR",
+            "public_key": "04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4",
+            "address": "1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB",
+            "wif_checksum": "f0a25c0c",
+            "public_key_type": "uncompressed",
+            "wif_type": "wif"
+        },
+        "compressed": {
+            "wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP",
+            "public_key": "02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e",
+            "address": "164MQi977u9GUteHr4EPH27VkkdxmfCvGW",
+            "wif_checksum": "dc37f844",
+            "public_key_type": "compressed",
+            "wif_type": "wif-compressed"
+        }
+    }
+}
