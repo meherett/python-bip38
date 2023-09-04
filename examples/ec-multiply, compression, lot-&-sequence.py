@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from bip38.bip38 import (
+from bip38 import (
     intermediate_code, create_new_encrypted_wif, confirm_code, bip38_decrypt
 )
 from typing import (
