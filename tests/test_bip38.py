@@ -4,7 +4,7 @@ import json
 import os
 
 from bip38.bip38 import (
-    bip38_encrypt, bip38_decrypt, intermediate_code, create_new_encrypted_private_key, confirm_code,
+    bip38_encrypt, bip38_decrypt, intermediate_code, create_new_encrypted_wif, confirm_code,
     # Importing other functions for testing
     private_key_to_public_key, public_key_to_addresses, private_key_to_wif,
     get_wif_type, wif_to_private_key, get_wif_checksum
@@ -59,6 +59,7 @@ def test_bip38_decrypt():
         assert decrypted["wif_type"] == _["bip38"]["bip38_decrypt"][index]["wif_type"]
         assert decrypted["public_key"] == _["bip38"]["bip38_decrypt"][index]["public_key"]
         assert decrypted["public_key_type"] == _["bip38"]["bip38_decrypt"][index]["public_key_type"]
+        assert decrypted["seed"] == _["bip38"]["bip38_decrypt"][index]["seed"]
         assert decrypted["address"] == _["bip38"]["bip38_decrypt"][index]["address"]
         assert decrypted["lot"] == _["bip38"]["bip38_decrypt"][index]["lot"]
         assert decrypted["sequence"] == _["bip38"]["bip38_decrypt"][index]["sequence"]
@@ -80,23 +81,23 @@ def test_intermediate_code():
         assert intermediate_passphrase == _["bip38"]["intermediate_code"][index]["intermediate_passphrase"]
 
 
-def test_create_new_encrypted_private_key():
+def test_create_new_encrypted_wif():
 
-    for index in range(len(_["bip38"]["create_new_encrypted_private_key"])):
+    for index in range(len(_["bip38"]["create_new_encrypted_wif"])):
 
-        encrypted_private_key: dict = create_new_encrypted_private_key(
-            intermediate_passphrase=_["bip38"]["create_new_encrypted_private_key"][index]["intermediate_passphrase"],
-            public_key_type=_["bip38"]["create_new_encrypted_private_key"][index]["public_key_type"],
-            seed_b=_["bip38"]["create_new_encrypted_private_key"][index]["seed_b"]
+        encrypted_wif: dict = create_new_encrypted_wif(
+            intermediate_passphrase=_["bip38"]["create_new_encrypted_wif"][index]["intermediate_passphrase"],
+            public_key_type=_["bip38"]["create_new_encrypted_wif"][index]["public_key_type"],
+            seed=_["bip38"]["create_new_encrypted_wif"][index]["seed"]
         )
 
-        assert isinstance(encrypted_private_key, dict)
+        assert isinstance(encrypted_wif, dict)
 
-        assert encrypted_private_key["encrypted_wif"] == _["bip38"]["create_new_encrypted_private_key"][index]["encrypted_wif"]
-        assert encrypted_private_key["confirmation_code"] == _["bip38"]["create_new_encrypted_private_key"][index]["confirmation_code"]
-        assert encrypted_private_key["public_key"] == _["bip38"]["create_new_encrypted_private_key"][index]["public_key"]
-        assert encrypted_private_key["public_key_type"] == _["bip38"]["create_new_encrypted_private_key"][index]["public_key_type"]
-        assert encrypted_private_key["address"] == _["bip38"]["create_new_encrypted_private_key"][index]["address"]
+        assert encrypted_wif["encrypted_wif"] == _["bip38"]["create_new_encrypted_wif"][index]["encrypted_wif"]
+        assert encrypted_wif["confirmation_code"] == _["bip38"]["create_new_encrypted_wif"][index]["confirmation_code"]
+        assert encrypted_wif["public_key"] == _["bip38"]["create_new_encrypted_wif"][index]["public_key"]
+        assert encrypted_wif["public_key_type"] == _["bip38"]["create_new_encrypted_wif"][index]["public_key_type"]
+        assert encrypted_wif["address"] == _["bip38"]["create_new_encrypted_wif"][index]["address"]
 
 
 def test_confirm_code():
