@@ -1,26 +1,8 @@
 #!/usr/bin/env python3
 
-# The MIT License (MIT)
-#
 # Copyright © 2023, Meheret Tesfaye Batu <meherett.batu@gmail.com> or <meherett@qtum.info>
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or https://opensource.org/license/mit
 
 from typing import (
     Tuple, Union, Optional, List, Dict
@@ -49,11 +31,11 @@ ADDRESS_PREFIX: int = 0x00
 # Wallet important format prefix
 WIF_PREFIX: int = 0x80
 # BIP38 non-EC-multiplied & EC-multiplied private key prefixes
-BIP38_NON_EC_PRIVATE_KEY_PREFIX: int = 0x0142
-BIP38_EC_PRIVATE_KEY_PREFIX: int = 0x0143
+BIP38_NO_EC_MULTIPLIED_PRIVATE_KEY_PREFIX: int = 0x0142
+BIP38_EC_MULTIPLIED_PRIVATE_KEY_PREFIX: int = 0x0143
 # Wallet important format flags
-BIP38_NON_EC_WIF_FLAG: int = 0xc0
-BIP38_NON_EC_WIF_COMPRESSED_FLAG: int = 0xe0
+BIP38_NO_EC_MULTIPLIED_WIF_FLAG: int = 0xc0
+BIP38_NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG: int = 0xe0
 # Magic bytes for lot and sequence and non lot and sequence
 MAGIC_LOT_AND_SEQUENCE: int = 0x2ce9b3e1ff39e251
 MAGIC_NON_LOT_AND_SEQUENCE: int = 0x2ce9b3e1ff39e253
@@ -95,7 +77,7 @@ FLAGS: Dict[str, List[int]] = {
         0x0c, 0x14, 0x1c, 0x2c, 0x34, 0x3c
     ],
     "non_ec": [
-        BIP38_NON_EC_WIF_FLAG, BIP38_NON_EC_WIF_COMPRESSED_FLAG,
+        BIP38_NO_EC_MULTIPLIED_WIF_FLAG, BIP38_NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG,
         0xc8, 0xd0, 0xd8, 0xe8, 0xf0, 0xf8
     ],
     "ec": [
@@ -167,6 +149,18 @@ def get_checksum(raw: bytes) -> bytes:
 
 
 def uncompress_public_key(public_key: Union[str, bytes]) -> str:
+    """
+    Uncompress public key converter
+
+    :param public_key: Public key
+    :type public_key: Union[str, bytes]
+
+    :returns: str -- Uncompressed public key
+
+    >>> from bip38 import uncompress_public_key
+    >>> uncompress_public_key(public_key="0348ca8b4e7c0c75ecfd4b437535d186a12f3027be0c29d2125e9c0dec48677caa")
+    '0448ca8b4e7c0c75ecfd4b437535d186a12f3027be0c29d2125e9c0dec48677caacb4cd50b4c5ea3313a69402c8b0a336b183d39ea18215ff69f59fdb540f00559'
+    """
 
     public_key: bytes = get_bytes(public_key)
     yp = bytes_to_integer(public_key[:1]) - 2
@@ -181,6 +175,18 @@ def uncompress_public_key(public_key: Union[str, bytes]) -> str:
 
 
 def compress_public_key(public_key: Union[str, bytes]) -> str:
+    """
+    Compress public key converter
+
+    :param public_key: Public key
+    :type public_key: Union[str, bytes]
+
+    :returns: str -- Compressed public key
+
+    >>> from bip38 import compress_public_key
+    >>> compress_public_key(public_key="0448ca8b4e7c0c75ecfd4b437535d186a12f3027be0c29d2125e9c0dec48677caacb4cd50b4c5ea3313a69402c8b0a336b183d39ea18215ff69f59fdb540f00559")
+    '0348ca8b4e7c0c75ecfd4b437535d186a12f3027be0c29d2125e9c0dec48677caa'
+    """
 
     public_key: bytes = get_bytes(public_key)
     x, y = public_key[1:33], public_key[33:]
@@ -226,6 +232,23 @@ def multiply_public_key(public_key: bytes, private_key: bytes, public_key_type: 
 
 
 def private_key_to_public_key(private_key: Union[str, bytes], public_key_type: Literal["uncompressed", "compressed"] = "compressed") -> str:
+    """
+    Private key to public key converter
+
+    :param private_key: Private key
+    :type private_key: Union[str, bytes]
+    :param public_key_type: Public key type, default to ``compressed``
+    :type public_key_type: Literal["uncompressed", "compressed"]
+
+    :returns: str -- Public key
+
+    >>> from bip38 import private_key_to_public_key
+    >>> private_key_to_public_key(private_key="cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5")
+    '02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e'
+    >>> private_key_to_public_key(private_key="cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", public_key_type="uncompressed")
+    '04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4'
+    """
+
     # Get the public key point
     x, y = ecc_multiply(
         G_POINT, bytes_to_integer(get_bytes(private_key))
@@ -265,6 +288,23 @@ def encode_wif(private_key: Union[str, bytes]) -> Tuple[str, str]:
 
 
 def private_key_to_wif(private_key: Union[str, bytes], wif_type: Literal["wif", "wif-compressed"] = "wif-compressed") -> str:
+    """
+    Private key to Wallet Important Fromat (WFI) converter
+
+    :param private_key: Private key
+    :type private_key: Union[str, bytes]
+    :param wif_type: Wallet Important Fromat (WFI) type, default to ``wif-compressed``
+    :type wif_type: Literal["wif", "wif-compressed"]
+
+    :returns: str -- Wallet Important Fromat
+
+    >>> from bip38 import private_key_to_wif
+    >>> private_key_to_wif(private_key="cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5")
+    'L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP'
+    >>> private_key_to_wif(private_key="cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", wif_type="wif")
+    '5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR'
+    """
+
     # Getting uncompressed and compressed
     wif, wif_compressed = encode_wif(private_key=private_key)
 
@@ -302,18 +342,78 @@ def decode_wif(wif: str) -> Tuple[bytes, Literal["wif", "wif-compressed"], bytes
 
 
 def wif_to_private_key(wif: str) -> str:
+    """
+    Wallet Important Fromat (WFI) to Private key converter
+
+    :param wif: Wallet Important Fromat
+    :type wif: str
+
+    :returns: str -- Private key
+
+    >>> from bip38 import wif_to_private_key
+    >>> wif_to_private_key(wif="L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP")
+    'cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5'
+    >>> wif_to_private_key(wif="5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR")
+    'cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5'
+    """
+
     return bytes_to_string(decode_wif(wif=wif)[0])
 
 
 def get_wif_type(wif: str) -> Literal["wif", "wif-compressed"]:
+    """
+    Get Wallet Important Fromat (WFI) type
+
+    :param wif: Wallet Important Fromat
+    :type wif: str
+
+    :returns: Literal["wif", "wif-compressed"] -- WFI type
+
+    >>> from bip38 import get_wif_type
+    >>> get_wif_type(wif="L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP")
+    'wif-compressed'
+    >>> get_wif_type(wif="5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR")
+    'wif'
+    """
+
     return decode_wif(wif=wif)[1]
 
 
 def get_wif_checksum(wif: str) -> str:
+    """
+    Get Wallet Important Fromat (WFI) checksum
+
+    :param wif: Wallet Important Fromat
+    :type wif: str
+
+    :returns: str -- WFI checksum
+
+    >>> from bip38 import get_wif_checksum
+    >>> get_wif_checksum(wif="L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP")
+    'dc37f844'
+    >>> get_wif_checksum(wif="5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR")
+    'f0a25c0c'
+    """
+
     return bytes_to_string(decode_wif(wif=wif)[2])
 
 
 def public_key_to_addresses(public_key: Union[str, bytes]) -> str:
+    """
+    Public key to address converter
+
+    :param public_key: Public key
+    :type public_key: Union[str, bytes]
+
+    :returns: str -- Address
+
+    >>> from bip38 import public_key_to_addresses
+    >>> public_key_to_addresses(public_key="02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e")
+    '164MQi977u9GUteHr4EPH27VkkdxmfCvGW'
+    >>> public_key_to_addresses(public_key="04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4")
+    '1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB'
+    """
+
     # Getting public key hash
     public_key_hash: bytes = hash160(get_bytes(public_key))
     payload: bytes = (
@@ -323,13 +423,34 @@ def public_key_to_addresses(public_key: Union[str, bytes]) -> str:
 
 
 def intermediate_code(
-    passphrase: str, lot: Optional[int] = None, sequence: Optional[int] = None, owner_salt: str = bytes_to_string(os.urandom(8))
+    passphrase: str, lot: Optional[int] = None, sequence: Optional[int] = None, owner_salt: Union[str, bytes] = os.urandom(8)
 ) -> str:
+    """
+    Intermediate passphrase generator
 
-    if len(get_bytes(owner_salt)) not in [4, 8]:
-        raise ValueError(f"Invalid owner salt length (expected 8/16, got {len(owner_salt)!r})")
-    if len(get_bytes(owner_salt)) == 4 and (not lot or not sequence):
-        raise ValueError(f"Invalid owner salt length for non lot/sequence (expected 16, got {len(owner_salt)!r})")
+    :param passphrase: Passphrase or password text
+    :type passphrase: str
+    :param lot: Lot number  between 100000 <= lot <= 999999 range, default to ``None``
+    :type lot: Optional[int]
+    :param sequence: Sequence number  between 0 <= sequence <= 4095 range, default to ``None``
+    :type sequence: Optional[int]
+    :param owner_salt: Owner salt, default to ``os.urandom(8)``
+    :type owner_salt: Optional[str, bytes]
+
+    :returns: str -- Intermediate passphrase
+
+    >>> from bip38 import intermediate_code
+    >>> intermediate_code(passphrase="TestingOneTwoThree")
+    'passphraseqVKbgU4mWMakKGgCtaeVWoETQdzMBy5696bG2w7ckVBeQmoLhMF9vLaxhmzhT3'
+    >>> intermediate_code(passphrase="TestingOneTwoThree", lot=199999, sequence=1, owner_salt="75ed1cdeb254cb38")
+    'passphraseb7ruSN4At4Rb8hPTNcAVezfsjonvUs4Qo3xSp1fBFsFPvVGSbpP2WTJMhw3mVZ'
+    """
+
+    owner_salt: bytes = get_bytes(owner_salt)
+    if len(owner_salt) not in [4, 8]:
+        raise ValueError(f"Invalid owner salt length (expected 8/16, got {len(bytes_to_string(owner_salt))!r})")
+    if len(owner_salt) == 4 and (not lot or not sequence):
+        raise ValueError(f"Invalid owner salt length for non lot/sequence (expected 16, got {len(bytes_to_string(owner_salt))!r})")
     if (lot and not sequence) or (not lot and sequence):
         raise ValueError(f"Both lot & sequence are required, got (lot {lot!r}) (sequence {sequence!r})")
 
@@ -340,13 +461,11 @@ def intermediate_code(
         if not 0 <= sequence <= 4095:
             raise ValueError(f"Invalid lot, (expected 0 <= sequence <= 4095, got {sequence!r})")
 
-        owner_salt: bytes = get_bytes(owner_salt)
         pre_factor: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), owner_salt[:4], 16384, 8, 8, 32)
         owner_entropy: bytes = owner_salt[:4] + integer_to_bytes((lot * 4096 + sequence), 4)
         pass_factor: bytes = double_sha256(pre_factor + owner_entropy)
         magic: bytes = integer_to_bytes(MAGIC_LOT_AND_SEQUENCE)
     else:
-        owner_salt: bytes = get_bytes(owner_salt)
         pass_factor: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), owner_salt, 16384, 8, 8, 32)
         magic: bytes = integer_to_bytes(MAGIC_NON_LOT_AND_SEQUENCE)
         owner_entropy: bytes = owner_salt
@@ -360,14 +479,30 @@ def intermediate_code(
 
 
 def bip38_encrypt(wif: str, passphrase: str) -> str:
+    """
+    BIP38 Encrypt wallet important format using passphrase/password
+
+    :param wif: Wallet important format
+    :type wif: str
+    :param passphrase: Passphrase or password text
+    :type passphrase: str
+
+    :returns: str -- Encrypted wallet important format
+
+    >>> from bip38 import bip38_encrypt
+    >>> bip38_encrypt(wif="5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR", passphrase="TestingOneTwoThree")
+    '6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg'
+    >>> bip38_encrypt(wif="L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", passphrase="TestingOneTwoThree")
+    '6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo'
+    """
 
     wif_type: Literal["wif", "wif-compressed"] = get_wif_type(wif=wif)
     if wif_type == "wif":
-        flag: bytes = integer_to_bytes(BIP38_NON_EC_WIF_FLAG)
+        flag: bytes = integer_to_bytes(BIP38_NO_EC_MULTIPLIED_WIF_FLAG)
         private_key: str = wif_to_private_key(wif=wif)
         public_key_type: Literal["uncompressed", "compressed"] = "uncompressed"
     elif wif_type == "wif-compressed":
-        flag: bytes = integer_to_bytes(BIP38_NON_EC_WIF_COMPRESSED_FLAG)
+        flag: bytes = integer_to_bytes(BIP38_NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG)
         private_key: str = wif_to_private_key(wif=wif)
         public_key_type: Literal["uncompressed", "compressed"] = "compressed"
     else:
@@ -379,31 +514,49 @@ def bip38_encrypt(wif: str, passphrase: str) -> str:
     address: str = public_key_to_addresses(public_key=public_key)
     address_hash: bytes = get_checksum(get_bytes(address, unhexlify=False))
     key: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), address_hash, 16384, 8, 8)
-    message_half_1, message_half_2 = key[0:32], key[32:64]
+    derived_half_1, derived_half_2 = key[0:32], key[32:64]
 
-    aes: AESModeOfOperationECB = AESModeOfOperationECB(message_half_2)
+    aes: AESModeOfOperationECB = AESModeOfOperationECB(derived_half_2)
     encrypted_half_1: bytes = aes.encrypt(integer_to_bytes(
-        bytes_to_integer(get_bytes(private_key[0:32])) ^ bytes_to_integer(message_half_1[0:16])
+        bytes_to_integer(get_bytes(private_key[0:32])) ^ bytes_to_integer(derived_half_1[0:16])
     ))
     encrypted_half_2: bytes = aes.encrypt(integer_to_bytes(
-        bytes_to_integer(get_bytes(private_key[32:64])) ^ bytes_to_integer(message_half_1[16:32])
+        bytes_to_integer(get_bytes(private_key[32:64])) ^ bytes_to_integer(derived_half_1[16:32])
     ))
 
     encrypted_private_key: bytes = (
-        integer_to_bytes(BIP38_NON_EC_PRIVATE_KEY_PREFIX) + flag + address_hash + encrypted_half_1 + encrypted_half_2
+        integer_to_bytes(BIP38_NO_EC_MULTIPLIED_PRIVATE_KEY_PREFIX) + flag + address_hash + encrypted_half_1 + encrypted_half_2
     )
     return ensure_string(encode(
         encrypted_private_key + get_checksum(encrypted_private_key)
     ))
 
 
-def create_new_encrypted_private_key(
+def create_new_encrypted_wif(
     intermediate_passphrase: str,
     public_key_type: Literal["uncompressed", "compressed"] = "uncompressed",
-    seed_b: Union[str, bytes] = double_sha256(os.urandom(24))
+    seed: Union[str, bytes] = os.urandom(24)
 ) -> dict:
+    """
+    Create new encrypted wallet important format
 
-    seed_b: bytes = get_bytes(seed_b)
+    :param intermediate_passphrase: Intermediate passphrase text
+    :type intermediate_passphrase: str
+    :param public_key_type: Public key type, default to ``uncompressed``
+    :type public_key_type: Literal["uncompressed", "compressed"]
+    :param seed: Seed, default to ``os.urandom(24)``
+    :type seed: Optional[str, bytes]
+
+    :returns: dict -- Encrypted wallet important format
+
+    >>> from bip38 import create_new_encrypted_wif
+    >>> create_new_encrypted_wif(intermediate_passphrase="passphraseb7ruSN4At4Rb8hPTNcAVezfsjonvUs4Qo3xSp1fBFsFPvVGSbpP2WTJMhw3mVZ")
+    {'encrypted_wif': '6PgGSHicUccU2dotWbwJd514DqWdmCM4KFNYiP4poXgC57qfUpEkKbTj9U', 'confirmation_code': 'cfrm38V8Foq3WpRPMXJD34SF6pGT6ht5ihYMWWMbezkzHgPpA1jVkfbTHwQzvuSA4ReF86PHZJY', 'public_key': '045cd5348750657daa7ef756582cbd5564fe6f65a4a4370fcc234f642826c8e43ec927612179c2768cf616fd1a2f1ccfbf91a5529daf2d8439f366fc9c8ae7dc71', 'seed': 'b6b1122e418c4e188de3f57588119f0f5bdc780f52c3f677', 'public_key_type': 'uncompressed', 'address': '1JbyXoVN4hXWirGB265q9VE4pQ6qbY6kmr'}
+    >>> create_new_encrypted_wif(intermediate_passphrase="passphraseb7ruSN4At4Rb8hPTNcAVezfsjonvUs4Qo3xSp1fBFsFPvVGSbpP2WTJMhw3mVZ", public_key_type="compressed", seed="99241d58245c883896f80843d2846672d7312e6195ca1a6c")
+    {'encrypted_wif': '6PoM8coZNg4AGPhQs91RbmmRmfLz6kmnU3XUGGLQxsJ5xN62LsUzMWYcdP', 'confirmation_code': 'cfrm38VXL5T6qVke13sHUWtEjibAkK1RquBqMXb2azCv1Zna6JKvBhD1Gf2b15wBj7UPv2BQnf6', 'public_key': '02100bb0440ff4106a1743750813271e66a7017431e92921e520319f537c7357c1', 'seed': '99241d58245c883896f80843d2846672d7312e6195ca1a6c', 'public_key_type': 'compressed', 'address': '15PuNwFmDqYhRsC9MDPNFvNY4Npzibm67c'}
+    """
+
+    seed_b: bytes = get_bytes(seed)
     intermediate_decode: bytes = check_decode(intermediate_passphrase)
     if len(intermediate_decode) != 49:
         raise ValueError(f"Invalid intermediate passphrase length (expected 49, got {len(intermediate_decode)!r})")
@@ -441,17 +594,17 @@ def create_new_encrypted_private_key(
     address_hash: bytes = get_checksum(get_bytes(address, unhexlify=False))
     salt: bytes = address_hash + owner_entropy
     scrypt_hash: bytes = scrypt.hash(pass_point, salt, 1024, 1, 1, 64)
-    message_half_1, message_half_2, key = scrypt_hash[:16], scrypt_hash[16:32], scrypt_hash[32:]
+    derived_half_1, derived_half_2, key = scrypt_hash[:16], scrypt_hash[16:32], scrypt_hash[32:]
 
     aes: AESModeOfOperationECB = AESModeOfOperationECB(key)
     encrypted_half_1: bytes = aes.encrypt(integer_to_bytes(
-        bytes_to_integer(seed_b[:16]) ^ bytes_to_integer(message_half_1)
+        bytes_to_integer(seed_b[:16]) ^ bytes_to_integer(derived_half_1)
     ))
     encrypted_half_2: bytes = aes.encrypt(integer_to_bytes(
-        bytes_to_integer(encrypted_half_1[8:] + seed_b[16:]) ^ bytes_to_integer(message_half_2)
+        bytes_to_integer(encrypted_half_1[8:] + seed_b[16:]) ^ bytes_to_integer(derived_half_2)
     ))
     encrypted_wif: str = ensure_string(check_encode((
-        integer_to_bytes(BIP38_EC_PRIVATE_KEY_PREFIX) + flag + address_hash + owner_entropy + encrypted_half_1[:8] + encrypted_half_2
+        integer_to_bytes(BIP38_EC_MULTIPLIED_PRIVATE_KEY_PREFIX) + flag + address_hash + owner_entropy + encrypted_half_1[:8] + encrypted_half_2
     )))
 
     point_b: bytes = get_bytes(private_key_to_public_key(factor_b, public_key_type="compressed"))
@@ -459,10 +612,10 @@ def create_new_encrypted_private_key(
         (bytes_to_integer(scrypt_hash[63:]) & 1) ^ bytes_to_integer(point_b[:1])
     )
     point_b_half_1: bytes = aes.encrypt(integer_to_bytes(
-        bytes_to_integer(point_b[1:17]) ^ bytes_to_integer(message_half_1)
+        bytes_to_integer(point_b[1:17]) ^ bytes_to_integer(derived_half_1)
     ))
     point_b_half_2: bytes = aes.encrypt(integer_to_bytes(
-        bytes_to_integer(point_b[17:]) ^ bytes_to_integer(message_half_2)
+        bytes_to_integer(point_b[17:]) ^ bytes_to_integer(derived_half_2)
     ))
     encrypted_point_b: bytes = (
         point_b_prefix + point_b_half_1 + point_b_half_2
@@ -475,12 +628,31 @@ def create_new_encrypted_private_key(
         encrypted_wif=encrypted_wif,
         confirmation_code=confirmation_code,
         public_key=bytes_to_string(public_key),
+        seed=bytes_to_string(seed_b),
         public_key_type=public_key_type,
         address=address
     )
 
 
 def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) -> Union[str, dict]:
+    """
+    Confirm passphrase
+
+    :param passphrase: Passphrase or password text
+    :type passphrase: str
+    :param confirmation_code: Confirmation code
+    :type confirmation_code: str
+    :param detail: To show in deatil, default to ``False``
+    :type detail: bool
+
+    :returns: Union[str, dict] -- Confirmation of address info's
+
+    >>> from bip38 import confirm_code
+    >>> confirm_code(passphrase="TestingOneTwoThree", confirmation_code="cfrm38V8Foq3WpRPMXJD34SF6pGT6ht5ihYMWWMbezkzHgPpA1jVkfbTHwQzvuSA4ReF86PHZJY")
+    '1JbyXoVN4hXWirGB265q9VE4pQ6qbY6kmr'
+    >>> confirm_code(passphrase="TestingOneTwoThree", confirmation_code="cfrm38VXL5T6qVke13sHUWtEjibAkK1RquBqMXb2azCv1Zna6JKvBhD1Gf2b15wBj7UPv2BQnf6", detail=True)
+    {'public_key': '02100bb0440ff4106a1743750813271e66a7017431e92921e520319f537c7357c1', 'public_key_type': 'compressed', 'address': '15PuNwFmDqYhRsC9MDPNFvNY4Npzibm67c', 'lot': 199999, 'sequence': 1}
+    """
 
     confirmation_code_decode: bytes = check_decode(confirmation_code)
     if len(confirmation_code_decode) != 51:
@@ -514,14 +686,14 @@ def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) 
     )
     salt: bytes = address_hash + owner_entropy
     scrypt_hash: bytes = scrypt.hash(get_bytes(pass_point), salt, 1024, 1, 1, 64)
-    message_half_1, message_half_2, key = encrypted_point_b[1:17], encrypted_point_b[17:], scrypt_hash[32:]
+    derived_half_1, derived_half_2, key = encrypted_point_b[1:17], encrypted_point_b[17:], scrypt_hash[32:]
 
     aes: AESModeOfOperationECB = AESModeOfOperationECB(key)
     point_b_half_1: bytes = integer_to_bytes(
-        bytes_to_integer(aes.decrypt(message_half_1)) ^ bytes_to_integer(scrypt_hash[:16])
+        bytes_to_integer(aes.decrypt(derived_half_1)) ^ bytes_to_integer(scrypt_hash[:16])
     )
     point_b_half_2: bytes = integer_to_bytes(
-        bytes_to_integer(aes.decrypt(message_half_2)) ^ bytes_to_integer(scrypt_hash[16:32])
+        bytes_to_integer(aes.decrypt(derived_half_2)) ^ bytes_to_integer(scrypt_hash[16:32])
     )
     point_b_prefix: bytes = integer_to_bytes(
         bytes_to_integer(encrypted_point_b[:1]) ^ (bytes_to_integer(scrypt_hash[63:]) & 1)
@@ -558,6 +730,24 @@ def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) 
 
 
 def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> Union[str, dict]:
+    """
+    BIP38 Decrypt encrypted wallet important format using passphrase/password
+
+    :param encrypted_wif: Encrypted wallet important format
+    :type encrypted_wif: str
+    :param passphrase: Passphrase or password text
+    :type passphrase: str
+    :param detail: To show in deatil, default to ``False``
+    :type detail: bool
+
+    :returns: Union[str, dict] -- WIF or All private Key info's
+
+    >>> from bip38 import bip38_decrypt
+    >>> bip38_decrypt(encrypted_wif="6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg", passphrase="TestingOneTwoThree")
+    '5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR'
+    >>> bip38_decrypt(encrypted_wif="6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg", passphrase="TestingOneTwoThree", detail=True)
+    {'wif': '5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR', 'private_key': 'cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5', 'wif_type': 'wif', 'public_key': '04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4', 'public_key_type': 'uncompressed', 'address': '1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB', 'lot': None, 'sequence': None}
+    """
 
     encrypted_wif_decode: bytes = decode(encrypted_wif)
     if len(encrypted_wif_decode) != 43:
@@ -567,18 +757,18 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
     flag: bytes = encrypted_wif_decode[2:3]
     address_hash: bytes = encrypted_wif_decode[3:7]
 
-    if prefix == integer_to_bytes(BIP38_NON_EC_PRIVATE_KEY_PREFIX):
+    if prefix == integer_to_bytes(BIP38_NO_EC_MULTIPLIED_PRIVATE_KEY_PREFIX):
 
-        if flag == integer_to_bytes(BIP38_NON_EC_WIF_FLAG):
+        if flag == integer_to_bytes(BIP38_NO_EC_MULTIPLIED_WIF_FLAG):
             wif_type: Literal["wif", "wif-compressed"] = "wif"
             public_key_type: Literal["uncompressed", "compressed"] = "uncompressed"
-        elif flag == integer_to_bytes(BIP38_NON_EC_WIF_COMPRESSED_FLAG):
+        elif flag == integer_to_bytes(BIP38_NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG):
             wif_type: Literal["wif", "wif-compressed"] = "wif-compressed"
             public_key_type: Literal["uncompressed", "compressed"] = "compressed"
         else:
             raise ValueError(
-                f"Invalid flag (expected {bytes_to_string(integer_to_bytes(BIP38_NON_EC_WIF_FLAG))!r}/"
-                f"{bytes_to_string(integer_to_bytes(BIP38_NON_EC_WIF_COMPRESSED_FLAG))!r}, got {bytes_to_string(flag)!r})"
+                f"Invalid flag (expected {bytes_to_string(integer_to_bytes(BIP38_NO_EC_MULTIPLIED_WIF_FLAG))!r}/"
+                f"{bytes_to_string(integer_to_bytes(BIP38_NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG))!r}, got {bytes_to_string(flag)!r})"
             )
 
         key: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), address_hash, 16384, 8, 8)
@@ -613,13 +803,14 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
                 wif_type=wif_type,
                 public_key=public_key,
                 public_key_type=public_key_type,
+                seed=None,
                 address=address,
                 lot=None,
                 sequence=None
             )
         return wif
 
-    elif prefix == integer_to_bytes(BIP38_EC_PRIVATE_KEY_PREFIX):
+    elif prefix == integer_to_bytes(BIP38_EC_MULTIPLIED_PRIVATE_KEY_PREFIX):
         owner_entropy: bytes = encrypted_wif_decode[7:15]
         encrypted_half_1_half_1: bytes = encrypted_wif_decode[15:23]
         encrypted_half_2: bytes = encrypted_wif_decode[23:-4]
@@ -641,23 +832,23 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
             private_key=pass_factor, public_key_type="compressed"
         )
         salt = address_hash + owner_entropy
-        encrypted_seedb: bytes = scrypt.hash(get_bytes(pre_public_key), salt, 1024, 1, 1, 64)
-        key: bytes = encrypted_seedb[32:]
+        encrypted_seed_b: bytes = scrypt.hash(get_bytes(pre_public_key), salt, 1024, 1, 1, 64)
+        key: bytes = encrypted_seed_b[32:]
 
         aes: AESModeOfOperationECB = AESModeOfOperationECB(key)
-        encrypted_half_1_half_2_seedb_last_3 = integer_to_bytes(
-            bytes_to_integer(aes.decrypt(encrypted_half_2)) ^ bytes_to_integer(encrypted_seedb[16:32])
+        encrypted_half_1_half_2_seed_b_last_3 = integer_to_bytes(
+            bytes_to_integer(aes.decrypt(encrypted_half_2)) ^ bytes_to_integer(encrypted_seed_b[16:32])
         )
-        encrypted_half_1_half_2: bytes = encrypted_half_1_half_2_seedb_last_3[:8]
+        encrypted_half_1_half_2: bytes = encrypted_half_1_half_2_seed_b_last_3[:8]
         encrypted_half_1: bytes = (
             encrypted_half_1_half_1 + encrypted_half_1_half_2
         )
 
-        seedb: bytes = integer_to_bytes(
-            bytes_to_integer(aes.decrypt(encrypted_half_1)) ^ bytes_to_integer(encrypted_seedb[:16])
-        ) + encrypted_half_1_half_2_seedb_last_3[8:]
+        seed_b: bytes = integer_to_bytes(
+            bytes_to_integer(aes.decrypt(encrypted_half_1)) ^ bytes_to_integer(encrypted_seed_b[:16])
+        ) + encrypted_half_1_half_2_seed_b_last_3[8:]
 
-        factor_b: bytes = double_sha256(seedb)
+        factor_b: bytes = double_sha256(seed_b)
         if bytes_to_integer(factor_b) == 0 or bytes_to_integer(factor_b) >= N:
             raise ValueError("Invalid ec encrypted wallet important format")
 
@@ -689,6 +880,7 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
                     wif_type=wif_type,
                     public_key=public_key,
                     public_key_type=public_key_type,
+                    seed=bytes_to_string(seed_b),
                     address=address,
                     lot=lot,
                     sequence=sequence
@@ -697,6 +889,6 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
         raise ValueError("Incorrect passphrase/password")
     else:
         raise ValueError(
-            f"Invalid prefix (expected {bytes_to_string(integer_to_bytes(BIP38_NON_EC_PRIVATE_KEY_PREFIX))!r}/"
-            f"{bytes_to_string(integer_to_bytes(BIP38_EC_PRIVATE_KEY_PREFIX))!r}, got {bytes_to_string(prefix)!r})"
+            f"Invalid prefix (expected {bytes_to_string(integer_to_bytes(BIP38_NO_EC_MULTIPLIED_PRIVATE_KEY_PREFIX))!r}/"
+            f"{bytes_to_string(integer_to_bytes(BIP38_EC_MULTIPLIED_PRIVATE_KEY_PREFIX))!r}, got {bytes_to_string(prefix)!r})"
         )
