@@ -24,7 +24,7 @@ sys.path.insert(1, os.path.abspath("./extensions"))
 
 # -- Project information -----------------------------------------------------
 
-project = "BIP38"
+project = "Python-BIP38"
 copyright = f"{datetime.datetime.now().year}, {__author__}"
 author = __author__
 
@@ -55,7 +55,7 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "furo"
+html_theme = "sphinx_rtd_theme"
 # Product logo name
 # html_logo = "static/png/hdwallet.png"
 # Theme options

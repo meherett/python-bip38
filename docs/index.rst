@@ -1,6 +1,6 @@
-===============================
-Bitcoin Improvement Proposal 38
-===============================
+===========================================
+Bitcoin Improvement Proposal - 0038 / BIP38
+===========================================
 
 |Build Status| |PyPI Version| |Documentation Status| |PyPI License| |PyPI Python Version| |Coverage Status|
 
@@ -22,13 +22,13 @@ Bitcoin Improvement Proposal 38
 .. |Coverage Status| image:: https://coveralls.io/repos/github/meherett/python-bip38/badge.svg?branch=master
    :target: https://coveralls.io/github/meherett/python-bip38?branch=master
 
-A pure python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol. It supports both `No EC-multiply <https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-flag-is-not-used>`_ and `EC-multiply <https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-mode-is-used>`_ modes.
+Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol. It supports both `No EC-multiply <https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-flag-is-not-used>`_ and `EC-multiply <https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-mode-is-used>`_ modes.
 
 BIP38 is a cryptographic standard that defines a method for encrypting and securing private keys associated with Bitcoin addresses. It provides a way to create encrypted versions of private keys, which can then be decrypted using a passphrase. This adds an additional layer of security to the process of storing and transmitting private keys.
 
 By encrypting a private key with BIP38, users can protect their funds even if the encrypted private key is exposed. This is because an attacker would need to know the passphrase in order to decrypt the private key and gain access to the associated funds. BIP38 encryption is often used to create "paper wallets" or physical copies of Bitcoin private keys that can be stored offline for enhanced security.
 
-For more info see the `BIP38 <https://en.bitcoin.it/wiki/BIP_0038>`_ specs.
+For more info see the `Passphrase-protected private key - BIP38 <https://en.bitcoin.it/wiki/BIP_0038>`_ specs.
 
 Installing BIP38
 ================
@@ -52,8 +52,8 @@ For the versions available, see the `tags on this repository <https://github.com
 Quick Usage
 ===========
 
-For no EC multiply:
-___________________
+no EC multiply:
+_______________
 
 ::
 
@@ -62,29 +62,32 @@ ___________________
     from bip38 import (
         bip38_encrypt, bip38_decrypt
     )
+    from typing import List
 
     import json
 
     # Passphrase / password
     PASSPHRASE: str = "meherett"  # u"\u03D2\u0301\u0000\U00010400\U0001F4A9"
-    # Wallet important format's
-    WIFs: dict = {
-        "wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR",  # No compression
-        "wif-compressed": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP"  # Compression
-    }
     # To show detail
     DETAIL: bool = True
+    # Wallet important format's
+    WIFs: List[str] = [
+        "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR",  # No compression
+        "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP"  # Compression
+    ]
 
-    for WIF in WIFs.keys():
+    for WIF in WIFs:
 
-        print("WFI:", WIFs[WIF])
+        print("WFI:", WIF)
         encrypted_wif: str = bip38_encrypt(
-            wif=WIFs[WIF], passphrase=PASSPHRASE
+            wif=WIF, passphrase=PASSPHRASE
         )
         print("BIP38 Encrypted WIF:", encrypted_wif)
         print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
             encrypted_wif=encrypted_wif, passphrase=PASSPHRASE, detail=DETAIL
-        ), indent=4), "\n")
+        ), indent=4))
+
+        print("-" * 125)
 
 
 .. raw:: html
@@ -107,7 +110,7 @@ ___________________
         "lot": null,
         "sequence": null
     }
-
+    -----------------------------------------------------------------------------------------------------------------------------
     WFI: L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP
     BIP38 Encrypted WIF: 6PYNKZ1EASfdDgcUgtxxRi7DkYPTXzwYUzEqzDxv2H8QbeKDV9D9wBWUA7
     BIP38 Decrypted: {
@@ -121,14 +124,15 @@ ___________________
         "lot": null,
         "sequence": null
     }
+    -----------------------------------------------------------------------------------------------------------------------------
 
 .. raw:: html
 
    </details>
 
 
-For EC multiply:
-----------------
+EC multiply:
+------------
 
 ::
 
@@ -147,7 +151,7 @@ For EC multiply:
     # To show detail
     DETAIL: bool = True
     # List of samples with owner salt, seed, public key type, lot, and sequence
-    samples: List[dict] = [
+    SAMPLES: List[dict] = [
         # Random owner salt & seed, No compression, No lot & sequence
         {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "uncompressed", "lot": None, "sequence": None},
         # Random owner salt & seed, No compression, With lot & sequence
@@ -157,29 +161,25 @@ For EC multiply:
         # Random owner salt & seed, Compression, With lot & sequence
         {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "compressed", "lot": 863741, "sequence": 1},
         # With owner salt & seed, No compression, No lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": None,
-         "sequence": None},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": None, "sequence": None},
         # With owner salt & seed, No compression, With lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": 567885,
-         "sequence": 1},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": 567885, "sequence": 1},
         # With owner salt & seed, Compression, No lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": None,
-         "sequence": None},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": None, "sequence": None},
         # With owner salt & seed, Compression, With lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": 369861,
-         "sequence": 1},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": 369861, "sequence": 1},
     ]
 
-    for sample in samples:
+    for SAMPLE in SAMPLES:
 
         intermediate_passphrase: str = intermediate_code(
-            passphrase=PASSPHRASE, owner_salt=sample["owner_salt"], lot=sample["lot"], sequence=sample["sequence"]
+            passphrase=PASSPHRASE, owner_salt=SAMPLE["owner_salt"], lot=SAMPLE["lot"], sequence=SAMPLE["sequence"]
         )
 
         print("Intermediate Passphrase:", intermediate_passphrase)
 
         encrypted_wif: dict = create_new_encrypted_wif(
-            intermediate_passphrase=intermediate_passphrase, public_key_type=sample["public_key_type"], seed=sample["seed"]
+            intermediate_passphrase=intermediate_passphrase, public_key_type=SAMPLE["public_key_type"], seed=SAMPLE["seed"]
         )
         print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
 
@@ -191,7 +191,7 @@ For EC multiply:
             encrypted_wif=encrypted_wif["encrypted_wif"], passphrase=PASSPHRASE, detail=DETAIL
         ), indent=4))
 
-        print("-" * 50)
+        print("-" * 125)
 
 .. raw:: html
 
@@ -200,118 +200,118 @@ For EC multiply:
 
 .. code-block:: shell
 
-    Intermediate Passphrase: passphraseoouQoiPKqUgnkxc4ZMMZoujRuZ9AxeeG5j53UwbCHCf1UToFvAV1rVDCJdypwL
+    Intermediate Passphrase: passphraseqtFiMLZSKYBJo6ZdivCqkPyMX3bnPFnedQRtEHWHmADXqEfSyJHE1CLuTbF6Wf
     Encrypted WIF: {
-        "encrypted_wif": "6PfNDqSUS9n8G6kjfPXW5jbKFS9QRVfRSjSoyxgwKPiBKHQrywNSYt2X5U",
-        "confirmation_code": "cfrm38V5KfUeoryRMPjAaHKLk2ZYyyoHttAdHnMe3MhHvmPcuYLkgxDpW7og9kdZyg1HG4ae6JU",
-        "public_key": "0492ce7005e0fd9a218325447489f1eff6d487dd9d2e5d501302943485217e4c9411a8dfea9d803a14c526ea537b2b2683e5ef8c33660622847cbfd8979433d512",
-        "seed": "357f1c58ca068ebfda512ff1dbc85f19e260e798344c9232",
+        "encrypted_wif": "6PfPd3hFPNjBMqirrvSSgEtDnErh9BzqK1NUdk6fiQCaN7LwdGFus4PhQV",
+        "confirmation_code": "cfrm38V5QE7EN2eF9SfWsesQCjJZSoSjc5YiqLDCgEJoqEDoV2D9f7NRXSqQHsWb3MKogaN8zAs",
+        "public_key": "0412bb1ec0a2fa1e7c90f4061578d8deeaa6984c9ec5c37717546fb0d127573a03f3050a9f7cb24f62e107c43470388531193fcd8b878618cf74e1d71698069e07",
+        "seed": "d010fe7f60a25982f3ee7e056e1bcd027f1c15bd26ddd221",
         "public_key_type": "uncompressed",
-        "address": "1EV1hewDjJ7YJut2eZ2gruDFcVhRN5qrXq"
+        "address": "1CHsGDzDbZJPVKiC9hUKe1hnAevwu5RTKi"
     }
     Confirm Code: {
-        "public_key": "0492ce7005e0fd9a218325447489f1eff6d487dd9d2e5d501302943485217e4c9411a8dfea9d803a14c526ea537b2b2683e5ef8c33660622847cbfd8979433d512",
+        "public_key": "0412bb1ec0a2fa1e7c90f4061578d8deeaa6984c9ec5c37717546fb0d127573a03f3050a9f7cb24f62e107c43470388531193fcd8b878618cf74e1d71698069e07",
         "public_key_type": "uncompressed",
-        "address": "1EV1hewDjJ7YJut2eZ2gruDFcVhRN5qrXq",
+        "address": "1CHsGDzDbZJPVKiC9hUKe1hnAevwu5RTKi",
         "lot": null,
         "sequence": null
     }
     BIP38 Decrypted: {
-        "wif": "5JzxQcXyrqqep2unYkugwsVDWYvG5mNFpJJHE4MQoxw8wFxfumg",
-        "private_key": "9bec1d3c0fa418d5a2e7ac3a2db2644ecc282288feb5c5e12172b62a7fc6c74b",
+        "wif": "5Jp53JGVEkX2dxXXJyb2UdJw3259yk3YjJCdhcHA3eXpJsr6PBB",
+        "private_key": "83348354ac6638ad7ea78505bd85ff96485e17edcffe85572df9a66f997e1324",
         "wif_type": "wif",
-        "public_key": "0492ce7005e0fd9a218325447489f1eff6d487dd9d2e5d501302943485217e4c9411a8dfea9d803a14c526ea537b2b2683e5ef8c33660622847cbfd8979433d512",
+        "public_key": "0412bb1ec0a2fa1e7c90f4061578d8deeaa6984c9ec5c37717546fb0d127573a03f3050a9f7cb24f62e107c43470388531193fcd8b878618cf74e1d71698069e07",
         "public_key_type": "uncompressed",
-        "seed": "357f1c58ca068ebfda512ff1dbc85f19e260e798344c9232",
-        "address": "1EV1hewDjJ7YJut2eZ2gruDFcVhRN5qrXq",
+        "seed": "d010fe7f60a25982f3ee7e056e1bcd027f1c15bd26ddd221",
+        "address": "1CHsGDzDbZJPVKiC9hUKe1hnAevwu5RTKi",
         "lot": null,
         "sequence": null
     }
-    --------------------------------------------------
-    Intermediate Passphrase: passphrasea5kfg7h8ErUgs2xCQtUkFvBqpy32Gge6oVTYVodfJp3jnc39KeJYh2sfadZfAW
+    -----------------------------------------------------------------------------------------------------------------------------
+    Intermediate Passphrase: passphrasedcXyya37d7imwPshCWV77N6SdDCXCGkbUDQ8dgg39Xutzej2UoNTRXCWjcVSk3
     Encrypted WIF: {
-        "encrypted_wif": "6PgQLNznFgCPEw9eo1XuKgc2NB5AZYVqbUZRv2UKQdg97aUV7fyoeNwx9s",
-        "confirmation_code": "cfrm38V8hYYF3sFQV95Swwovn7x8sP3tjHqcvSskHdpiSMYqCTQ4toR8fggaaPVd22FAK2hXwk8",
-        "public_key": "04ef8084a54cf1ee773c7f4bd1808c1b3e916764aed26534966eb44098b4f6b46a44947d626a8f75f982d827711008ce9d1870c07b4db5576a6cabc8a2f20b8f48",
-        "seed": "a2cb5b797c5145972961d13f8752aa05e6feca7127cbd318",
+        "encrypted_wif": "6PgHqxpPU2tA4rqjL5gMMkqeahFRRDDe3g1jJy5mhQdNasT1WtwEkzGcdk",
+        "confirmation_code": "cfrm38V8LPy6dJTRpd7Qs74zLAdE26F3ZGqJ1Dmr5HheKY2miBwbJMdk1qY6VhZDjNJkitu5Di5",
+        "public_key": "049b3dcf56a38df3a2437055f2ad3aec950a54f7205bbcc9949d5299ee4e0215d0924a756dce3baf3356da8465341ebf1c580c4ee13e2602508df57ec49a15e981",
+        "seed": "8195ac15d84c139531faec482a9d312f86f79242acb728a7",
         "public_key_type": "uncompressed",
-        "address": "16aPsKjLSay9vz7vcoo1TsNUUUwGrCRZDt"
+        "address": "17YeFTwCoxVhz5P8KiGHv4d8JwUEwPUbhj"
     }
     Confirm Code: {
-        "public_key": "04ef8084a54cf1ee773c7f4bd1808c1b3e916764aed26534966eb44098b4f6b46a44947d626a8f75f982d827711008ce9d1870c07b4db5576a6cabc8a2f20b8f48",
+        "public_key": "049b3dcf56a38df3a2437055f2ad3aec950a54f7205bbcc9949d5299ee4e0215d0924a756dce3baf3356da8465341ebf1c580c4ee13e2602508df57ec49a15e981",
         "public_key_type": "uncompressed",
-        "address": "16aPsKjLSay9vz7vcoo1TsNUUUwGrCRZDt",
+        "address": "17YeFTwCoxVhz5P8KiGHv4d8JwUEwPUbhj",
         "lot": 863741,
         "sequence": 1
     }
     BIP38 Decrypted: {
-        "wif": "5KVkuuWnSpbTt7WwAvs5hYZm1ETXw5j3NfEh3z6v4iERhD7uJbQ",
-        "private_key": "dd5202e63adc9d3362831dcedfa727f066f1499629cd27eb3fa683cabf55a7eb",
+        "wif": "5KGpex1ZJaPoG2L6cHtzAU1nM9un8nw3uD8d6v8xGJs6M6q9qQj",
+        "private_key": "bff2e24adfd0323ecd0b969cb3768adba578a0ea503306fd647e6b11e8739d70",
         "wif_type": "wif",
-        "public_key": "04ef8084a54cf1ee773c7f4bd1808c1b3e916764aed26534966eb44098b4f6b46a44947d626a8f75f982d827711008ce9d1870c07b4db5576a6cabc8a2f20b8f48",
+        "public_key": "049b3dcf56a38df3a2437055f2ad3aec950a54f7205bbcc9949d5299ee4e0215d0924a756dce3baf3356da8465341ebf1c580c4ee13e2602508df57ec49a15e981",
         "public_key_type": "uncompressed",
-        "seed": "a2cb5b797c5145972961d13f8752aa05e6feca7127cbd318",
-        "address": "16aPsKjLSay9vz7vcoo1TsNUUUwGrCRZDt",
+        "seed": "8195ac15d84c139531faec482a9d312f86f79242acb728a7",
+        "address": "17YeFTwCoxVhz5P8KiGHv4d8JwUEwPUbhj",
         "lot": 863741,
         "sequence": 1
     }
-    --------------------------------------------------
-    Intermediate Passphrase: passphraseo12adZTXDqkXn99mNyxdDvT6NfghEcJXTGrcW1sefxfpYsWQmuBg5neozNGByU
+    -----------------------------------------------------------------------------------------------------------------------------
+    Intermediate Passphrase: passphraseoH4GEqnBR53ipb9gwLfbJM8nKMx4LnZPCzYbvgPyR2zYkF5DqKrW2gf8DZ8s7y
     Encrypted WIF: {
-        "encrypted_wif": "6PnXPED59kT4A9mnEYGpFBf5BFoYrCfeMrTcjnwLpApGcW4dJatruJGuSY",
-        "confirmation_code": "cfrm38VUeVGaevSWvteWmBS6e8AGKUPBkh7n1wYwU7wXdb1Rh1qkbo97WTx9tJWKx4fFS6UBB3y",
-        "public_key": "02165a4d1b0da933af4feb58b7d2831aced84cc26e7b7e7213bc6cbcd2f072c6a3",
-        "seed": "4f70079f5bdc93a34d7d3caf4313fea5e63d53e3d29063ae",
+        "encrypted_wif": "6PnYW3V9jp8sKA4aMEWJjBvNTRtVYBCSRWb6Yja6xZqBhVVrDXWSnYz2at",
+        "confirmation_code": "cfrm38VUi8UMcgVUDQRSjjn1VxVLfHYQxphSRvAQYSU244oNwHoxt24UByEnUeqSbN6QatRVtaR",
+        "public_key": "022604144840ed73bc5055916e2e114efe2a706ee71033b48644e3e322a2c58dab",
+        "seed": "e0051112f4903c0bbe52dc698c031467bf4646040b6b12a3",
         "public_key_type": "compressed",
-        "address": "1JJ6NEaMazsfq1L9iKCcLepwk21VMy4TQA"
+        "address": "1EVSAfcUHG8Ce2CF74QwW58wSr7WY4QBaH"
     }
     Confirm Code: {
-        "public_key": "02165a4d1b0da933af4feb58b7d2831aced84cc26e7b7e7213bc6cbcd2f072c6a3",
+        "public_key": "022604144840ed73bc5055916e2e114efe2a706ee71033b48644e3e322a2c58dab",
         "public_key_type": "compressed",
-        "address": "1JJ6NEaMazsfq1L9iKCcLepwk21VMy4TQA",
+        "address": "1EVSAfcUHG8Ce2CF74QwW58wSr7WY4QBaH",
         "lot": null,
         "sequence": null
     }
     BIP38 Decrypted: {
-        "wif": "L1xgWYbER6FytF3cfVJKaeiXhCm8S3rodEcm5v7LvRQcU8EaRXww",
-        "private_key": "8d749fd783d186a3ce9b88871386c1128bcefc4b470e0f95ef537d35429a0b91",
+        "wif": "Kz2v4F99WaPamvCC2LwGTwdr25TnUXUB991wKpVhHGxtJE6iAveq",
+        "private_key": "53f56bb7fc1a9e9682aa55be6e501776fc9ac2369654c6c85b00b87d41ab8229",
         "wif_type": "wif-compressed",
-        "public_key": "02165a4d1b0da933af4feb58b7d2831aced84cc26e7b7e7213bc6cbcd2f072c6a3",
+        "public_key": "022604144840ed73bc5055916e2e114efe2a706ee71033b48644e3e322a2c58dab",
         "public_key_type": "compressed",
-        "seed": "4f70079f5bdc93a34d7d3caf4313fea5e63d53e3d29063ae",
-        "address": "1JJ6NEaMazsfq1L9iKCcLepwk21VMy4TQA",
+        "seed": "e0051112f4903c0bbe52dc698c031467bf4646040b6b12a3",
+        "address": "1EVSAfcUHG8Ce2CF74QwW58wSr7WY4QBaH",
         "lot": null,
         "sequence": null
     }
-    --------------------------------------------------
-    Intermediate Passphrase: passphraseYoVubMghFfXu8JJDfXu6EN1NauvyLWpj8MR6YaBemDfCRbAuzZHAEAG7aPcfKD
+    -----------------------------------------------------------------------------------------------------------------------------
+    Intermediate Passphrase: passphraseaWdkWraG6G7W9TCAhCtmoLXbFWdDYjrG8gtv2VPCY7mCvJgbFCoktRKm4ePsQU
     Encrypted WIF: {
-        "encrypted_wif": "6PoM8ydznfoqedE1xXTKpQ3bhr8tjT2HRmcZaccCtZxnHbhwZxhBKy5yBe",
-        "confirmation_code": "cfrm38VXL6czb2YDRqbDe5AmhV7ZT7JESkvLyYRMAh5NVQ37TUuZrhEa8rEDfSeW96LykTsTizh",
-        "public_key": "026a369214f7183ec50964e9d849dbf0b0ea47e6c1eed4c2c89a17d5a4eb36f03b",
-        "seed": "c99fd4a4d98d8bd53fd2f298f9446b86792b207aa530576f",
+        "encrypted_wif": "6PoHWWXXJTibxUGKcVmyts86N8rcTHXJpAoj5VeRf2FhJqj2oQgCsHheKg",
+        "confirmation_code": "cfrm38VX8GoZrei4jxLQKA6Mx2zSWkrQZPhxQW1FcCRjtizmQDoWoomm5SW63ESEAUuLkA8MFmc",
+        "public_key": "025f4476d9d8c093a04499fe9d7fbd34533dae14a498a2506a90d6cfdda66e99b3",
+        "seed": "1ac2513b9149124a0a0d697ae76cbb4583e85d4a652330a6",
         "public_key_type": "compressed",
-        "address": "1CzWDKnZSooKCgSsS4sEtvdfq9MzUQcqgP"
+        "address": "1ESHxrqxMLrdzwfif9nQbq4PTGhDGi1uq2"
     }
     Confirm Code: {
-        "public_key": "026a369214f7183ec50964e9d849dbf0b0ea47e6c1eed4c2c89a17d5a4eb36f03b",
+        "public_key": "025f4476d9d8c093a04499fe9d7fbd34533dae14a498a2506a90d6cfdda66e99b3",
         "public_key_type": "compressed",
-        "address": "1CzWDKnZSooKCgSsS4sEtvdfq9MzUQcqgP",
+        "address": "1ESHxrqxMLrdzwfif9nQbq4PTGhDGi1uq2",
         "lot": 863741,
         "sequence": 1
     }
     BIP38 Decrypted: {
-        "wif": "L4Pd4nxLFL86aevLQ1DhETKRNZKxPiFatrS3TuTYE2aD6a44k7KY",
-        "private_key": "d5f5f42b3f2d8c69eeb72e1acabe6c3b0c082f1b80ed5be9167368fcb708143f",
+        "wif": "L2otjF2N8EpKvh541jw1n3MrXZLpnCfQ2GB4eiGZLFwoSj1UHprw",
+        "private_key": "a6c57a43bf2a8ecc153b6b1e8807ec2409033616d4fc98a4edae277c02312eb7",
         "wif_type": "wif-compressed",
-        "public_key": "026a369214f7183ec50964e9d849dbf0b0ea47e6c1eed4c2c89a17d5a4eb36f03b",
+        "public_key": "025f4476d9d8c093a04499fe9d7fbd34533dae14a498a2506a90d6cfdda66e99b3",
         "public_key_type": "compressed",
-        "seed": "c99fd4a4d98d8bd53fd2f298f9446b86792b207aa530576f",
-        "address": "1CzWDKnZSooKCgSsS4sEtvdfq9MzUQcqgP",
+        "seed": "1ac2513b9149124a0a0d697ae76cbb4583e85d4a652330a6",
+        "address": "1ESHxrqxMLrdzwfif9nQbq4PTGhDGi1uq2",
         "lot": 863741,
         "sequence": 1
     }
-    --------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
     Intermediate Passphrase: passphraseondJwvQGEWFNrNJRPi4G5XAL5SU777GwTNtqmDXqA3CGP7HXfH6AdBxxc5WUKC
     Encrypted WIF: {
         "encrypted_wif": "6PfP7T3iQ5jLJLsH5DneySLLF5bhd879DHW87Pxzwtwvn2ggcncxsNKN5c",
@@ -339,7 +339,7 @@ For EC multiply:
         "lot": null,
         "sequence": null
     }
-    --------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
     Intermediate Passphrase: passphraseb7ruSNPsLdQF7t1gh7fs1xvWB4MKDssFQwL11EHkVr4njFX5PtsCUqQqwzh9rS
     Encrypted WIF: {
         "encrypted_wif": "6PgKxJUke6BcDc1XuvPDKCD9krZEebapef98SJ3YAjWQHtR3EVsaeK62ja",
@@ -367,7 +367,7 @@ For EC multiply:
         "lot": 567885,
         "sequence": 1
     }
-    --------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
     Intermediate Passphrase: passphraseondJwvQGEWFNrNJRPi4G5XAL5SU777GwTNtqmDXqA3CGP7HXfH6AdBxxc5WUKC
     Encrypted WIF: {
         "encrypted_wif": "6PnUVPinrvPGwoYJK3GbGBNgFuqEXmfvagE4QiAxj7yrZp4i29p22MrY5r",
@@ -395,7 +395,7 @@ For EC multiply:
         "lot": null,
         "sequence": null
     }
-    --------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
     Intermediate Passphrase: passphraseb7ruSNDGP7cmnFHQpmos7TeAy26AFN4GyRTBqq6hiaFbQzQBvirD9oHsafQvzd
     Encrypted WIF: {
         "encrypted_wif": "6PoEPBnJjm8UAiSGWQEKKNq9V2GMHqKkTcUqUFzsaX7wgjpQWR2qWPdnpt",
@@ -423,7 +423,7 @@ For EC multiply:
         "lot": 369861,
         "sequence": 1
     }
-    --------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
 
 
 .. raw:: html
