@@ -57,11 +57,13 @@ WIFs: List[str] = [
 
 for WIF in WIFs:
     
-    print("WFI:", WIF)
+    print("WIF:", WIF)
+
     encrypted_wif: str = bip38_encrypt(
         wif=WIF, passphrase=PASSPHRASE
     )
     print("BIP38 Encrypted WIF:", encrypted_wif)
+    
     print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
         encrypted_wif=encrypted_wif, passphrase=PASSPHRASE, detail=DETAIL
     ), indent=4))
@@ -146,7 +148,6 @@ for SAMPLE in SAMPLES:
     intermediate_passphrase: str = intermediate_code(
         passphrase=PASSPHRASE, owner_salt=SAMPLE["owner_salt"], lot=SAMPLE["lot"], sequence=SAMPLE["sequence"]
     )
-
     print("Intermediate Passphrase:", intermediate_passphrase)
 
     encrypted_wif: dict = create_new_encrypted_wif(
