@@ -37,20 +37,22 @@ pip install git+git://github.com/meherett/python-bip38.git
 #!/usr/bin/env python3
 
 from bip38 import (
-    bip38_encrypt, bip38_decrypt
+    private_key_to_wif, bip38_encrypt, bip38_decrypt
 )
 from typing import List
 
 import json
 
+# Private key
+PRIVATE_KEY: str = "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5"
 # Passphrase / password
 PASSPHRASE: str = "meherett"  # u"\u03D2\u0301\u0000\U00010400\U0001F4A9"
 # To show detail
 DETAIL: bool = True
 # Wallet important format's
 WIFs: List[str] = [
-    "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR",  # No compression
-    "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP"  # Compression
+    private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif"),  # No compression
+    private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif-compressed")  # Compression
 ]
 
 for WIF in WIFs:
@@ -62,7 +64,9 @@ for WIF in WIFs:
     print("BIP38 Encrypted WIF:", encrypted_wif)
     print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
         encrypted_wif=encrypted_wif, passphrase=PASSPHRASE, detail=DETAIL
-    ), indent=4), "\n")
+    ), indent=4))
+
+    print("-" * 125)
 ```
 
 <details open>
