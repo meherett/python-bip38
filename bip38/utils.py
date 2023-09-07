@@ -5,18 +5,12 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    AnyStr, Optional, Union
+    AnyStr, Optional, Union, Literal
 )
 
 import hashlib
 
 from .libs.ripemd160 import ripemd160 as r160
-
-try:
-    from typing import Literal  # pylint: disable=unused-import
-except ImportError:
-    # Literal not supported by Python 3.7
-    from typing_extensions import Literal  # type: ignore # noqa: F401
 
 
 def get_bytes(data: AnyStr, unhexlify: bool = True) -> bytes:

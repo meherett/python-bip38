@@ -5,19 +5,13 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Tuple, Union, Optional, List, Dict
+    Tuple, Union, Optional, List, Dict, Literal
 )
 from pyaes import AESModeOfOperationECB
 
 import scrypt
 import unicodedata
 import os
-
-try:
-    from typing import Literal  # pylint: disable=unused-import
-except ImportError:
-    # Literal not supported by Python 3.7
-    from typing_extensions import Literal  # type: ignore # noqa: F401
 
 from .utils import (
     integer_to_bytes, bytes_to_integer, bytes_to_string, get_bytes, double_sha256, hash160
@@ -38,12 +32,12 @@ BIP38_NO_EC_MULTIPLIED_WIF_FLAG: int = 0xc0
 BIP38_NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG: int = 0xe0
 # Magic bytes for lot and sequence and non lot and sequence
 MAGIC_LOT_AND_SEQUENCE: int = 0x2ce9b3e1ff39e251
-MAGIC_NON_LOT_AND_SEQUENCE: int = 0x2ce9b3e1ff39e253
+MAGIC_NO_LOT_AND_SEQUENCE: int = 0x2ce9b3e1ff39e253
 # Magic uncompressed and compressed flags
 MAGIC_LOT_AND_SEQUENCE_UNCOMPRESSED_FLAG: int = 0x04
 MAGIC_LOT_AND_SEQUENCE_COMPRESSED_FLAG: int = 0x24
-MAGIC_NON_LOT_AND_SEQUENCE_UNCOMPRESSED_FLAG: int = 0x00
-MAGIC_NON_LOT_AND_SEQUENCE_COMPRESSED_FLAG: int = 0x20
+MAGIC_NO_LOT_AND_SEQUENCE_UNCOMPRESSED_FLAG: int = 0x00
+MAGIC_NO_LOT_AND_SEQUENCE_COMPRESSED_FLAG: int = 0x20
 # Confirmation code prefix
 CONFIRMATION_CODE_PREFIX: int = 0x643bf6a89a
 # The proven prime
@@ -69,7 +63,7 @@ CHECKSUM_BYTE_LENGTH: int = 4
 # List of compression, lot_and_sequence, non_ec, ec, & illegal flags
 FLAGS: Dict[str, List[int]] = {
     "compression": [
-        MAGIC_NON_LOT_AND_SEQUENCE_COMPRESSED_FLAG, MAGIC_LOT_AND_SEQUENCE_COMPRESSED_FLAG,
+        MAGIC_NO_LOT_AND_SEQUENCE_COMPRESSED_FLAG, MAGIC_LOT_AND_SEQUENCE_COMPRESSED_FLAG,
         0x28, 0x2c, 0x30, 0x34, 0x38, 0x3c, 0xe0, 0xe8, 0xf0, 0xf8
     ],
     "lot_and_sequence": [
@@ -467,7 +461,7 @@ def intermediate_code(
         magic: bytes = integer_to_bytes(MAGIC_LOT_AND_SEQUENCE)
     else:
         pass_factor: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), owner_salt, 16384, 8, 8, 32)
-        magic: bytes = integer_to_bytes(MAGIC_NON_LOT_AND_SEQUENCE)
+        magic: bytes = integer_to_bytes(MAGIC_NO_LOT_AND_SEQUENCE)
         owner_entropy: bytes = owner_salt
 
     pass_point: str = private_key_to_public_key(
@@ -572,17 +566,17 @@ def create_new_encrypted_wif(
             flag: bytes = integer_to_bytes(MAGIC_LOT_AND_SEQUENCE_COMPRESSED_FLAG)
         else:
             raise ValueError(f"Invalid public key type (expected uncompressed/compressed, got {public_key_type!r})")
-    elif magic == integer_to_bytes(MAGIC_NON_LOT_AND_SEQUENCE):
+    elif magic == integer_to_bytes(MAGIC_NO_LOT_AND_SEQUENCE):
         if public_key_type == "uncompressed":
-            flag: bytes = integer_to_bytes(MAGIC_NON_LOT_AND_SEQUENCE_UNCOMPRESSED_FLAG)
+            flag: bytes = integer_to_bytes(MAGIC_NO_LOT_AND_SEQUENCE_UNCOMPRESSED_FLAG)
         elif public_key_type == "compressed":
-            flag: bytes = integer_to_bytes(MAGIC_NON_LOT_AND_SEQUENCE_COMPRESSED_FLAG)
+            flag: bytes = integer_to_bytes(MAGIC_NO_LOT_AND_SEQUENCE_COMPRESSED_FLAG)
         else:
             raise ValueError(f"Invalid public key type (expected uncompressed/compressed, got {public_key_type!r})")
     else:
         raise ValueError(
             f"Invalid magic (expected {bytes_to_string(integer_to_bytes(MAGIC_LOT_AND_SEQUENCE))!r}/"
-            f"{bytes_to_string(integer_to_bytes(MAGIC_NON_LOT_AND_SEQUENCE))!r}, got {bytes_to_string(magic)!r})"
+            f"{bytes_to_string(integer_to_bytes(MAGIC_NO_LOT_AND_SEQUENCE))!r}, got {bytes_to_string(magic)!r})"
         )
 
     factor_b: bytes = double_sha256(seed_b)
