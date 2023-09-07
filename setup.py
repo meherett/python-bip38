@@ -4,8 +4,6 @@ from setuptools import (
     setup, find_packages
 )
 
-import bip38
-
 # Project URL's
 project_urls: dict = {
     "Tracker": "https://github.com/meherett/python-bip38/issues",
@@ -22,13 +20,13 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="bip38",
-    version=bip38.__version__,
-    description=bip38.__description__,
+    version="v0.1.0",
+    description="Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    license=bip38.__license__,
-    author=bip38.__author__,
-    author_email=bip38.__email__,
+    license="MIT",
+    author="Meheret Tesfaye Batu",
+    author_email="meherett.batu@gmail.com",
     url="https://github.com/meherett/python-bip38",
     project_urls=project_urls,
     keywords=[
