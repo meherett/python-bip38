@@ -20,7 +20,7 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="bip38",
-    version="v0.1.0",
+    version="v0.1.1",
     description="Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol.",
     long_description=long_description,
     long_description_content_type="text/markdown",
