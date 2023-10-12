@@ -23,7 +23,7 @@ from .bip38 import (
 )
 
 __version__, __license__, __author__, __email__, __description__ = (
-    "v0.1.1",
+    "v0.2.0",
     "MIT",
     "Meheret Tesfaye Batu",
     "meherett.batu@gmail.com",
