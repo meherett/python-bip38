@@ -25,6 +25,7 @@ def test_bip38_encrypt():
         encrypted_wif: str = bip38_encrypt(
             wif=_["bip38"]["bip38_encrypt"][index]["wif"],
             passphrase=_["bip38"]["bip38_encrypt"][index]["passphrase"],
+            network=_["bip38"]["bip38_encrypt"][index]["network"]
         )
 
         assert isinstance(encrypted_wif, str)
@@ -39,6 +40,7 @@ def test_bip38_decrypt():
         decrypted_wif: str = bip38_decrypt(
             encrypted_wif=_["bip38"]["bip38_decrypt"][index]["encrypted_wif"],
             passphrase=_["bip38"]["bip38_decrypt"][index]["passphrase"],
+            network=_["bip38"]["bip38_decrypt"][index]["network"],
             detail=False
         )
 
@@ -49,6 +51,7 @@ def test_bip38_decrypt():
         decrypted: dict = bip38_decrypt(
             encrypted_wif=_["bip38"]["bip38_decrypt"][index]["encrypted_wif"],
             passphrase=_["bip38"]["bip38_decrypt"][index]["passphrase"],
+            network=_["bip38"]["bip38_decrypt"][index]["network"],
             detail=True
         )
 
