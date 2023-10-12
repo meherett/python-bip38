@@ -20,10 +20,12 @@ from .libs.base58 import (
     encode, check_encode, decode, check_decode, ensure_string
 )
 
-# Address prefix
-ADDRESS_PREFIX: int = 0x00
 # Wallet important format prefix
 WIF_PREFIX: int = 0x80
+# Bitcoin Pay to Public Key Hash (P2PKH) address prefixes
+ADDRESS_PREFIXES: Dict[Literal["mainnet", "testnet"], int] = {
+    "mainnet": 0x00, "testnet": 0x6f
+}
 # BIP38 non-EC-multiplied & EC-multiplied private key prefixes
 BIP38_NO_EC_MULTIPLIED_PRIVATE_KEY_PREFIX: int = 0x0142
 BIP38_EC_MULTIPLIED_PRIVATE_KEY_PREFIX: int = 0x0143
@@ -392,12 +394,14 @@ def get_wif_checksum(wif: str) -> str:
     return bytes_to_string(decode_wif(wif=wif)[2])
 
 
-def public_key_to_addresses(public_key: Union[str, bytes]) -> str:
+def public_key_to_addresses(public_key: Union[str, bytes], network: Literal["mainnet", "testnet"] = "mainnet") -> str:
     """
     Public key to address converter
 
     :param public_key: Public key
     :type public_key: Union[str, bytes]
+    :param network: Network type
+    :type network: Literal["mainnet", "testnet"], default to ``mainnet``
 
     :returns: str -- Address
 
@@ -407,11 +411,14 @@ def public_key_to_addresses(public_key: Union[str, bytes]) -> str:
     >>> public_key_to_addresses(public_key="04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4")
     '1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB'
     """
+    
+    if network not in ["mainnet", "testnet"]:
+        raise ValueError(f"Invalid Bitcoin network, (expected: 'mainnet' or 'testnet', got: {network})")
 
     # Getting public key hash
     public_key_hash: bytes = hash160(get_bytes(public_key))
     payload: bytes = (
-        integer_to_bytes(ADDRESS_PREFIX) + public_key_hash
+        integer_to_bytes(ADDRESS_PREFIXES[network]) + public_key_hash
     )
     return ensure_string(encode(payload + get_checksum(payload)))
 
@@ -472,7 +479,7 @@ def intermediate_code(
     ))
 
 
-def bip38_encrypt(wif: str, passphrase: str) -> str:
+def bip38_encrypt(wif: str, passphrase: str, network: Literal["mainnet", "testnet"] = "mainnet") -> str:
     """
     BIP38 Encrypt wallet important format using passphrase/password
 
@@ -480,6 +487,8 @@ def bip38_encrypt(wif: str, passphrase: str) -> str:
     :type wif: str
     :param passphrase: Passphrase or password text
     :type passphrase: str
+    :param network: Network type
+    :type network: Literal["mainnet", "testnet"], default to ``mainnet``
 
     :returns: str -- Encrypted wallet important format
 
@@ -505,7 +514,7 @@ def bip38_encrypt(wif: str, passphrase: str) -> str:
     public_key: str = private_key_to_public_key(
         private_key=private_key, public_key_type=public_key_type
     )
-    address: str = public_key_to_addresses(public_key=public_key)
+    address: str = public_key_to_addresses(public_key=public_key, network=network)
     address_hash: bytes = get_checksum(get_bytes(address, unhexlify=False))
     key: bytes = scrypt.hash(unicodedata.normalize("NFC", passphrase), address_hash, 16384, 8, 8)
     derived_half_1, derived_half_2 = key[0:32], key[32:64]
@@ -529,7 +538,8 @@ def bip38_encrypt(wif: str, passphrase: str) -> str:
 def create_new_encrypted_wif(
     intermediate_passphrase: str,
     public_key_type: Literal["uncompressed", "compressed"] = "uncompressed",
-    seed: Union[str, bytes] = os.urandom(24)
+    seed: Union[str, bytes] = os.urandom(24),
+    network: Literal["mainnet", "testnet"] = "mainnet"
 ) -> dict:
     """
     Create new encrypted wallet important format
@@ -540,6 +550,8 @@ def create_new_encrypted_wif(
     :type public_key_type: Literal["uncompressed", "compressed"]
     :param seed: Seed, default to ``os.urandom(24)``
     :type seed: Optional[str, bytes]
+    :param network: Network type
+    :type network: Literal["mainnet", "testnet"], default to ``mainnet``
 
     :returns: dict -- Encrypted wallet important format
 
@@ -584,7 +596,7 @@ def create_new_encrypted_wif(
         raise ValueError("Invalid ec encrypted wallet important format")
 
     public_key: bytes = multiply_public_key(pass_point, factor_b, public_key_type)
-    address: str = public_key_to_addresses(public_key=public_key)
+    address: str = public_key_to_addresses(public_key=public_key, network=network)
     address_hash: bytes = get_checksum(get_bytes(address, unhexlify=False))
     salt: bytes = address_hash + owner_entropy
     scrypt_hash: bytes = scrypt.hash(pass_point, salt, 1024, 1, 1, 64)
@@ -628,7 +640,9 @@ def create_new_encrypted_wif(
     )
 
 
-def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) -> Union[str, dict]:
+def confirm_code(
+    passphrase: str, confirmation_code: str, network: Literal["mainnet", "testnet"] = "mainnet", detail: bool = False
+) -> Union[str, dict]:
     """
     Confirm passphrase
 
@@ -636,6 +650,8 @@ def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) 
     :type passphrase: str
     :param confirmation_code: Confirmation code
     :type confirmation_code: str
+    :param network: Network type
+    :type network: Literal["mainnet", "testnet"], default to ``mainnet``
     :param detail: To show in deatil, default to ``False``
     :type detail: bool
 
@@ -704,7 +720,7 @@ def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) 
         public_key: bytes = get_bytes(compress_public_key(public_key=public_key))
         public_key_type: str = "compressed"
 
-    address: str = public_key_to_addresses(public_key=public_key)
+    address: str = public_key_to_addresses(public_key=public_key, network=network)
     if get_checksum(get_bytes(address, unhexlify=False)) == address_hash:
         lot: Optional[int] = None
         sequence: Optional[int] = None
@@ -723,7 +739,9 @@ def confirm_code(passphrase: str, confirmation_code: str, detail: bool = False) 
     raise ValueError("Incorrect passphrase/password")
 
 
-def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> Union[str, dict]:
+def bip38_decrypt(
+    encrypted_wif: str, passphrase: str, network: Literal["mainnet", "testnet"] = "mainnet", detail: bool = False
+) -> Union[str, dict]:
     """
     BIP38 Decrypt encrypted wallet important format using passphrase/password
 
@@ -731,6 +749,8 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
     :type encrypted_wif: str
     :param passphrase: Passphrase or password text
     :type passphrase: str
+    :param network: Network type
+    :type network: Literal["mainnet", "testnet"], default to ``mainnet``
     :param detail: To show in deatil, default to ``False``
     :type detail: bool
 
@@ -783,7 +803,7 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
         public_key: str = private_key_to_public_key(
             private_key=private_key, public_key_type=public_key_type
         )
-        address: str = public_key_to_addresses(public_key=public_key)
+        address: str = public_key_to_addresses(public_key=public_key, network=network)
         if get_checksum(get_bytes(address, unhexlify=False)) != address_hash:
             raise ValueError("Incorrect passphrase/password")
 
@@ -857,7 +877,7 @@ def bip38_decrypt(encrypted_wif: str, passphrase: str, detail: bool = False) -> 
             public_key_type = "compressed"
             wif_type = "wif-compressed"
 
-        address: str = public_key_to_addresses(public_key=public_key)
+        address: str = public_key_to_addresses(public_key=public_key, network=network)
         if get_checksum(get_bytes(address, unhexlify=False)) == address_hash:
             wif: str = private_key_to_wif(
                 private_key=private_key, wif_type=wif_type
