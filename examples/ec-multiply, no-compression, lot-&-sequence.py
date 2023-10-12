@@ -18,6 +18,8 @@ OWNER_SALT: Union[str, bytes] = os.urandom(8)  # "75ed1cdeb254cb38"
 SEED: Union[str, bytes] = os.urandom(24)  # "99241d58245c883896f80843d2846672d7312e6195ca1a6c"
 # Public key type
 PUBLIC_KEY_TYPE: Literal["uncompressed", "compressed"] = "uncompressed"
+# Network type
+NETWORK: Literal["mainnet", "testnet"] = "mainnet"
 # 100000 <= lot <= 999999 / set none
 LOT: Optional[int] = 567885
 # 0 <= sequence <= 4095 / set none
@@ -32,14 +34,14 @@ intermediate_passphrase: str = intermediate_code(
 print("Intermediate Passphrase:", intermediate_passphrase)
 
 encrypted_wif: dict = create_new_encrypted_wif(
-    intermediate_passphrase=intermediate_passphrase, public_key_type=PUBLIC_KEY_TYPE, seed=SEED
+    intermediate_passphrase=intermediate_passphrase, public_key_type=PUBLIC_KEY_TYPE, seed=SEED, network=NETWORK
 )
 print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
 
 print("Confirm Code:", json.dumps(confirm_code(
-    passphrase=PASSPHRASE, confirmation_code=encrypted_wif["confirmation_code"], detail=DETAIL
+    passphrase=PASSPHRASE, confirmation_code=encrypted_wif["confirmation_code"], network=NETWORK, detail=DETAIL
 ), indent=4))
 
 print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
-    encrypted_wif=encrypted_wif["encrypted_wif"], passphrase=PASSPHRASE, detail=DETAIL
+    encrypted_wif=encrypted_wif["encrypted_wif"], passphrase=PASSPHRASE, network=NETWORK, detail=DETAIL
 ), indent=4))
