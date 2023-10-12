@@ -1,6 +1,6 @@
 # This workflow will install Swap package dependencies, run tests and lint with a variety of Python versions.
 
-name: bip38-workflow
+name: workflow
 
 on:
   push:
@@ -32,3 +32,5 @@ jobs:
         pip install -e .[tests,docs]
     - name: Test with pytest
       run: pytest
+    - name: Coveralls
+      uses: coverallsapp/github-action@v2
