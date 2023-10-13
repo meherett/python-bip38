@@ -32,5 +32,3 @@ jobs:
         pip install -e .[tests,docs]
     - name: Test with pytest
       run: pytest
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
