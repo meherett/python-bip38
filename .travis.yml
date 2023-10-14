@@ -3,7 +3,7 @@ dist: bionic
 before_install:
   - python -m pip install --upgrade pip
 install:
-  - pip install -e .[tests,docs] tox-travis python-coveralls
+  - pip install -e .[tests,docs] tox-travis coveralls
 matrix:
   include:
   - name: "3.9"
