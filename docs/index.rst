@@ -70,6 +70,8 @@ _______________
     PRIVATE_KEY: str = "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5"
     # Passphrase / password
     PASSPHRASE: str = "meherett"  # u"\u03D2\u0301\u0000\U00010400\U0001F4A9"
+    # Network type
+    NETWORK: Literal["mainnet", "testnet"] = "mainnet"
     # To show detail
     DETAIL: bool = True
     # Wallet important format's
@@ -83,12 +85,12 @@ _______________
         print("WIF:", WIF)
 
         encrypted_wif: str = bip38_encrypt(
-            wif=WIF, passphrase=PASSPHRASE
+            wif=WIF, passphrase=PASSPHRASE, network=NETWORK
         )
         print("BIP38 Encrypted WIF:", encrypted_wif)
 
         print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
-            encrypted_wif=encrypted_wif, passphrase=PASSPHRASE, detail=DETAIL
+            encrypted_wif=encrypted_wif, passphrase=PASSPHRASE, network=NETWORK, detail=DETAIL
         ), indent=4))
 
         print("-" * 125)
@@ -152,6 +154,8 @@ EC multiply:
 
     # Passphrase / password
     PASSPHRASE: str = "meherett"  # u"\u03D2\u0301\u0000\U00010400\U0001F4A9"
+    # Network type
+    NETWORK: Literal["mainnet", "testnet"] = "mainnet"
     # To show detail
     DETAIL: bool = True
     # List of samples with owner salt, seed, public key type, lot, and sequence
@@ -182,16 +186,16 @@ EC multiply:
         print("Intermediate Passphrase:", intermediate_passphrase)
 
         encrypted_wif: dict = create_new_encrypted_wif(
-            intermediate_passphrase=intermediate_passphrase, public_key_type=SAMPLE["public_key_type"], seed=SAMPLE["seed"]
+            intermediate_passphrase=intermediate_passphrase, public_key_type=SAMPLE["public_key_type"], seed=SAMPLE["seed"], network=NETWORK
         )
         print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
 
         print("Confirm Code:", json.dumps(confirm_code(
-            passphrase=PASSPHRASE, confirmation_code=encrypted_wif["confirmation_code"], detail=DETAIL
+            passphrase=PASSPHRASE, confirmation_code=encrypted_wif["confirmation_code"], network=NETWORK, detail=DETAIL
         ), indent=4))
 
         print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
-            encrypted_wif=encrypted_wif["encrypted_wif"], passphrase=PASSPHRASE, detail=DETAIL
+            encrypted_wif=encrypted_wif["encrypted_wif"], passphrase=PASSPHRASE, network=NETWORK, detail=DETAIL
         ), indent=4))
 
         print("-" * 125)

@@ -5,8 +5,7 @@
 [![Documentation Status](https://readthedocs.org/projects/bip38/badge/?version=master)](https://bip38.readthedocs.io)
 [![PyPI License](https://img.shields.io/pypi/l/bip38?color=black)](https://pypi.org/project/bip38)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/bip38.svg)](https://pypi.org/project/bip38)
-
-[comment]: <> ([![Coverage Status]&#40;https://coveralls.io/repos/github/meherett/python-bip38/badge.svg?branch=master&#41;]&#40;https://coveralls.io/github/meherett/python-bip38&#41;)
+[![Coverage Status](https://coveralls.io/repos/github/meherett/python-bip38/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-bip38)
 
 Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol. It supports both [No EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-flag-is-not-used) and [EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-mode-is-used) modes.
 

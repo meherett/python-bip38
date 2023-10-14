@@ -285,14 +285,14 @@ def encode_wif(private_key: Union[str, bytes]) -> Tuple[str, str]:
 
 def private_key_to_wif(private_key: Union[str, bytes], wif_type: Literal["wif", "wif-compressed"] = "wif-compressed") -> str:
     """
-    Private key to Wallet Important Fromat (WFI) converter
+    Private key to Wallet Important Format (WIF) converter
 
     :param private_key: Private key
     :type private_key: Union[str, bytes]
-    :param wif_type: Wallet Important Fromat (WFI) type, default to ``wif-compressed``
+    :param wif_type: Wallet Important Format (WIF) type, default to ``wif-compressed``
     :type wif_type: Literal["wif", "wif-compressed"]
 
-    :returns: str -- Wallet Important Fromat
+    :returns: str -- Wallet Important Format
 
     >>> from bip38 import private_key_to_wif
     >>> private_key_to_wif(private_key="cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5")
@@ -339,9 +339,9 @@ def decode_wif(wif: str) -> Tuple[bytes, Literal["wif", "wif-compressed"], bytes
 
 def wif_to_private_key(wif: str) -> str:
     """
-    Wallet Important Fromat (WFI) to Private key converter
+    Wallet Important Format (WIF) to Private key converter
 
-    :param wif: Wallet Important Fromat
+    :param wif: Wallet Important Format
     :type wif: str
 
     :returns: str -- Private key
@@ -358,12 +358,12 @@ def wif_to_private_key(wif: str) -> str:
 
 def get_wif_type(wif: str) -> Literal["wif", "wif-compressed"]:
     """
-    Get Wallet Important Fromat (WFI) type
+    Get Wallet Important Format (WIF) type
 
-    :param wif: Wallet Important Fromat
+    :param wif: Wallet Important Format
     :type wif: str
 
-    :returns: Literal["wif", "wif-compressed"] -- WFI type
+    :returns: Literal["wif", "wif-compressed"] -- WIF type
 
     >>> from bip38 import get_wif_type
     >>> get_wif_type(wif="L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP")
@@ -377,12 +377,12 @@ def get_wif_type(wif: str) -> Literal["wif", "wif-compressed"]:
 
 def get_wif_checksum(wif: str) -> str:
     """
-    Get Wallet Important Fromat (WFI) checksum
+    Get Wallet Important Format (WIF) checksum
 
-    :param wif: Wallet Important Fromat
+    :param wif: Wallet Important Format
     :type wif: str
 
-    :returns: str -- WFI checksum
+    :returns: str -- WIF checksum
 
     >>> from bip38 import get_wif_checksum
     >>> get_wif_checksum(wif="L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP")
@@ -406,10 +406,14 @@ def public_key_to_addresses(public_key: Union[str, bytes], network: Literal["mai
     :returns: str -- Address
 
     >>> from bip38 import public_key_to_addresses
-    >>> public_key_to_addresses(public_key="02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e")
+    >>> public_key_to_addresses(public_key="02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e", network="mainnet")
     '164MQi977u9GUteHr4EPH27VkkdxmfCvGW'
-    >>> public_key_to_addresses(public_key="04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4")
+    >>> public_key_to_addresses(public_key="04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4", network="mainnet")
     '1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB'
+    >>> public_key_to_addresses(public_key="02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e", network="testnet")
+    'mkaJhmE5vvaXG17uZdCm6wKpckEfnG4yt9'
+    >>> public_key_to_addresses(public_key="04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4", network="testnet")
+    'myM3eoxWDWxFe7GYHZw8K21rw7QDNZeDYM'
     """
     
     if network not in ["mainnet", "testnet"]:
@@ -652,7 +656,7 @@ def confirm_code(
     :type confirmation_code: str
     :param network: Network type
     :type network: Literal["mainnet", "testnet"], default to ``mainnet``
-    :param detail: To show in deatil, default to ``False``
+    :param detail: To show in detail, default to ``False``
     :type detail: bool
 
     :returns: Union[str, dict] -- Confirmation of address info's
@@ -751,7 +755,7 @@ def bip38_decrypt(
     :type passphrase: str
     :param network: Network type
     :type network: Literal["mainnet", "testnet"], default to ``mainnet``
-    :param detail: To show in deatil, default to ``False``
+    :param detail: To show in detail, default to ``False``
     :type detail: bool
 
     :returns: Union[str, dict] -- WIF or All private Key info's
