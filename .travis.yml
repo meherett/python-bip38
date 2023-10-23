@@ -3,7 +3,7 @@ dist: bionic
 before_install:
   - python -m pip install --upgrade pip
 install:
-  - pip install -e .[tests,docs] tox-travis coveralls
+  - pip install -e .[tests,docs] tox-travis
 matrix:
   include:
   - name: "3.9"
@@ -13,6 +13,3 @@ matrix:
   - name: "3.11"
     python: 3.11
 script: tox
-after_success:
-  - if [ "${TRAVIS_PYTHON_VERSION}" == "3.11" ]; then coverage run --source=bip38 -m pytest; fi;
-  - if [ "${TRAVIS_PYTHON_VERSION}" == "3.11" ]; then coveralls; fi;
