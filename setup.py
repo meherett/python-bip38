@@ -38,7 +38,6 @@ setup(
     extras_require={
         "tests": [
             "pytest>=7.4.0,<8",
-            "pytest-cov>=4.1.0,<5",
             "pyyaml>=6.0.1,<7"
         ],
         "docs": [
