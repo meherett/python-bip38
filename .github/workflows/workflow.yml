@@ -33,5 +33,5 @@ jobs:
     - name: Test with PyTest with Coverage
       run: coverage run --source=bip38 -m pytest
     - name: Submit Coverage report to Coveralls
-      if: ${{ matrix.python-version < "3.11" }}
+      if: ${{ matrix.python-version == "3.11" }}
       run: coveralls
