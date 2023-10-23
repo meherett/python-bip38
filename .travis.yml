@@ -3,8 +3,7 @@ dist: bionic
 before_install:
   - python -m pip install --upgrade pip
 install:
-  - pip install -e .[tests,docs] tox-travis
-  - curl -L https://coveralls.io/coveralls-linux.tar.gz | tar -xz -C .
+  - pip install -e .[tests,docs] tox-travis coveralls
 matrix:
   include:
   - name: "3.9"
@@ -15,6 +14,5 @@ matrix:
     python: 3.11
 script: tox
 after_success:
-  - if [ "${TRAVIS_PYTHON_VERSION}" == "3.11" ];
-    then ./coveralls report --repo-token=E8y6cerK5DVDZocB7eHTdzBKjdwQDkJzw;
-    fi;
+  - if [ "${TRAVIS_PYTHON_VERSION}" == "3.11" ]; then coverage run --source=bip38 -m pytest; fi;
+  - if [ "${TRAVIS_PYTHON_VERSION}" == "3.11" ]; then coveralls; fi;
