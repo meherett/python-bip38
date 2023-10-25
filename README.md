@@ -53,7 +53,7 @@ PASSPHRASE: str = "meherett"  # u"\u03D2\u0301\u0000\U00010400\U0001F4A9"
 NETWORK: Literal["mainnet", "testnet"] = "mainnet"
 # To show detail
 DETAIL: bool = True
-# Wallet Wallet Important Format's
+# Wallet Important Format's
 WIFs: List[str] = [
     private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif", network=NETWORK),  # No compression
     private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif-compressed", network=NETWORK)  # Compression

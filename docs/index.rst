@@ -62,7 +62,9 @@ _______________
     from bip38 import (
         private_key_to_wif, bip38_encrypt, bip38_decrypt
     )
-    from typing import List
+    from typing import (
+        List, Literal
+    )
 
     import json
 
@@ -76,8 +78,8 @@ _______________
     DETAIL: bool = True
     # Wallet important format's
     WIFs: List[str] = [
-        private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif"),  # No compression
-        private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif-compressed")  # Compression
+        private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif", network=NETWORK),  # No compression
+        private_key_to_wif(private_key=PRIVATE_KEY, wif_type="wif-compressed", network=NETWORK)  # Compression
     ]
 
     for WIF in WIFs:
@@ -147,7 +149,9 @@ EC multiply:
     from bip38 import (
         intermediate_code, create_new_encrypted_wif, confirm_code, bip38_decrypt
     )
-    from typing import List
+    from typing import (
+        List, Literal
+    )
 
     import json
     import os
