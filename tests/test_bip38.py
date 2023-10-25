@@ -7,7 +7,7 @@ from bip38.bip38 import (
     bip38_encrypt, bip38_decrypt, intermediate_code, create_new_encrypted_wif, confirm_code,
     # Importing other functions for testing
     private_key_to_public_key, public_key_to_addresses, private_key_to_wif,
-    get_wif_type, wif_to_private_key, get_wif_checksum
+    get_wif_type, wif_to_private_key, get_wif_checksum, get_wif_network
 )
 
 # Test Values
@@ -134,14 +134,6 @@ def test_confirm_code():
 
 def test_other_functions():
 
-    assert private_key_to_wif(
-        private_key=_["other"]["private_key"], wif_type=_["other"]["uncompressed"]["wif_type"]
-    ) == _["other"]["uncompressed"]["wif"]
-
-    assert private_key_to_wif(
-        private_key=_["other"]["private_key"], wif_type=_["other"]["compressed"]["wif_type"]
-    ) == _["other"]["compressed"]["wif"]
-
     assert private_key_to_public_key(
         private_key=_["other"]["private_key"], public_key_type=_["other"]["uncompressed"]["public_key_type"]
     ) == _["other"]["uncompressed"]["public_key"]
@@ -158,14 +150,26 @@ def test_other_functions():
         public_key=_["other"]["compressed"]["public_key"]
     ) == _["other"]["compressed"]["address"]
 
-    assert get_wif_type(wif=_["other"]["uncompressed"]["wif"]) == _["other"]["uncompressed"]["wif_type"]
+    for network in ["mainnet", "testnet"]:
 
-    assert get_wif_type(wif=_["other"]["compressed"]["wif"]) == _["other"]["compressed"]["wif_type"]
+        for private_key_type in ["uncompressed", "compressed"]:
 
-    assert wif_to_private_key(wif=_["other"]["uncompressed"]["wif"]) == _["other"]["private_key"]
+            assert private_key_to_wif(
+                private_key=_["other"]["private_key"], wif_type=_["other"][private_key_type]["wif_type"], network=network
+            ) == _["other"][private_key_type]["wif"][network]
 
-    assert wif_to_private_key(wif=_["other"]["compressed"]["wif"]) == _["other"]["private_key"]
+            assert get_wif_type(
+                wif=_["other"][private_key_type]["wif"][network]
+            ) == _["other"][private_key_type]["wif_type"]
 
-    assert get_wif_checksum(wif=_["other"]["uncompressed"]["wif"]) == _["other"]["uncompressed"]["wif_checksum"]
+            assert wif_to_private_key(
+                wif=_["other"][private_key_type]["wif"][network]
+            ) == _["other"]["private_key"]
 
-    assert get_wif_checksum(wif=_["other"]["compressed"]["wif"]) == _["other"]["compressed"]["wif_checksum"]
+            assert get_wif_checksum(
+                wif=_["other"][private_key_type]["wif"][network]
+            ) == _["other"][private_key_type]["wif_checksum"][network]
+
+            assert get_wif_network(
+                wif=_["other"][private_key_type]["wif"][network]
+            ) == network

@@ -2,16 +2,16 @@
     "bip38": {
         "bip38_encrypt": [
             {"wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR", "passphrase": "TestingOneTwoThree", "network": "mainnet", "encrypted_wif":  "6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg"},
-            {"wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR", "passphrase": "TestingOneTwoThree", "network": "testnet", "encrypted_wif":  "6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS"},
+            {"wif": "938jwjergAxARSWx2YSt9nSBWBz24h8gLhv7EUfgEP1wpMLg6iX", "passphrase": "TestingOneTwoThree", "network": "testnet", "encrypted_wif":  "6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS"},
             {"wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", "passphrase": "TestingOneTwoThree", "network": "mainnet", "encrypted_wif":  "6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo"},
-            {"wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", "passphrase": "TestingOneTwoThree", "network": "testnet", "encrypted_wif":  "6PYVB5nHnumbUua1UmsAMPHWHa76Ci48MY79aKYnpKmwxeGqHU2XpXtKvo"}
+            {"wif": "cURAYbG6FtvUasdBsooEmmY9MqUfhJ8tdybQWV7iA4BAwunCT2Fu", "passphrase": "TestingOneTwoThree", "network": "testnet", "encrypted_wif":  "6PYVB5nHnumbUua1UmsAMPHWHa76Ci48MY79aKYnpKmwxeGqHU2XpXtKvo"}
         ],
         "bip38_decrypt": [
             {"encrypted_wif": "6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg", "passphrase": "TestingOneTwoThree", "network": "mainnet", "wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif", "public_key": "04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4", "public_key_type": "uncompressed", "seed": null, "address": "1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB", "lot": null, "sequence": null},
-            {"encrypted_wif": "6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS", "passphrase": "TestingOneTwoThree", "network": "testnet", "wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif", "public_key": "04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4", "public_key_type": "uncompressed", "seed": null, "address": "myM3eoxWDWxFe7GYHZw8K21rw7QDNZeDYM", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS", "passphrase": "TestingOneTwoThree", "network": "testnet", "wif": "938jwjergAxARSWx2YSt9nSBWBz24h8gLhv7EUfgEP1wpMLg6iX", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif", "public_key": "04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4", "public_key_type": "uncompressed", "seed": null, "address": "myM3eoxWDWxFe7GYHZw8K21rw7QDNZeDYM", "lot": null, "sequence": null},
             {"encrypted_wif": "6PRNFFkZc2NZ6dJqFfhRoFNMR9Lnyj7dYGrzdgXXVMXcxoKTePPX1dWByq", "passphrase": "Satoshi", "network": "mainnet", "wif": "5HtasZ6ofTHP6HCwTqTkLDuLQisYPah7aUnSKfC7h4hMUVw2gi5", "private_key": "09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae", "wif_type": "wif", "public_key": "0463b600a0bb6a2f2bef7bb9648222c3593a6ef5f7c2d81433c5193bf84b9f862b940e55da162aeca6293cde138bcc18ba978fae399f14f258afa4f799ee61adcb", "public_key_type": "uncompressed", "seed": null, "address": "1AvKt49sui9zfzGeo8EyL8ypvAhtR2KwbL", "lot": null, "sequence": null},
             {"encrypted_wif": "6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo", "passphrase": "TestingOneTwoThree", "network": "mainnet", "wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif-compressed", "public_key": "02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e", "public_key_type": "compressed", "seed": null, "address": "164MQi977u9GUteHr4EPH27VkkdxmfCvGW", "lot": null, "sequence": null},
-            {"encrypted_wif": "6PYVB5nHnumbUua1UmsAMPHWHa76Ci48MY79aKYnpKmwxeGqHU2XpXtKvo", "passphrase": "TestingOneTwoThree", "network": "testnet", "wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif-compressed", "public_key": "02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e", "public_key_type": "compressed", "seed": null, "address": "mkaJhmE5vvaXG17uZdCm6wKpckEfnG4yt9", "lot": null, "sequence": null},
+            {"encrypted_wif": "6PYVB5nHnumbUua1UmsAMPHWHa76Ci48MY79aKYnpKmwxeGqHU2XpXtKvo", "passphrase": "TestingOneTwoThree", "network": "testnet", "wif": "cURAYbG6FtvUasdBsooEmmY9MqUfhJ8tdybQWV7iA4BAwunCT2Fu", "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5", "wif_type": "wif-compressed", "public_key": "02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e", "public_key_type": "compressed", "seed": null, "address": "mkaJhmE5vvaXG17uZdCm6wKpckEfnG4yt9", "lot": null, "sequence": null},
             {"encrypted_wif": "6PYLtMnXvfG3oJde97zRyLYFZCYizPU5T3LwgdYJz1fRhh16bU7u6PPmY7", "passphrase": "Satoshi", "network": "mainnet", "wif": "KwYgW8gcxj1JWJXhPSu4Fqwzfhp5Yfi42mdYmMa4XqK7NJxXUSK7", "private_key": "09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae", "wif_type": "wif-compressed", "public_key": "0363b600a0bb6a2f2bef7bb9648222c3593a6ef5f7c2d81433c5193bf84b9f862b", "public_key_type": "compressed", "seed": null, "address": "1HmPbwsvG5qJ3KJfxzsZRZWhbm1xBMuS8B", "lot": null, "sequence": null},
             {"encrypted_wif": "6PfQu77ygVyJLZjfvMLyhLMQbYnu5uguoJJ4kMCLqWwPEdfpwANVS76gTX", "passphrase": "TestingOneTwoThree", "network": "mainnet", "wif": "5K4caxezwjGCGfnoPTZ8tMcJBLB7Jvyjv4xxeacadhq8nLisLR2", "private_key": "a43a940577f4e97f5c4d39eb14ff083a98187c64ea7c99ef7ce460833959a519", "wif_type": "wif", "public_key": "04afb614bab3285fe4a9f618daa0720a1baf94f1c4e31c7983031e72051c52cadd6b10c647fd7e7f5612d40fbe909f834ee00a309333fa8d06fa5ea37a1a802919", "public_key_type": "uncompressed", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "address": "1PE6TQi6HTVNz5DLwB1LcpMBALubfuN2z2", "lot": null, "sequence": null},
             {"encrypted_wif": "6PfLGnQs6VZnrNpmVKfjotbnQuaJK4KZoPFrAjx1JMJUa1Ft8gnf5WxfKd", "passphrase": "Satoshi", "network": "mainnet", "wif": "5KJ51SgxWaAYR13zd9ReMhJpwrcX47xTJh2D3fGPG9CM8vkv5sH", "private_key": "c2c8036df268f498099350718c4a3ef3984d2be84618c2650f5171dcc5eb660a", "wif_type": "wif", "public_key": "0411a2ee331b6dd3c906e5db7c308a1004b97853ce84ca4ffd6874d300fde7e857aaab17e3bfbb2da7a23fbb4053999baa413df0bf37c2a1b43041c6dc98abfe11", "public_key_type": "uncompressed", "seed": "49111e301d94eab339ff9f6822ee99d9f49606db3b47a497", "address": "1CqzrtZC6mXSAhoxtFwVjz8LtwLJjDYU3V", "lot": null, "sequence": null},
@@ -38,18 +38,30 @@
     "other": {
         "private_key": "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5",
         "uncompressed": {
-            "wif": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR",
+            "wif": {
+                "mainnet": "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR",
+                "testnet": "938jwjergAxARSWx2YSt9nSBWBz24h8gLhv7EUfgEP1wpMLg6iX"
+            },
             "public_key": "04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4",
             "address": "1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB",
-            "wif_checksum": "f0a25c0c",
+            "wif_checksum": {
+                "mainnet": "f0a25c0c",
+                "testnet": "2e14d4a4"
+            },
             "public_key_type": "uncompressed",
             "wif_type": "wif"
         },
         "compressed": {
-            "wif": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP",
+            "wif": {
+                "mainnet": "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP",
+                "testnet": "cURAYbG6FtvUasdBsooEmmY9MqUfhJ8tdybQWV7iA4BAwunCT2Fu"
+            },
             "public_key": "02d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360e",
             "address": "164MQi977u9GUteHr4EPH27VkkdxmfCvGW",
-            "wif_checksum": "dc37f844",
+            "wif_checksum": {
+                "mainnet": "dc37f844",
+                "testnet": "d18ea264"
+            },
             "public_key_type": "compressed",
             "wif_type": "wif-compressed"
         }
