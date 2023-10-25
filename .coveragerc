@@ -1,2 +1,3 @@
 [run]
 omit = bip38/libs/*
+source = bip38
