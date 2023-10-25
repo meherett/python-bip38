@@ -20,7 +20,7 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="bip38",
-    version="v0.2.1",
+    version="v0.3.0",
     description="Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -37,6 +37,7 @@ setup(
     install_requires=requirements,
     extras_require={
         "tests": [
+            "coveralls>=3.3.1,<4",
             "pytest>=7.4.0,<8",
             "pyyaml>=6.0.1,<7"
         ],
