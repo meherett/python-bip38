@@ -9,7 +9,7 @@ import json
 
 # Passphrase / password
 PASSPHRASE: str = "meherett"
-# Wallet important format
+# Wallet Important Format
 WIF: str = "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP"
 # Network type
 NETWORK: Literal["mainnet", "testnet"] = "mainnet"
