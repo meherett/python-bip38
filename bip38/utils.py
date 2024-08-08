@@ -155,3 +155,17 @@ def hash160(data: Union[str, bytes]) -> bytes:
     """
 
     return ripemd160(sha256(data))
+
+
+def pad(data: bytes, block_size: int = 16) -> bytes:
+    padding_length = block_size - (len(data) % block_size)
+    padding = bytes([padding_length] * padding_length)
+    return data + padding
+
+def unpad(data: bytes, block_size: int = 16) -> bytes:
+    padding_length = data[-1]
+    if padding_length < 1 or padding_length > block_size:
+        raise ValueError("Invalid padding length")
+    if data[-padding_length:] != bytes([padding_length] * padding_length):
+        raise ValueError("Invalid padding")
+    return data[:-padding_length]
