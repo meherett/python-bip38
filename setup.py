@@ -1,57 +1,64 @@
 #!/usr/bin/env python3
 
+# Copyright © 2023-2024, Meheret Tesfaye Batu <meherett.batu@gmail.com>
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or https://opensource.org/license/mit
+
+from typing import List
 from setuptools import (
     setup, find_packages
 )
 
-# Project URL's
-project_urls: dict = {
-    "Tracker": "https://github.com/meherett/python-bip38/issues",
-    "Documentation": "https://bip38.readthedocs.io"
-}
+import importlib.util
+
+
+# requirements/{name}.txt
+def get_requirements(name: str) -> List[str]:
+    with open(f"requirements/{name}.txt", "r") as requirements:
+        return list(map(str.strip, requirements.read().split("\n")))
+
 
 # README.md
 with open("README.md", "r", encoding="utf-8") as readme:
     long_description: str = readme.read()
 
-# requirements.txt
-with open("requirements.txt", "r") as _requirements:
-    requirements: list = list(map(str.strip, _requirements.read().split("\n")))
+# hdwallet/info.py
+spec = importlib.util.spec_from_file_location(
+    "info", "hdwallet/info.py"
+)
+info = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(info)
 
 setup(
-    name="bip38",
-    version="v0.3.0",
-    description="Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol.",
+    name=info.__name__,
+    version=info.__versions__[info.__name__],
+    description=info.__description__,
     long_description=long_description,
     long_description_content_type="text/markdown",
-    license="MIT",
-    author="Meheret Tesfaye Batu",
-    author_email="meherett.batu@gmail.com",
-    url="https://github.com/meherett/python-bip38",
-    project_urls=project_urls,
-    keywords=[
-        "bip38", "bitcoin", "private-key", "pure-python", "encrypt", "decrypt", "passphrase", "wif", "bip-0038"
-    ],
-    python_requires=">=3.9,<4",
-    packages=find_packages(),
-    install_requires=requirements,
-    extras_require={
-        "tests": [
-            "coveralls>=3.3.1,<4",
-            "pytest>=7.4.0,<8",
-            "pyyaml>=6.0.1,<7"
-        ],
-        "docs": [
-            "sphinx>=7.2.5,<8",
-            "sphinx-rtd-theme==1.3.0"
-        ]
+    license=info.__license__,
+    author=info.__author__,
+    author_email=info.__email__,
+    url=info.__url__,
+    project_urls={
+        "Tracker": info.__tracker__,
+        "Documentation": info.__documentation__
     },
+    keywords=info.__keywords__,
+    python_requires=">=3.9,<4",
+    packages=find_packages(exclude=["tests*"]),
+    install_requires=get_requirements(name="bip38"),
+    include_package_data=True,
+    extras_require=dict(
+        docs=get_requirements(name="docs"),
+        tests=get_requirements(name="tests")
+    ),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ]
 )
