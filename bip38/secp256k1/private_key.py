@@ -10,7 +10,7 @@ from ecdsa import (
     curves, keys
 )
 
-from ..const import SECP256K1
+from ..const import PRIVATE_KEY_LENGTH
 from .public_key import PublicKey
 
 
@@ -56,10 +56,9 @@ class PrivateKey:
 
         :return: Length of the private key in bytes.
         :rtype: int
-
         """
 
-        return SECP256K1.PRIVATE_KEY_BYTE_LENGTH
+        return PRIVATE_KEY_LENGTH
 
     def underlying_object(self) -> Any:
         """

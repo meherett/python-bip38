@@ -4,16 +4,17 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
-from typing import (
-    Any, Literal
-)
+from typing import Any
 from ecdsa import VerifyingKey
 from ecdsa.ecdsa import curve_secp256k1
 from ecdsa import (
     curves, ellipticcurve, keys
 )
 
-from ..const import SECP256K1
+from ..const import (
+    COMPRESSED_PUBLIC_KEY_LENGTH,
+    UNCOMPRESSED_PUBLIC_KEY_LENGTH
+)
 from .point import Point
 
 
@@ -85,7 +86,7 @@ class PublicKey:
         :rtype: int
         """
 
-        return SECP256K1.PUBLIC_KEY_COMPRESSED_BYTE_LENGTH
+        return COMPRESSED_PUBLIC_KEY_LENGTH
 
     @staticmethod
     def uncompressed_length() -> int:
@@ -96,7 +97,7 @@ class PublicKey:
         :rtype: int
         """
 
-        return SECP256K1.PUBLIC_KEY_UNCOMPRESSED_BYTE_LENGTH
+        return UNCOMPRESSED_PUBLIC_KEY_LENGTH
 
     def underlying_object(self) -> Any:
         """

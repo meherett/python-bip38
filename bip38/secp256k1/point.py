@@ -11,7 +11,7 @@ from ecdsa.ellipticcurve import (
 )
 from ecdsa import keys
 
-from ..const import SECP256K1
+from ..const import COORDINATE_POINT_LENGTH
 from ..utils import (
     bytes_to_integer, integer_to_bytes
 )
@@ -52,8 +52,8 @@ class Point:
             raise ValueError("Invalid point key bytes") from ex
         except AttributeError:
             return cls.from_coordinates(
-                bytes_to_integer(point[:SECP256K1.POINT_COORDINATE_BYTE_LENGTH]),
-                bytes_to_integer(point[SECP256K1.POINT_COORDINATE_BYTE_LENGTH:])
+                bytes_to_integer(point[:COORDINATE_POINT_LENGTH]),
+                bytes_to_integer(point[COORDINATE_POINT_LENGTH:])
             )
 
     @classmethod
@@ -127,7 +127,9 @@ class Point:
         try:
             return self.point.to_bytes("compressed")
         except AttributeError:
-            x: bytes = integer_to_bytes(self.point.x(), SECP256K1.POINT_COORDINATE_BYTE_LENGTH)
+            x: bytes = integer_to_bytes(
+                self.point.x(), COORDINATE_POINT_LENGTH
+            )
             return b"\x03" + x if self.point.y() & 1 else b"\x02" + x
 
     def raw_decoded(self) -> bytes:
@@ -141,9 +143,12 @@ class Point:
         try:
             return self.point.to_bytes()
         except AttributeError:
-            x: bytes = integer_to_bytes(self.point.x(), SECP256K1.POINT_COORDINATE_BYTE_LENGTH)
-            y: bytes = integer_to_bytes(self.point.y(), SECP256K1.POINT_COORDINATE_BYTE_LENGTH)
-
+            x: bytes = integer_to_bytes(
+                self.point.x(), COORDINATE_POINT_LENGTH
+            )
+            y: bytes = integer_to_bytes(
+                self.point.y(), COORDINATE_POINT_LENGTH
+            )
             return x + y
 
     def __add__(self, point: "Point") -> "Point":
