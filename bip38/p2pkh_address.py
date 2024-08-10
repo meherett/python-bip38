@@ -8,22 +8,21 @@ from typing import (
     Any, Union
 )
 
-from bip38.libs.base58 import (
+from .libs.base58 import (
     ensure_string, check_encode, check_decode
 )
-from bip38.const import PUBLIC_KEY_TYPES
-from bip38.secp256k1 import PublicKey
-from bip38.prefixes import PREFIXES
-
-from bip38.utils import (
-    integer_to_bytes, bytes_to_string, hash160, get_bytes
+from .secp256k1 import PublicKey
+from .cryptocurrencies import Bitcoin
+from .crypto import hash160
+from .utils import (
+    get_bytes, integer_to_bytes, bytes_to_string
 )
 
 
 class P2PKHAddress:
     
-    address_prefix: int = PREFIXES["Bitcoin"]["NETWORKS"]["MAINNET"]["ADDRESS_PREFIX"]
-    alphabet: str = PREFIXES["Bitcoin"]["ALPHABET"]
+    address_prefix: int = Bitcoin.NETWORKS["mainnet"]["address_prefix"]
+    alphabet: str = Bitcoin.ALPHABET
 
     @classmethod
     def encode(cls, public_key: Union[bytes, str, PublicKey], **kwargs: Any) -> str:
@@ -51,7 +50,7 @@ class P2PKHAddress:
 
         public_key_hash: bytes = hash160(
             public_key.raw_compressed()
-            if kwargs.get("public_key_type", PUBLIC_KEY_TYPES.COMPRESSED) == PUBLIC_KEY_TYPES.COMPRESSED else
+            if kwargs.get("public_key_type", "compressed") == "compressed" else
             public_key.raw_uncompressed()
         )
 
