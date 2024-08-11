@@ -59,21 +59,21 @@ def double_sha256(data: Union[str, bytes]) -> bytes:
     return sha256(sha256(data))
 
 
-def get_checksum(raw: bytes) -> bytes:
+def get_checksum(data: Union[str, bytes]) -> bytes:
     """
     Calculate the checksum for the given raw bytes.
 
     The checksum is derived by performing a double SHA-256 hash on the input
     and returning the first few bytes, as determined by `CHECKSUM_BYTE_LENGTH`.
 
-    :param raw: The raw data to checksum.
-    :type raw: bytes
+    :param data: The raw data to checksum.
+    :type data: Union[str, bytes]
 
     :returns: The checksum of the data.
     :rtype: bytes
     """
 
-    return double_sha256(raw)[:CHECKSUM_BYTE_LENGTH]
+    return double_sha256(data)[:CHECKSUM_BYTE_LENGTH]
 
 
 def hash160(data: Union[str, bytes]) -> bytes:
