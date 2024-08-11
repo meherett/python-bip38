@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright © 2023, Meheret Tesfaye Batu <meherett.batu@gmail.com>
+# Copyright © 2023-2024, Meheret Tesfaye Batu <meherett.batu@gmail.com>
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
@@ -8,21 +8,18 @@ from typing import (
     AnyStr, Optional, Union, Literal
 )
 
-import hashlib
-
-from .libs.ripemd160 import ripemd160 as r160
-
 
 def get_bytes(data: AnyStr, unhexlify: bool = True) -> bytes:
     """
-    Any string to bytes converter
+    Convert input data to bytes format.
 
-    :param data: Data
-    :type data: AnyStr
-    :param unhexlify: Unhexlify, default to ``True``
+    :param data: The input data to convert. Can be bytes or string.
+    :type data: Union[bytes, str]
+    :param unhexlify: Flag indicating whether to interpret strings as hexadecimal (default True).
     :type unhexlify: bool
 
-    :returns: bytes -- Data
+    :return: The input data converted to bytes format.
+    :rtype: bytes
     """
 
     if not data:
@@ -39,19 +36,30 @@ def get_bytes(data: AnyStr, unhexlify: bool = True) -> bytes:
 
 
 def bytes_reverse(data: bytes) -> bytes:
+    """
+    Reverse the order of bytes in a bytes object.
+
+    :param data: The bytes object to reverse.
+    :type data: bytes
+
+    :return: The bytes object with its byte order reversed.
+    :rtype: bytes
+    """
+
     tmp = bytearray(data)
     tmp.reverse()
     return bytes(tmp)
 
 
-def bytes_to_string(data: bytes) -> str:
+def bytes_to_string(data: Union[bytes, str]) -> str:
     """
-    Bytes to string converter
+    Convert bytes or string data to a hexadecimal string representation.
 
-    :param data: Data
-    :type data: bytes
+    :param data: The bytes or string data to convert to hexadecimal string.
+    :type data: Union[bytes, str]
 
-    :returns: str -- Data
+    :return: The hexadecimal string representation of the input data.
+    :rtype: str
     """
 
     if not data:
@@ -68,104 +76,40 @@ def bytes_to_string(data: bytes) -> str:
 
 def bytes_to_integer(data: bytes, endianness: Literal["little", "big"] = "big", signed: bool = False) -> int:
     """
-    Bytes to integer converter
+    Convert bytes to an integer based on specified endianness and signedness.
 
-    :param data: Data
+    :param data: The bytes object to convert to an integer.
     :type data: bytes
-    :param endianness: Endianness, default to ``big``
+    :param endianness: The byte order ("little" or "big").
     :type endianness: Literal["little", "big"]
-    :param signed: Signed, default to ``False``
+    :param signed: Flag indicating whether the integer is signed (default False).
     :type signed: bool
 
-    :returns: int -- Data
+    :return: The integer value converted from bytes.
+    :rtype: int
     """
 
     return int.from_bytes(data, byteorder=endianness, signed=signed)
 
 
-def integer_to_bytes(data: int, bytes_num: Optional[int] = None, endianness: Literal["little", "big"] = "big", signed: bool = False) -> bytes:
+def integer_to_bytes(
+    data: int, bytes_num: Optional[int] = None, endianness: Literal["little", "big"] = "big", signed: bool = False
+) -> bytes:
     """
-    Integer to bytes converter
+    Convert an integer to bytes based on specified parameters.
 
-    :param data: Data
+    :param data: The integer to convert to bytes.
     :type data: int
-    :param bytes_num: Bytes number, default to ``None``
+    :param bytes_num: Optional number of bytes to use for the conversion. If not provided, it is calculated based on the integer's bit length.
     :type bytes_num: Optional[int]
-    :param endianness: Endianness, default to ``big``
+    :param endianness: The byte order ("little" or "big").
     :type endianness: Literal["little", "big"]
-    :param signed: Signed, default to ``False``
+    :param signed: Flag indicating whether the integer is signed (default False).
     :type signed: bool
 
-    :returns: bytes -- Data
+    :return: The bytes object representing the integer.
+    :rtype: bytes
     """
 
     bytes_num = bytes_num or ((data.bit_length() if data > 0 else 1) + 7) // 8
     return data.to_bytes(bytes_num, byteorder=endianness, signed=signed)
-
-
-def ripemd160(data: Union[str, bytes]) -> bytes:
-    """
-    Ripemd160 hash
-
-    :param data: Data
-    :type data: Union[str, bytes]
-
-    :returns: bytes -- Data ripemd160 hash
-    """
-
-    return (
-        hashlib.new("ripemd160", get_bytes(data)).digest() if "ripemd160" in hashlib.algorithms_available else r160(get_bytes(data))
-    )
-
-
-def sha256(data: Union[str, bytes]) -> bytes:
-    """
-    SHA256 hash
-
-    :param data: Data
-    :type data: Union[str, bytes]
-
-    :returns: bytes -- Data sha256 hash
-    """
-
-    return hashlib.sha256(get_bytes(data)).digest()
-
-
-def double_sha256(data: Union[str, bytes]) -> bytes:
-    """
-    Double SHA256 hash
-
-    :param data: Data
-    :type data: Union[str, bytes]
-
-    :returns: bytes -- Data double sha256 hash
-    """
-
-    return hashlib.sha256(sha256(data)).digest()
-
-
-def hash160(data: Union[str, bytes]) -> bytes:
-    """
-    Hash160 hash
-
-    :param data: Data
-    :type data: Union[str, bytes]
-
-    :returns: bytes -- Data hash160 hash
-    """
-
-    return ripemd160(sha256(data))
-
-
-def pad(data: bytes, block_size: int = 16) -> bytes:
-    padding_length = block_size - (len(data) % block_size)
-    padding = bytes([padding_length] * padding_length)
-    return data + padding
-
-def unpad(data: bytes, block_size: int = 16) -> bytes:
-    padding_length = data[-1]
-    if padding_length < 1 or padding_length > block_size:
-        raise ValueError("Invalid padding length")
-    if data[-padding_length:] != bytes([padding_length] * padding_length):
-        raise ValueError("Invalid padding")
-    return data[:-padding_length]
