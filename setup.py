@@ -31,7 +31,7 @@ spec.loader.exec_module(info)
 
 setup(
     name=info.__name__,
-    version=info.__versions__[info.__name__],
+    version=info.__version__,
     description=info.__description__,
     long_description=long_description,
     long_description_content_type="text/markdown",
