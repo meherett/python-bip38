@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 
-from bip38 import (
-    bip38_encrypt, bip38_decrypt
-)
-from typing import Literal
-
 import json
 
-# Passphrase / password
+from bip38 import BIP38
+from bip38.cryptocurrencies import Bitcoin as Cryptocurrency
+
+# Define the passphrase used for encryption/decryption
 PASSPHRASE: str = "meherett"
-# Wallet Important Format
-WIF: str = "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP"
-# Network type
-NETWORK: Literal["mainnet", "testnet"] = "mainnet"
-# To show detail
+# Specify the Wallet Import Format (WIF)
+WIF: str = "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP"  # wif-compressed type
+# Define the network type
+NETWORK: str = "mainnet"
+# Whether to show detailed information during operations
 DETAIL: bool = True
 
-encrypted_wif: str = bip38_encrypt(
-    wif=WIF, passphrase=PASSPHRASE, network=NETWORK
+# Initialize the BIP38 object with the cryptocurrency and network
+bip38: BIP38 = BIP38(
+    cryptocurrency=Cryptocurrency, network=NETWORK
+)
+# Encrypt the WIF using the BIP38 standard and the specified passphrase
+encrypted_wif: str = bip38.encrypt(
+    wif=WIF, passphrase=PASSPHRASE
 )
 print("BIP38 Encrypted WIF:", encrypted_wif)
-
-print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
-    encrypted_wif=encrypted_wif, passphrase=PASSPHRASE, network=NETWORK, detail=DETAIL
+# Decrypt the BIP38 encrypted WIF back to the original private key and show details
+print("BIP38 Decrypted:", json.dumps(bip38.decrypt(
+    encrypted_wif=encrypted_wif, passphrase=PASSPHRASE, detail=DETAIL
 ), indent=4))

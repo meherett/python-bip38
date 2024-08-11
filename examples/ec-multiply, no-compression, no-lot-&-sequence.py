@@ -1,48 +1,52 @@
 #!/usr/bin/env python3
 
-from bip38 import (
-    intermediate_code, create_new_encrypted_wif, confirm_code, bip38_decrypt
-)
 from typing import (
-    Union, Optional, Literal
+    Union, Literal, Optional
 )
 
 import json
 import os
 
-# Passphrase / password
-PASSPHRASE: str = "meherett"  # "TestingOneTwoThree", "Satoshi" or u"\u03D2\u0301\u0000\U00010400\U0001F4A9"
-# Pick random owner salt / use your own salt
-OWNER_SALT: Union[str, bytes] = os.urandom(8)  # "75ed1cdeb254cb38"
-# Pick random seed / use your own seed
-SEED: Union[str, bytes] = os.urandom(24)  # "99241d58245c883896f80843d2846672d7312e6195ca1a6c"
-# Public key type
-PUBLIC_KEY_TYPEs: list = ["uncompressed", "compressed"]
-# Network type
-NETWORK: Literal["mainnet", "testnet"] = "testnet"
-# 100000 <= lot <= 999999 / set none
+from bip38 import BIP38
+from bip38.cryptocurrencies import Bitcoin as Cryptocurrency
+
+
+# Define the passphrase used for encryption/decryption
+PASSPHRASE: str = "meherett"
+# Pick a random owner salt or use your own
+OWNER_SALT: Union[str, bytes] = os.urandom(8)  # Example: "75ed1cdeb254cb38"
+# Pick a random seed or use your own
+SEED: Union[str, bytes] = os.urandom(24)  # Example: "99241d58245c883896f80843d2846672d7312e6195ca1a6c"
+# Specify the public key type
+PUBLIC_KEY_TYPE: Literal["uncompressed", "compressed"] = "uncompressed"
+# Define the network type
+NETWORK: str = "mainnet"
+# Specify the lot number (100000 <= lot <= 999999), or set to None
 LOT: Optional[int] = None
-# 0 <= sequence <= 4095 / set none
+# Specify the sequence number (0 <= sequence <= 4095), or set to None
 SEQUENCE: Optional[int] = None
-# To show detail
+# Whether to show detailed information during operations
 DETAIL: bool = True
 
-intermediate_passphrase: str = intermediate_code(
+# Initialize the BIP38 object with the cryptocurrency and network
+bip38: BIP38 = BIP38(
+    cryptocurrency=Cryptocurrency, network=NETWORK
+)
+# Generate the intermediate passphrase (used in BIP38 encryption)
+intermediate_passphrase: str = bip38.intermediate_code(
     passphrase=PASSPHRASE, owner_salt=OWNER_SALT, lot=LOT, sequence=SEQUENCE
 )
-
 print("Intermediate Passphrase:", intermediate_passphrase)
-
-for PUBLIC_KEY_TYPE in PUBLIC_KEY_TYPEs:
-    encrypted_wif: dict = create_new_encrypted_wif(
-        intermediate_passphrase=intermediate_passphrase, public_key_type=PUBLIC_KEY_TYPE, seed=SEED, network=NETWORK
-    )
-    print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
-
-    print("Confirm Code:", json.dumps(confirm_code(
-        passphrase=PASSPHRASE, confirmation_code=encrypted_wif["confirmation_code"], network=NETWORK, detail=DETAIL
-    ), indent=4))
-
-    print("BIP38 Decrypted:", json.dumps(bip38_decrypt(
-        encrypted_wif=encrypted_wif["encrypted_wif"], passphrase=PASSPHRASE, network=NETWORK, detail=DETAIL
-    ), indent=4))
+# Create a new encrypted WIF (Wallet Import Format) using the intermediate passphrase
+encrypted_wif: dict = bip38.create_new_encrypted_wif(
+    intermediate_passphrase=intermediate_passphrase, public_key_type=PUBLIC_KEY_TYPE, seed=SEED
+)
+print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
+# Confirm the encrypted WIF using the passphrase and confirmation code
+print("Confirm Code:", json.dumps(bip38.confirm_code(
+    passphrase=PASSPHRASE, confirmation_code=encrypted_wif["confirmation_code"], detail=DETAIL
+), indent=4))
+# Decrypt the BIP38 encrypted WIF back to the original private key
+print("BIP38 Decrypted:", json.dumps(bip38.decrypt(
+    encrypted_wif=encrypted_wif["encrypted_wif"], passphrase=PASSPHRASE, detail=DETAIL
+), indent=4))
