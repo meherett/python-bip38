@@ -1,7 +1,5 @@
 # Files stuff
 .coverage
-make.bat
-Makefile
 
 # Folders stuff
 .idea/
