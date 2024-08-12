@@ -4,6 +4,5 @@
 BIP38
 =====
 
-.. automodule:: bip38.bip38
+.. autoclass:: bip38.BIP38
    :members:
-
