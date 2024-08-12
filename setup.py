@@ -24,7 +24,7 @@ with open("README.md", "r", encoding="utf-8") as readme:
 
 # hdwallet/info.py
 spec = importlib.util.spec_from_file_location(
-    "info", "hdwallet/info.py"
+    "info", "bip38/info.py"
 )
 info = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(info)
