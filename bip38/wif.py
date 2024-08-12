@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright © 2020-2024, Meheret Tesfaye Batu <meherett.batu@gmail.com>
+# Copyright © 2023-2024, Meheret Tesfaye Batu <meherett.batu@gmail.com>
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
@@ -11,23 +11,29 @@ from typing import (
 from .libs.base58 import (
     encode, decode
 )
-from .const import WIF_TYPES
+from .cryptocurrencies import Bitcoin
+from .const import COMPRESSED_PRIVATE_KEY_PREFIX
+from .crypto import get_checksum
 from .utils import (
-    get_bytes, integer_to_bytes, bytes_to_string, double_sha256
+    get_bytes, integer_to_bytes, bytes_to_string
 )
 
-# Private key prefixes
-UNCOMPRESSED_PRIVATE_KEY_PREFIX: int = 0x00
-COMPRESSED_PRIVATE_KEY_PREFIX: int = 0x01
-# Checksum byte length
-CHECKSUM_BYTE_LENGTH: int = 4
 
+def encode_wif(
+    private_key: Union[str, bytes], wif_prefix: int = Bitcoin.NETWORKS["mainnet"]["wif_prefix"]
+) -> Tuple[str, str]:
+    """
+    Encode a private key to Wallet Import Format (WIF).
 
-def get_checksum(raw: bytes) -> bytes:
-    return double_sha256(raw)[:CHECKSUM_BYTE_LENGTH]
+    :param private_key: The private key to encode, as a 32-byte string or bytes.
+    :type private_key: Union[str, bytes]
+    :param wif_prefix: The prefix to use for the WIF format (default is Bitcoin mainnet prefix).
+    :type wif_prefix: int
 
+    :returns: A tuple containing the WIF and WIF-compressed formats.
+    :rtype: Tuple[str, str]
+    """
 
-def encode_wif(private_key: Union[str, bytes], wif_prefix: int) -> Tuple[str, str]:
     if len(get_bytes(private_key)) != 32:
         raise ValueError(f"Invalid private key length (expected 64, got {len(private_key)!r})")
 
@@ -43,7 +49,20 @@ def encode_wif(private_key: Union[str, bytes], wif_prefix: int) -> Tuple[str, st
     )
 
 
-def decode_wif(wif: str, wif_prefix: int) -> Tuple[bytes, str, bytes]:
+def decode_wif(
+    wif: str, wif_prefix: int = Bitcoin.NETWORKS["mainnet"]["wif_prefix"]
+) -> Tuple[bytes, str, bytes]:
+    """
+    Decode a Wallet Import Format (WIF) string to a private key.
+
+    :param wif: The WIF string to decode.
+    :type wif: str
+    :param wif_prefix: The prefix to use for the WIF format (default is Bitcoin mainnet prefix).
+    :type wif_prefix: int
+
+    :returns: A tuple containing the private key, the WIF type ('wif' or 'wif-compressed'), and the checksum.
+    :rtype: Tuple[bytes, str, bytes]
+    """
 
     raw: bytes = decode(wif)
     if not raw.startswith(integer_to_bytes(wif_prefix)):
@@ -58,74 +77,92 @@ def decode_wif(wif: str, wif_prefix: int) -> Tuple[bytes, str, bytes]:
 
     checksum: bytes = raw_without_prefix[-1 * 4:]
     private_key: bytes = raw_without_prefix[:-1 * 4]
-    wif_type: str = WIF_TYPES.WIF
+    wif_type: str = "wif"
 
     if len(private_key) not in [33, 32]:
         raise ValueError(f"Invalid wallet important format")
     elif len(private_key) == 33:
         private_key = private_key[:-len(integer_to_bytes(COMPRESSED_PRIVATE_KEY_PREFIX))]
-        wif_type = WIF_TYPES.WIF_COMPRESSED
+        wif_type = "wif-compressed"
 
     return private_key, wif_type, checksum
 
 
-def private_key_to_wif(private_key: Union[str, bytes], wif_prefix: int, wif_type: str = WIF_TYPES.WIF_COMPRESSED) -> str:
+def private_key_to_wif(
+    private_key: Union[str, bytes],
+    wif_prefix: int = Bitcoin.NETWORKS["mainnet"]["wif_prefix"],
+    wif_type: str = "wif-compressed"
+) -> str:
     """
-    Private key to Wallet Important Format (WIF) converter
+    Convert a private key to Wallet Import Format (WIF).
 
-    :param private_key: Private key
+    :param private_key: The private key to convert, as a 32-byte string or bytes.
     :type private_key: Union[str, bytes]
-    :param wif_type: Wallet Important Format (WIF) type, default to ``wif-compressed``
+    :param wif_prefix: The prefix to use for the WIF format (default is Bitcoin mainnet prefix).
+    :type wif_prefix: int
+    :param wif_type: The WIF type, either 'wif' or 'wif-compressed' (default is 'wif-compressed').
     :type wif_type: str
 
-    :returns: str -- Wallet Important Format
+    :returns: The private key in WIF format.
+    :rtype: str
     """
 
     # Getting uncompressed and compressed
-    wif, wif_compressed = encode_wif(private_key=private_key, wif_prefix=wif_prefix)
+    wif, wif_compressed = encode_wif(
+        private_key=private_key, wif_prefix=wif_prefix
+    )
 
-    if wif_type == WIF_TYPES.WIF:
+    if wif_type == "wif":
         return wif
-    elif wif_type == WIF_TYPES.WIF_COMPRESSED:
+    elif wif_type == "wif-compressed":
         return wif_compressed
     else:
         raise ValueError("Invalid WIF type, choose only 'wif' or 'wif-compressed' types")
 
 
-def wif_to_private_key(wif: str, wif_prefix: int) -> str:
+def wif_to_private_key(wif: str, wif_prefix: int = Bitcoin.NETWORKS["mainnet"]["wif_prefix"]) -> str:
     """
-    Wallet Important Format (WIF) to Private key converter
+    Convert a Wallet Import Format (WIF) string to a private key.
 
-    :param wif: Wallet Important Format
+    :param wif: The WIF string to decode.
     :type wif: str
+    :param wif_prefix: The prefix to use for the WIF format (default is Bitcoin mainnet prefix).
+    :type wif_prefix: int
 
-    :returns: str -- Private key
+    :returns: The private key as a string.
+    :rtype: str
     """
 
     return bytes_to_string(decode_wif(wif=wif, wif_prefix=wif_prefix)[0])
 
 
-def get_wif_type(wif: str, wif_prefix: int) -> str:
+def get_wif_type(wif: str, wif_prefix: int = Bitcoin.NETWORKS["mainnet"]["wif_prefix"]) -> str:
     """
-    Get Wallet Important Format (WIF) type
+    Get the type of Wallet Import Format (WIF) string ('wif' or 'wif-compressed').
 
-    :param wif: Wallet Important Format
+    :param wif: The WIF string to inspect.
     :type wif: str
+    :param wif_prefix: The prefix to use for the WIF format (default is Bitcoin mainnet prefix).
+    :type wif_prefix: int
 
-    :returns: str -- WFI type
+    :returns: The WIF type ('wif' or 'wif-compressed').
+    :rtype: str
     """
 
     return decode_wif(wif=wif, wif_prefix=wif_prefix)[1]
 
 
-def get_wif_checksum(wif: str, wif_prefix: int) -> str:
+def get_wif_checksum(wif: str, wif_prefix: int = Bitcoin.NETWORKS["mainnet"]["wif_prefix"]) -> str:
     """
-    Get Wallet Important Format (WFI) checksum
+    Get the checksum of a Wallet Import Format (WIF) string.
 
-    :param wif: Wallet Important Format
+    :param wif: The WIF string to inspect.
     :type wif: str
+    :param wif_prefix: The prefix to use for the WIF format (default is Bitcoin mainnet prefix).
+    :type wif_prefix: int
 
-    :returns: str -- WFI checksum
+    :returns: The checksum as a string.
+    :rtype: str
     """
 
     return bytes_to_string(decode_wif(wif=wif, wif_prefix=wif_prefix)[2])
