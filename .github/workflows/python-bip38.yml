@@ -1,6 +1,6 @@
 # This workflow will install Swap package dependencies, run tests and lint with a variety of Python versions.
 
-name: workflow
+name: Python-BIP38
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         python-version: [
-          "3.9", "3.10", "3.11"
+          "3.9", "3.10", "3.11", "3.12"
         ]
     steps:
     - uses: actions/checkout@master
@@ -33,5 +33,5 @@ jobs:
     - name: Test with PyTest with Coverage
       run: coverage run -m pytest
     - name: Submit Coverage report to Coveralls
-      if: ${{ matrix.python-version == 3.11 }}
+      if: ${{ matrix.python-version == 3.12 }}
       run: coveralls
