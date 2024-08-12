@@ -14,17 +14,15 @@ import os
 import sys
 import datetime
 
-from bip38 import (
+from bip38.info import (
     __version__, __author__
 )
 
-sys.path.insert(0, os.path.abspath("../.."))
-sys.path.insert(1, os.path.abspath("./extensions"))
-
+sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
-project = "Python-BIP38"
+project = "BIP38"
 copyright = f"{datetime.datetime.now().year}, {__author__}"
 author = __author__
 
@@ -55,7 +53,7 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"
 # Product logo name
 # html_logo = "static/png/hdwallet.png"
 # Theme options
@@ -76,14 +74,14 @@ html_theme_options = {
     # "titles_only": False
 
     # "light_css_variables": {
-        # "color-brand-primary": "darkblue",
-        # "color-brand-content": "darkblue",
-        # "color-admonition-background": "black",
+    #     "color-brand-primary": "darkblue",
+    #     "color-brand-content": "darkblue",
+    #     "color-admonition-background": "black",
     # },
     # "dark_css_variables": {
     #     "color-brand-primary": "green",
     #     "color-brand-content": "green",
-        # "color-admonition-background": "white",
+    #     "color-admonition-background": "white",
     # },
     # "sidebar_hide_name": True,
     # "navigation_with_keys": True,
