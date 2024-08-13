@@ -4,6 +4,7 @@
 # Folders stuff
 .idea/
 .tox/
+experiment/
 
 # Setuptools stuff
 build/
