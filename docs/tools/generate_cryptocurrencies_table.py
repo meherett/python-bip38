@@ -18,8 +18,9 @@ del BIP38_CRYPTOCURRENCIES["ICryptocurrency"]
 
 # Table headers
 markdown_table: str = (
-    "<table><thead><tr><th align='left'>Name</th><th>Network</th>"
-    "<th>WIF Prefix</th><th>Address Prefix</th></tr></thead><tbody>"
+    "<table><thead><tr><th align='left'><div style='margin: 0;'>Name</div></th><th>"
+    "<div style='margin: 0;'>Network</div></th><th><div style='margin: 0;'>WIF Prefix</div>"
+    "</th><th><div style='margin: 0;'>Address Prefix</div></th></tr></thead><tbody>"
 )
 
 rst_table: str = (
