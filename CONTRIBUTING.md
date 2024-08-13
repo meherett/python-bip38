@@ -10,7 +10,7 @@ with the owners of this repository before making a change.
 To get started, just fork this repo, clone it locally, and run:
 
 ```
-pip install -e .[tests,docs] -r requirements.txt
+pip install -e .[tests,docs]
 ```
 
 ## Pull Request
@@ -52,4 +52,4 @@ tests against a specific version of Python.
 
 ## License
 
-Distributed under the [ISC](https://github.com/meherett/python-bip38/blob/master/LICENSE) license. See ``LICENSE`` for more information.
+Distributed under the [MIT](https://github.com/meherett/python-bip38/blob/master/LICENSE) license. See ``LICENSE`` for more information.

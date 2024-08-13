@@ -7,14 +7,14 @@
 from typing import List
 
 __name__: str = "bip38"
-__version__: str = "v1.0.0"
+__version__: str = "v1.0.1"
 __license__: str = "MIT"
 __author__: str = "Meheret Tesfaye Batu"
 __email__: str = "meherett.batu@gmail.com"
 __documentation__: str = "https://bip38.readthedocs.com"
-__description__: str = "Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol."
+__description__: str = "A Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol."
 __url__: str = "https://github.com/meherett/python-bip38"
 __tracker__: str = f"{__url__}/issues"
 __keywords__: List[str] = [
-    "bip38", "bitcoin", "private-key", "pure-python", "encrypt", "decrypt", "passphrase", "wif", "bip-0038"
+    "bip38", "bitcoin", "private-key", "hdwallet", "encrypt", "decrypt", "passphrase", "wif", "bip-0038"
 ]
