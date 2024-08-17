@@ -50,6 +50,14 @@ from .wif import (
 
 
 class BIP38:
+    """
+    A class for BIP38 encryption and decryption of Wallet Import Format (WIF) keys.
+
+    :param cryptocurrency: The cryptocurrency class to use (e.g., Bitcoin).
+    :type cryptocurrency: Type[ICryptocurrency]
+    :param network: The network for the WIF key (e.g., 'mainnet' or 'testnet'). Defaults to 'mainnet'.
+    :type network: str
+    """
 
     network: str
     cryptocurrency: Type[ICryptocurrency]
@@ -131,7 +139,7 @@ class BIP38:
             magic + owner_entropy + pass_point.raw_compressed()
         ))
 
-    def encrypt(self, wif: str, passphrase: str) -> str:
+    def encrypt(self, wif: str, passphrase: str, network: Optional[str] = None) -> str:
         """
         Encrypts a Wallet Import Format (WIF) key using a passphrase with BIP38 encryption.
 
@@ -139,6 +147,8 @@ class BIP38:
         :type wif: str
         :param passphrase: The passphrase for encryption.
         :type passphrase: str
+        :param network: Optional network for encryption. Defaults to the class's network if not provided.
+        :type network: Optional[str]
 
         :returns: Encrypted WIF key as a string.
         :rtype: str
@@ -150,26 +160,28 @@ class BIP38:
         '6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg'
         >>> bip38.encrypt(wif="L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP", passphrase="TestingOneTwoThree")
         '6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo'
-        >>> bip38: BIP38 = BIP38(cryptocurrency=Bitcoin, network="testnet")
-        >>> bip38.encrypt(wif="938jwjergAxARSWx2YSt9nSBWBz24h8gLhv7EUfgEP1wpMLg6iX", passphrase="TestingOneTwoThree")
+        >>> bip38.encrypt(wif="938jwjergAxARSWx2YSt9nSBWBz24h8gLhv7EUfgEP1wpMLg6iX", passphrase="TestingOneTwoThree", network="testnet")
         '6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS'
-        >>> bip38.encrypt(wif="cURAYbG6FtvUasdBsooEmmY9MqUfhJ8tdybQWV7iA4BAwunCT2Fu", passphrase="TestingOneTwoThree")
+        >>> bip38.encrypt(wif="cURAYbG6FtvUasdBsooEmmY9MqUfhJ8tdybQWV7iA4BAwunCT2Fu", passphrase="TestingOneTwoThree", network="testnet")
         '6PYVB5nHnumbUua1UmsAMPHWHa76Ci48MY79aKYnpKmwxeGqHU2XpXtKvo'
         """
 
+        network: str = (
+            network if network else self.network
+        )
         wif_type: str = get_wif_type(
-            wif=wif, cryptocurrency=self.cryptocurrency, network=self.network
+            wif=wif, cryptocurrency=self.cryptocurrency, network=network
         )
         if wif_type == "wif":
             flag: bytes = integer_to_bytes(NO_EC_MULTIPLIED_WIF_FLAG)
             private_key: PrivateKey = PrivateKey.from_bytes(get_bytes(wif_to_private_key(
-                wif=wif, cryptocurrency=self.cryptocurrency, network=self.network
+                wif=wif, cryptocurrency=self.cryptocurrency, network=network
             )))
             public_key_type: str = "uncompressed"
         elif wif_type == "wif-compressed":
             flag: bytes = integer_to_bytes(NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG)
             private_key: PrivateKey = PrivateKey.from_bytes(get_bytes(wif_to_private_key(
-                wif=wif, cryptocurrency=self.cryptocurrency, network=self.network
+                wif=wif, cryptocurrency=self.cryptocurrency, network=network
             )))
             public_key_type: str = "compressed"
         else:
@@ -177,7 +189,7 @@ class BIP38:
 
         address: str = P2PKHAddress.encode(
             public_key=private_key.public_key(),
-            address_prefix=self.cryptocurrency.NETWORKS[self.network]["address_prefix"],
+            address_prefix=self.cryptocurrency.NETWORKS[network]["address_prefix"],
             public_key_type=public_key_type
         )
         address_hash: bytes = get_checksum(get_bytes(address, unhexlify=False))
@@ -205,7 +217,8 @@ class BIP38:
         self,
         intermediate_passphrase: str,
         public_key_type: str = "uncompressed",
-        seed: Optional[Union[str, bytes]] = None
+        seed: Optional[Union[str, bytes]] = None,
+        network: Optional[str] = None
     ) -> dict:
         """
         Creates a new encrypted WIF (Wallet Import Format).
@@ -216,6 +229,8 @@ class BIP38:
         :type public_key_type: str
         :param seed: Optional seed (default: random 24 bytes).
         :type seed: Optional[str, bytes]
+        :param network: Optional network for encryption. Defaults to the class's network if not provided.
+        :type network: Optional[str]
 
         :returns: A dictionary containing the encrypted WIF.
         :rtype: dict
@@ -269,7 +284,7 @@ class BIP38:
         )
         address: str = P2PKHAddress.encode(
             public_key=public_key,
-            address_prefix=self.cryptocurrency.NETWORKS[self.network]["address_prefix"],
+            address_prefix=self.cryptocurrency.NETWORKS[network if network else self.network]["address_prefix"],
             public_key_type=public_key_type
         )
         address_hash: bytes = get_checksum(get_bytes(address, unhexlify=False))
@@ -318,7 +333,7 @@ class BIP38:
         )
 
     def confirm_code(
-        self, passphrase: str, confirmation_code: str, detail: bool = False
+        self, passphrase: str, confirmation_code: str, network: Optional[str] = None, detail: bool = False
     ) -> Union[str, dict]:
         """
         Confirms the passphrase using a confirmation code.
@@ -327,6 +342,8 @@ class BIP38:
         :type passphrase: str
         :param confirmation_code: The confirmation code.
         :type confirmation_code: str
+        :param network: Optional network for encryption. Defaults to the class's network if not provided.
+        :type network: Optional[str]
         :param detail: Whether to return detailed info (default: False).
         :type detail: bool
 
@@ -338,10 +355,9 @@ class BIP38:
         >>> bip38: BIP38 = BIP38(cryptocurrency=Bitcoin, network="testnet")
         >>> bip38.confirm_code(passphrase="TestingOneTwoThree", confirmation_code="cfrm38V8ZQSdCuzcrYYKGNXVwbHgdjsUEfAbFGoEUouB4YEKaXVdFiMcBWai1Exdu8jN7DcoKtM")
         'mwW38M23zvDmhbsTdnVFzw3bVnueDhrKec'
-        >>> bip38: BIP38 = BIP38(cryptocurrency=Bitcoin, network="testnet")
-        >>> bip38.confirm_code(passphrase="TestingOneTwoThree", confirmation_code="cfrm38V8Foq3WpRPMXJD34SF6pGT6ht5ihYMWWMbezkzHgPpA1jVkfbTHwQzvuSA4ReF86PHZJY")
+        >>> bip38.confirm_code(passphrase="TestingOneTwoThree", confirmation_code="cfrm38V8Foq3WpRPMXJD34SF6pGT6ht5ihYMWWMbezkzHgPpA1jVkfbTHwQzvuSA4ReF86PHZJY", network="mainnet")
         '1JbyXoVN4hXWirGB265q9VE4pQ6qbY6kmr'
-        >>> bip38.confirm_code(passphrase="TestingOneTwoThree", confirmation_code="cfrm38VXL5T6qVke13sHUWtEjibAkK1RquBqMXb2azCv1Zna6JKvBhD1Gf2b15wBj7UPv2BQnf6", detail=True)
+        >>> bip38.confirm_code(passphrase="TestingOneTwoThree", confirmation_code="cfrm38VXL5T6qVke13sHUWtEjibAkK1RquBqMXb2azCv1Zna6JKvBhD1Gf2b15wBj7UPv2BQnf6", network="mainnet", detail=True)
         {'public_key': '02100bb0440ff4106a1743750813271e66a7017431e92921e520319f537c7357c1', 'public_key_type': 'compressed', 'address': '15PuNwFmDqYhRsC9MDPNFvNY4Npzibm67c', 'lot': 199999, 'sequence': 1}
         """
 
@@ -399,7 +415,7 @@ class BIP38:
 
         address: str = P2PKHAddress.encode(
             public_key=public_key,
-            address_prefix=self.cryptocurrency.NETWORKS[self.network]["address_prefix"],
+            address_prefix=self.cryptocurrency.NETWORKS[network if network else self.network]["address_prefix"],
             public_key_type=public_key_type
         )
         if get_checksum(get_bytes(address, unhexlify=False)) == address_hash:
@@ -420,7 +436,7 @@ class BIP38:
         raise ValueError("Incorrect passphrase or password")
 
     def decrypt(
-        self, encrypted_wif: str, passphrase: str, detail: bool = False
+        self, encrypted_wif: str, passphrase: str, network: Optional[str] = None, detail: bool = False
     ) -> Union[str, dict]:
         """
         Decrypts an encrypted WIF (Wallet Import Format) using a passphrase.
@@ -429,6 +445,8 @@ class BIP38:
         :type encrypted_wif: str
         :param passphrase: The passphrase or password.
         :type passphrase: str
+        :param network: Optional network for encryption. Defaults to the class's network if not provided.
+        :type network: Optional[str]
         :param detail: Whether to return detailed info (default: False).
         :type detail: bool
 
@@ -442,13 +460,15 @@ class BIP38:
         '5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR'
         >>> bip38.decrypt(encrypted_wif="6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg", passphrase="TestingOneTwoThree", detail=True)
         {'wif': '5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR', 'private_key': 'cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5', 'wif_type': 'wif', 'public_key': '04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4', 'public_key_type': 'uncompressed', 'seed': None, 'address': '1Jq6MksXQVWzrznvZzxkV6oY57oWXD9TXB', 'lot': None, 'sequence': None}
-        >>> bip38: BIP38 = BIP38(cryptocurrency=Bitcoin, network="testnet")
-        >>> bip38.decrypt(encrypted_wif="6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS", passphrase="TestingOneTwoThree")
+        >>> bip38.decrypt(encrypted_wif="6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS", passphrase="TestingOneTwoThree", network="testnet")
         '938jwjergAxARSWx2YSt9nSBWBz24h8gLhv7EUfgEP1wpMLg6iX'
-        >>> bip38.decrypt(encrypted_wif="6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS", passphrase="TestingOneTwoThree", detail=True)
+        >>> bip38.decrypt(encrypted_wif="6PRL8jj6dLQjBBJjHMdUKLSNLEpjTyAfmt8GnCnfT87NeQ2BU5eAW1tcsS", passphrase="TestingOneTwoThree", network="testnet", detail=True)
         {'wif': '938jwjergAxARSWx2YSt9nSBWBz24h8gLhv7EUfgEP1wpMLg6iX', 'private_key': 'cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5', 'wif_type': 'wif', 'public_key': '04d2ce831dd06e5c1f5b1121ef34c2af4bcb01b126e309234adbc3561b60c9360ea7f23327b49ba7f10d17fad15f068b8807dbbc9e4ace5d4a0b40264eefaf31a4', 'public_key_type': 'uncompressed', 'seed': None, 'address': 'myM3eoxWDWxFe7GYHZw8K21rw7QDNZeDYM', 'lot': None, 'sequence': None}
         """
 
+        network: str = (
+            network if network else self.network
+        )
         encrypted_wif_decode: bytes = decode(encrypted_wif)
         if len(encrypted_wif_decode) != 43:
             raise ValueError(f"Invalid encrypted WIF length (expected: 43, got: {len(encrypted_wif_decode)})")
@@ -489,14 +509,14 @@ class BIP38:
             public_key: PublicKey = PrivateKey.from_bytes(private_key).public_key()
             address: str = P2PKHAddress.encode(
                 public_key=public_key,
-                address_prefix=self.cryptocurrency.NETWORKS[self.network]["address_prefix"],
+                address_prefix=self.cryptocurrency.NETWORKS[network]["address_prefix"],
                 public_key_type=public_key_type
             )
             if get_checksum(get_bytes(address, unhexlify=False)) != address_hash:
                 raise ValueError("Incorrect passphrase or password")
 
             wif: str = private_key_to_wif(
-                private_key=private_key, wif_type=wif_type, cryptocurrency=self.cryptocurrency, network=self.network
+                private_key=private_key, wif_type=wif_type, cryptocurrency=self.cryptocurrency, network=network
             )
             if detail:
                 return dict(
@@ -564,12 +584,12 @@ class BIP38:
                 wif_type = "wif-compressed"
             address: str = P2PKHAddress.encode(
                 public_key=public_key,
-                address_prefix=self.cryptocurrency.NETWORKS[self.network]["address_prefix"],
+                address_prefix=self.cryptocurrency.NETWORKS[network]["address_prefix"],
                 public_key_type=public_key_type
             )
             if get_checksum(get_bytes(address, unhexlify=False)) == address_hash:
                 wif: str = private_key_to_wif(
-                    private_key=private_key, wif_type=wif_type, cryptocurrency=self.cryptocurrency, network=self.network
+                    private_key=private_key, wif_type=wif_type, cryptocurrency=self.cryptocurrency, network=network
                 )
                 lot: Optional[int] = None
                 sequence: Optional[int] = None
