@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="png">
+    <file>images/png/cil-arrow-top.png</file>
+    <file>images/png/cil-arrow-bottom.png</file>
+  </qresource>
+</RCC>

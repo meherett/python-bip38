@@ -8,8 +8,11 @@ from typing import Optional
 
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QStackedWidget,
+    QFrame, QComboBox
 )
-from PySide6.QtCore import QFileSystemWatcher
+from PySide6.QtCore import (
+    Qt, QFileSystemWatcher
+)
 
 from desktop.utils import resolve_path
 from desktop.ui.ui_bip38 import Ui_MainWindow
@@ -63,6 +66,10 @@ class Application(QMainWindow):
         self.theme_watcher.fileChanged.connect(lambda: self.load_stylesheet(css_path))
         self.load_stylesheet(css_path)
 
+        # Remove Combo shadow
+        for combo in self.findChildren(QComboBox):
+            combo.findChild(QFrame).setWindowFlags(Qt.Popup | Qt.NoDropShadowWindowHint)
+
     def load_stylesheet(self, path: str) -> None:
         """
         Load and apply a stylesheet from the specified path.
@@ -75,23 +82,3 @@ class Application(QMainWindow):
                 self.setStyleSheet(stylesheet)
         except Exception as e:
             print(f"Failed to load stylesheet: {e}")
-
-    def change_page(self, stacked_name: str, widget_name: str) -> None:
-        """
-        Change the currently displayed page in a QStackedWidget.
-
-        :param stacked_name: The name of the QStackedWidget.
-        :param widget_name: The name of the widget to display.
-        """
-        qStackedWidget: Optional[QStackedWidget] = self.findChild(QStackedWidget, stacked_name)
-
-        if qStackedWidget is None:
-            print(f"QStackWidget not found: {stacked_name}")
-            return
-
-        qWidget: Optional[QWidget] = qStackedWidget.findChild(QWidget, widget_name)
-
-        if qStackedWidget and qWidget:
-            qStackedWidget.setCurrentWidget(qWidget)
-        else:
-            print(f"ERROR changing page: '{stacked_name}' '{widget_name}'")

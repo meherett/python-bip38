@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -9,6 +11,8 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
     QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
     QTextEdit, QVBoxLayout, QWidget)
+
+from .resources_rc import *
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -39,6 +43,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.cryptocurrencyContainerQFrame = QFrame(self.cryptoAndNetworkContainerQFrame)
         self.cryptocurrencyContainerQFrame.setObjectName(u"cryptocurrencyContainerQFrame")
+        self.cryptocurrencyContainerQFrame.setMaximumSize(QSize(150, 16777215))
         self.cryptocurrencyContainerQFrameVLayout = QVBoxLayout(self.cryptocurrencyContainerQFrame)
         self.cryptocurrencyContainerQFrameVLayout.setSpacing(5)
         self.cryptocurrencyContainerQFrameVLayout.setObjectName(u"cryptocurrencyContainerQFrameVLayout")
@@ -61,10 +66,10 @@ class Ui_MainWindow(object):
 
         self.cryptocurrencyContainerQFrameVLayout.addWidget(self.cryptocurrencyLabelContainerQFrame)
 
-        self.CryptocurrencyQComboBox = QComboBox(self.cryptocurrencyContainerQFrame)
-        self.CryptocurrencyQComboBox.setObjectName(u"CryptocurrencyQComboBox")
+        self.cryptocurrencyQComboBox = QComboBox(self.cryptocurrencyContainerQFrame)
+        self.cryptocurrencyQComboBox.setObjectName(u"cryptocurrencyQComboBox")
 
-        self.cryptocurrencyContainerQFrameVLayout.addWidget(self.CryptocurrencyQComboBox)
+        self.cryptocurrencyContainerQFrameVLayout.addWidget(self.cryptocurrencyQComboBox)
 
 
         self.horizontalLayout.addWidget(self.cryptocurrencyContainerQFrame)
@@ -136,7 +141,7 @@ class Ui_MainWindow(object):
 
         self.modeContainerQFrame = QFrame(self.cryptoAndNetworkContainerQFrame)
         self.modeContainerQFrame.setObjectName(u"modeContainerQFrame")
-        self.modeContainerQFrame.setMaximumSize(QSize(115, 16777215))
+        self.modeContainerQFrame.setMaximumSize(QSize(145, 16777215))
         self.modeContainerQFrameVLayout = QVBoxLayout(self.modeContainerQFrame)
         self.modeContainerQFrameVLayout.setSpacing(5)
         self.modeContainerQFrameVLayout.setObjectName(u"modeContainerQFrameVLayout")
@@ -220,7 +225,7 @@ class Ui_MainWindow(object):
 
         self.noECWIFTypeContainerQFrame = QFrame(self.noECPrivateKeyAndWifTypeContainerQFrame)
         self.noECWIFTypeContainerQFrame.setObjectName(u"noECWIFTypeContainerQFrame")
-        self.noECWIFTypeContainerQFrame.setMaximumSize(QSize(115, 16777215))
+        self.noECWIFTypeContainerQFrame.setMaximumSize(QSize(145, 16777215))
         self.noECWIFTypeContainerQFrameVLayout = QVBoxLayout(self.noECWIFTypeContainerQFrame)
         self.noECWIFTypeContainerQFrameVLayout.setSpacing(5)
         self.noECWIFTypeContainerQFrameVLayout.setObjectName(u"noECWIFTypeContainerQFrameVLayout")
@@ -271,6 +276,7 @@ class Ui_MainWindow(object):
 
         self.noECPrivateKeyConvertQPushButton = QPushButton(self.noECPrivateKeyButtonContainerQFrame)
         self.noECPrivateKeyConvertQPushButton.setObjectName(u"noECPrivateKeyConvertQPushButton")
+        self.noECPrivateKeyConvertQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.noECPrivateKeyButtonHLayout.addWidget(self.noECPrivateKeyConvertQPushButton)
 
@@ -335,6 +341,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.noECEncryptQPushButton.sizePolicy().hasHeightForWidth())
         self.noECEncryptQPushButton.setSizePolicy(sizePolicy)
+        self.noECEncryptQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.noECWIFContainerVLayout.addWidget(self.noECEncryptQPushButton)
 
@@ -403,6 +410,7 @@ class Ui_MainWindow(object):
         self.decryptWIFQPushButton.setObjectName(u"decryptWIFQPushButton")
         sizePolicy.setHeightForWidth(self.decryptWIFQPushButton.sizePolicy().hasHeightForWidth())
         self.decryptWIFQPushButton.setSizePolicy(sizePolicy)
+        self.decryptWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.decryptWIFHLayout.addWidget(self.decryptWIFQPushButton)
 
@@ -423,6 +431,7 @@ class Ui_MainWindow(object):
         self.outputGroupBoxVLayout.setContentsMargins(0, 5, 0, 0)
         self.outputQTextEdit = QTextEdit(self.outputQGroupBox)
         self.outputQTextEdit.setObjectName(u"outputQTextEdit")
+        self.outputQTextEdit.setReadOnly(True)
 
         self.outputGroupBoxVLayout.addWidget(self.outputQTextEdit)
 
@@ -445,7 +454,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.cryptocurrencyQLabel.setText(QCoreApplication.translate("MainWindow", u"Cryptocurrency", None))
-        self.CryptocurrencyQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
+        self.cryptocurrencyQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.networkQLabel.setText(QCoreApplication.translate("MainWindow", u"Network", None))
         self.networkQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.passphraseQLabel.setText(QCoreApplication.translate("MainWindow", u"Passphrase", None))
