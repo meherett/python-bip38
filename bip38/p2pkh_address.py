@@ -14,6 +14,7 @@ from .libs.base58 import (
 from .secp256k1 import PublicKey
 from .cryptocurrencies import Bitcoin
 from .crypto import hash160
+from .exceptions import AddressError
 from .utils import (
     get_bytes, integer_to_bytes, bytes_to_string
 )
@@ -87,10 +88,10 @@ class P2PKHAddress:
 
         expected_length: int = 20 + len(address_prefix)
         if len(address_decode) != expected_length:
-            raise ValueError(f"Invalid length (expected: {expected_length}, got: {len(address_decode)})")
+            raise AddressError(f"Invalid length (expected: {expected_length}, got: {len(address_decode)})")
 
         prefix_got: bytes = address_decode[:len(address_prefix)]
         if address_prefix != prefix_got:
-            raise ValueError(f"Invalid prefix (expected: {address_prefix}, got: {prefix_got})")
+            raise AddressError(f"Invalid prefix (expected: {address_prefix}, got: {prefix_got})")
 
         return bytes_to_string(address_decode[len(address_prefix):])
