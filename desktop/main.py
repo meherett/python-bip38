@@ -29,10 +29,11 @@ class BIP38Application:
     """
     Main application class for managing the UI and core functionalities.
     """
+    TEXT_COLOR: QColor = QColor(255, 255, 255)
     ERROR_COLOR: QColor = QColor(255, 96, 96)
     JSON_PATTERNS = [
-        (re.compile(r'\".*?\"(?=\s*:)'), QColor(0, 191, 165)),  # keys
-        (re.compile(r'\".*?\"'), QColor(0, 191, 165)),          # string values
+        # (re.compile(r'\".*?\"(?=\s*:)'), QColor(0, 191, 165)),  # keys
+        (re.compile(r'\".*?\"'), QColor(0, 191, 165)),          # string
         (re.compile(r'\b\d+\b'), QColor(125, 211, 252)),        # numbers
         (re.compile(r'\btrue\b|\bfalse\b|\bnull\b'), QColor(16, 182, 212)),  # booleans/null
         (re.compile(r'[{}[\],:]'), QColor(255, 255, 255))                    # punctuation
@@ -135,6 +136,7 @@ class BIP38Application:
                 wif=wif,
                 passphrase=passphrase
             )
+            self.ui.decryptWIFQLineEdit.setText(encrypted_wif)
             self.log(encrypted_wif)
         except ValueError as e:
             self.logerr(f"Error: Invalid WIF")
@@ -166,13 +168,15 @@ class BIP38Application:
     def get_netowrk(self):
         return self.ui.networkQComboBox.currentText().lower()
 
-
     def log(self, data: Optional[Union[str, dict]], end="\n") -> None:
         if isinstance(data, dict):
             data = json.dumps(data, indent=4)
 
         cursor = self.ui.outputQTextEdit.textCursor()
         cursor.movePosition(QTextCursor.End)
+
+        default_format = QTextCharFormat()
+        default_format.setForeground(BIP38Application.TEXT_COLOR)  
 
         # Apply highlighting
         for line in data.splitlines():
@@ -189,9 +193,9 @@ class BIP38Application:
                         match_found = True
                         break
                 if not match_found:
-                    cursor.insertText(line[pos])
+                    cursor.insertText(line[pos], default_format)
                     pos += 1
-            cursor.insertText(end)
+            cursor.insertText(end, default_format)
 
         self.ui.outputQTextEdit.setTextCursor(cursor)
         self.ui.outputQTextEdit.ensureCursorVisible()

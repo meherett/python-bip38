@@ -9,6 +9,7 @@ QWidget {
 
 QFrame{
     background-color: transparent;
+    border: none;
 }
 
 QLabel {
@@ -19,7 +20,7 @@ QLabel {
 
 QGroupBox {
     background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(28, 150, 20, 0.25);
+    border: 1px solid rgba(0, 191, 165, 0.8);
     border-radius: 3px;
     margin-top: 8px;
     font: 11pt "Segoe UI";
@@ -124,7 +125,7 @@ QComboBox QAbstractItemView  {
     color: white;
     border: none;
     padding: 10px;
-    background-color: rgba(15, 33, 42, 0.5);
+    background-color: rgba(15, 33, 42, 1);
     outline: none;
 }
 
