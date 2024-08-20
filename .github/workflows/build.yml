@@ -1,6 +1,6 @@
 # This workflow will install Swap package dependencies, run tests and lint with a variety of Python versions.
 
-name: Python-BIP38
+name: BIP38
 
 on:
   push:
@@ -17,21 +17,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        python-name: [
+          "Python 3.9", "Python 3.10", "Python 3.11", "Python 3.12"
+        ]
         python-version: [
           "3.9", "3.10", "3.11", "3.12"
         ]
     steps:
     - uses: actions/checkout@master
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up ${{ matrix.python-name }}
       uses: actions/setup-python@master
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -e .[tests]
     - name: Test with PyTest with Coverage
-      run: coverage run -m pytest
-    - name: Submit Coverage report to Coveralls
+      run: |
+        coverage run -m pytest
+        coverage report
+    - name: Submit Coverage Report to Coveralls
       if: ${{ matrix.python-version == 3.12 }}
       run: coveralls
