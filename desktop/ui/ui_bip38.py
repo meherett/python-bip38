@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(705, 455)
+        MainWindow.resize(804, 409)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centeralWidgetLayout = QVBoxLayout(self.centralwidget)
@@ -59,7 +59,7 @@ class Ui_MainWindow(object):
 
         self.cryptocurrencyLabelContainerQFrameHLayout.addWidget(self.cryptocurrencyQLabel)
 
-        self.cryptocurrencyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.cryptocurrencyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.cryptocurrencyLabelContainerQFrameHLayout.addItem(self.cryptocurrencyLabelContainerQFrameHSpacer)
 
@@ -92,7 +92,7 @@ class Ui_MainWindow(object):
 
         self.networkLabelContainerQFrameHLayout.addWidget(self.networkQLabel)
 
-        self.networkLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.networkLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.networkLabelContainerQFrameHLayout.addItem(self.networkLabelContainerQFrameHSpacer)
 
@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
 
         self.passphraseLabelContainerQFrameHLayout.addWidget(self.passphraseQLabel)
 
-        self.passphraseLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.passphraseLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.passphraseLabelContainerQFrameHLayout.addItem(self.passphraseLabelContainerQFrameHSpacer)
 
@@ -157,7 +157,7 @@ class Ui_MainWindow(object):
 
         self.modeLabelContainerQFrameHLayout.addWidget(self.modeQLabel)
 
-        self.modeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.modeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.modeLabelContainerQFrameHLayout.addItem(self.modeLabelContainerQFrameHSpacer)
 
@@ -208,7 +208,7 @@ class Ui_MainWindow(object):
 
         self.noECPrivateKeyLabelContainerQFrameHLayout.addWidget(self.noECPrivateKeyQLabel)
 
-        self.noECPrivateKeyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.noECPrivateKeyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.noECPrivateKeyLabelContainerQFrameHLayout.addItem(self.noECPrivateKeyLabelContainerQFrameHSpacer)
 
@@ -241,7 +241,7 @@ class Ui_MainWindow(object):
 
         self.noECWIFTypeLabelContainerQFrameHLayout.addWidget(self.noECWIFTypeQLabel)
 
-        self.noECWIFTypeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.noECWIFTypeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.noECWIFTypeLabelContainerQFrameHLayout.addItem(self.noECWIFTypeLabelContainerQFrameHSpacer)
 
@@ -267,16 +267,16 @@ class Ui_MainWindow(object):
         self.noECPrivateKeyButtonContainerQFrame.setObjectName(u"noECPrivateKeyButtonContainerQFrame")
         self.noECPrivateKeyButtonContainerQFrame.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.noECPrivateKeyButtonHLayout = QVBoxLayout(self.noECPrivateKeyButtonContainerQFrame)
-        self.noECPrivateKeyButtonHLayout.setSpacing(0)
+        self.noECPrivateKeyButtonHLayout.setSpacing(5)
         self.noECPrivateKeyButtonHLayout.setObjectName(u"noECPrivateKeyButtonHLayout")
         self.noECPrivateKeyButtonHLayout.setContentsMargins(0, 0, 0, 0)
-        self.noECPrivateKeyButtonSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.noECPrivateKeyButtonSpacer = QSpacerItem(20, 40, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.noECPrivateKeyButtonHLayout.addItem(self.noECPrivateKeyButtonSpacer)
 
         self.noECPrivateKeyConvertQPushButton = QPushButton(self.noECPrivateKeyButtonContainerQFrame)
         self.noECPrivateKeyConvertQPushButton.setObjectName(u"noECPrivateKeyConvertQPushButton")
-        self.noECPrivateKeyConvertQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.noECPrivateKeyConvertQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.noECPrivateKeyButtonHLayout.addWidget(self.noECPrivateKeyConvertQPushButton)
 
@@ -314,7 +314,7 @@ class Ui_MainWindow(object):
 
         self.noECWIFLabelContainerQFrameHLayout.addWidget(self.noECWIFQLabel)
 
-        self.noECWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.noECWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.noECWIFLabelContainerQFrameHLayout.addItem(self.noECWIFLabelContainerQFrameHSpacer)
 
@@ -336,12 +336,12 @@ class Ui_MainWindow(object):
 
         self.noECEncryptQPushButton = QPushButton(self.noECWIFAndEncyptContainerQFrame)
         self.noECEncryptQPushButton.setObjectName(u"noECEncryptQPushButton")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.noECEncryptQPushButton.sizePolicy().hasHeightForWidth())
         self.noECEncryptQPushButton.setSizePolicy(sizePolicy)
-        self.noECEncryptQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.noECEncryptQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.noECWIFContainerVLayout.addWidget(self.noECEncryptQPushButton)
 
@@ -357,6 +357,325 @@ class Ui_MainWindow(object):
         self.modeQStackedWidget.addWidget(self.noECQWidget)
         self.ecQWidget = QWidget()
         self.ecQWidget.setObjectName(u"ecQWidget")
+        self.ecVLayout = QVBoxLayout(self.ecQWidget)
+        self.ecVLayout.setSpacing(10)
+        self.ecVLayout.setObjectName(u"ecVLayout")
+        self.ecVLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecSaltMainContainerQFrame = QFrame(self.ecQWidget)
+        self.ecSaltMainContainerQFrame.setObjectName(u"ecSaltMainContainerQFrame")
+        self.ecSaltMainContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecSaltMainContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecOwnerSaltMainContainerHLayout = QHBoxLayout(self.ecSaltMainContainerQFrame)
+        self.ecOwnerSaltMainContainerHLayout.setSpacing(15)
+        self.ecOwnerSaltMainContainerHLayout.setObjectName(u"ecOwnerSaltMainContainerHLayout")
+        self.ecOwnerSaltMainContainerHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecOwnerSaltContainerQFrame = QFrame(self.ecSaltMainContainerQFrame)
+        self.ecOwnerSaltContainerQFrame.setObjectName(u"ecOwnerSaltContainerQFrame")
+        self.ecOwnerSaltContainerQFrameVLayout = QVBoxLayout(self.ecOwnerSaltContainerQFrame)
+        self.ecOwnerSaltContainerQFrameVLayout.setSpacing(5)
+        self.ecOwnerSaltContainerQFrameVLayout.setObjectName(u"ecOwnerSaltContainerQFrameVLayout")
+        self.ecOwnerSaltContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecOwnerSaltLableContainerQFrame = QFrame(self.ecOwnerSaltContainerQFrame)
+        self.ecOwnerSaltLableContainerQFrame.setObjectName(u"ecOwnerSaltLableContainerQFrame")
+        self.ecOwnerSaltLableContainerQFrameHLayout = QHBoxLayout(self.ecOwnerSaltLableContainerQFrame)
+        self.ecOwnerSaltLableContainerQFrameHLayout.setSpacing(15)
+        self.ecOwnerSaltLableContainerQFrameHLayout.setObjectName(u"ecOwnerSaltLableContainerQFrameHLayout")
+        self.ecOwnerSaltLableContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecOwnerSaltQLabel = QLabel(self.ecOwnerSaltLableContainerQFrame)
+        self.ecOwnerSaltQLabel.setObjectName(u"ecOwnerSaltQLabel")
+
+        self.ecOwnerSaltLableContainerQFrameHLayout.addWidget(self.ecOwnerSaltQLabel)
+
+        self.ecOwnerSaltLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.ecOwnerSaltLableContainerQFrameHLayout.addItem(self.ecOwnerSaltLabelContainerQFrameHSpacer)
+
+
+        self.ecOwnerSaltContainerQFrameVLayout.addWidget(self.ecOwnerSaltLableContainerQFrame)
+
+        self.ecOwnerSaltAndGenerateContainerQFrame = QFrame(self.ecOwnerSaltContainerQFrame)
+        self.ecOwnerSaltAndGenerateContainerQFrame.setObjectName(u"ecOwnerSaltAndGenerateContainerQFrame")
+        self.ecOwnerSaltAndGenerateContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecOwnerSaltAndGenerateContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecOwnerSaltAndGenerateContainerQFrameHLayout = QHBoxLayout(self.ecOwnerSaltAndGenerateContainerQFrame)
+        self.ecOwnerSaltAndGenerateContainerQFrameHLayout.setSpacing(15)
+        self.ecOwnerSaltAndGenerateContainerQFrameHLayout.setObjectName(u"ecOwnerSaltAndGenerateContainerQFrameHLayout")
+        self.ecOwnerSaltAndGenerateContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecOwnerSaltQLineEdit = QLineEdit(self.ecOwnerSaltAndGenerateContainerQFrame)
+        self.ecOwnerSaltQLineEdit.setObjectName(u"ecOwnerSaltQLineEdit")
+
+        self.ecOwnerSaltAndGenerateContainerQFrameHLayout.addWidget(self.ecOwnerSaltQLineEdit)
+
+        self.ecOwnerSaltGenerateQPushButton = QPushButton(self.ecOwnerSaltAndGenerateContainerQFrame)
+        self.ecOwnerSaltGenerateQPushButton.setObjectName(u"ecOwnerSaltGenerateQPushButton")
+        sizePolicy.setHeightForWidth(self.ecOwnerSaltGenerateQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecOwnerSaltGenerateQPushButton.setSizePolicy(sizePolicy)
+        self.ecOwnerSaltGenerateQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.ecOwnerSaltAndGenerateContainerQFrameHLayout.addWidget(self.ecOwnerSaltGenerateQPushButton)
+
+
+        self.ecOwnerSaltContainerQFrameVLayout.addWidget(self.ecOwnerSaltAndGenerateContainerQFrame)
+
+
+        self.ecOwnerSaltMainContainerHLayout.addWidget(self.ecOwnerSaltContainerQFrame)
+
+        self.ecSeedContainerQFrame = QFrame(self.ecSaltMainContainerQFrame)
+        self.ecSeedContainerQFrame.setObjectName(u"ecSeedContainerQFrame")
+        self.ecSeedContainerQFrameHLayout = QVBoxLayout(self.ecSeedContainerQFrame)
+        self.ecSeedContainerQFrameHLayout.setSpacing(5)
+        self.ecSeedContainerQFrameHLayout.setObjectName(u"ecSeedContainerQFrameHLayout")
+        self.ecSeedContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecSeedLabelContainerQFrame = QFrame(self.ecSeedContainerQFrame)
+        self.ecSeedLabelContainerQFrame.setObjectName(u"ecSeedLabelContainerQFrame")
+        self.ecSeedLabelContainerQFrameHLayout = QHBoxLayout(self.ecSeedLabelContainerQFrame)
+        self.ecSeedLabelContainerQFrameHLayout.setSpacing(15)
+        self.ecSeedLabelContainerQFrameHLayout.setObjectName(u"ecSeedLabelContainerQFrameHLayout")
+        self.ecSeedLabelContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecSeedQLabel = QLabel(self.ecSeedLabelContainerQFrame)
+        self.ecSeedQLabel.setObjectName(u"ecSeedQLabel")
+
+        self.ecSeedLabelContainerQFrameHLayout.addWidget(self.ecSeedQLabel)
+
+        self.ecSeedLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.ecSeedLabelContainerQFrameHLayout.addItem(self.ecSeedLabelContainerQFrameHSpacer)
+
+
+        self.ecSeedContainerQFrameHLayout.addWidget(self.ecSeedLabelContainerQFrame)
+
+        self.ecSeedAndGenerateContainerQFrame = QFrame(self.ecSeedContainerQFrame)
+        self.ecSeedAndGenerateContainerQFrame.setObjectName(u"ecSeedAndGenerateContainerQFrame")
+        self.ecSeedAndGenerateContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecSeedAndGenerateContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecSeedAndGenerateContainerQFrameHLayout = QHBoxLayout(self.ecSeedAndGenerateContainerQFrame)
+        self.ecSeedAndGenerateContainerQFrameHLayout.setSpacing(15)
+        self.ecSeedAndGenerateContainerQFrameHLayout.setObjectName(u"ecSeedAndGenerateContainerQFrameHLayout")
+        self.ecSeedAndGenerateContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecSeedQLineEdit = QLineEdit(self.ecSeedAndGenerateContainerQFrame)
+        self.ecSeedQLineEdit.setObjectName(u"ecSeedQLineEdit")
+
+        self.ecSeedAndGenerateContainerQFrameHLayout.addWidget(self.ecSeedQLineEdit)
+
+        self.ecSeedGenerateQPushButton = QPushButton(self.ecSeedAndGenerateContainerQFrame)
+        self.ecSeedGenerateQPushButton.setObjectName(u"ecSeedGenerateQPushButton")
+        sizePolicy.setHeightForWidth(self.ecSeedGenerateQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecSeedGenerateQPushButton.setSizePolicy(sizePolicy)
+        self.ecSeedGenerateQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.ecSeedAndGenerateContainerQFrameHLayout.addWidget(self.ecSeedGenerateQPushButton)
+
+
+        self.ecSeedContainerQFrameHLayout.addWidget(self.ecSeedAndGenerateContainerQFrame)
+
+
+        self.ecOwnerSaltMainContainerHLayout.addWidget(self.ecSeedContainerQFrame)
+
+        self.ecLotContainerQFrame = QFrame(self.ecSaltMainContainerQFrame)
+        self.ecLotContainerQFrame.setObjectName(u"ecLotContainerQFrame")
+        self.ecLotContainerQFrame.setMaximumSize(QSize(100, 16777215))
+        self.ecLotContainerQFrameVLayout = QVBoxLayout(self.ecLotContainerQFrame)
+        self.ecLotContainerQFrameVLayout.setSpacing(5)
+        self.ecLotContainerQFrameVLayout.setObjectName(u"ecLotContainerQFrameVLayout")
+        self.ecLotContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecLotLableContainerQFrame = QFrame(self.ecLotContainerQFrame)
+        self.ecLotLableContainerQFrame.setObjectName(u"ecLotLableContainerQFrame")
+        self.ecLotLableContainerQFrameHLayout = QHBoxLayout(self.ecLotLableContainerQFrame)
+        self.ecLotLableContainerQFrameHLayout.setSpacing(15)
+        self.ecLotLableContainerQFrameHLayout.setObjectName(u"ecLotLableContainerQFrameHLayout")
+        self.ecLotLableContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecLotQLabel = QLabel(self.ecLotLableContainerQFrame)
+        self.ecLotQLabel.setObjectName(u"ecLotQLabel")
+
+        self.ecLotLableContainerQFrameHLayout.addWidget(self.ecLotQLabel)
+
+        self.ecLotLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.ecLotLableContainerQFrameHLayout.addItem(self.ecLotLabelContainerQFrameHSpacer)
+
+
+        self.ecLotContainerQFrameVLayout.addWidget(self.ecLotLableContainerQFrame)
+
+        self.ecLotEditContainerQFrame = QFrame(self.ecLotContainerQFrame)
+        self.ecLotEditContainerQFrame.setObjectName(u"ecLotEditContainerQFrame")
+        self.ecLotEditContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecLotEditContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecLotEditContainerQFrameHLayout = QHBoxLayout(self.ecLotEditContainerQFrame)
+        self.ecLotEditContainerQFrameHLayout.setSpacing(0)
+        self.ecLotEditContainerQFrameHLayout.setObjectName(u"ecLotEditContainerQFrameHLayout")
+        self.ecLotEditContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecLotQLineEdit = QLineEdit(self.ecLotEditContainerQFrame)
+        self.ecLotQLineEdit.setObjectName(u"ecLotQLineEdit")
+
+        self.ecLotEditContainerQFrameHLayout.addWidget(self.ecLotQLineEdit)
+
+
+        self.ecLotContainerQFrameVLayout.addWidget(self.ecLotEditContainerQFrame)
+
+
+        self.ecOwnerSaltMainContainerHLayout.addWidget(self.ecLotContainerQFrame)
+
+        self.ecSequenceContainerQFrame = QFrame(self.ecSaltMainContainerQFrame)
+        self.ecSequenceContainerQFrame.setObjectName(u"ecSequenceContainerQFrame")
+        self.ecSequenceContainerQFrame.setMaximumSize(QSize(100, 16777215))
+        self.ecSequenceContainerQFrameVLayout = QVBoxLayout(self.ecSequenceContainerQFrame)
+        self.ecSequenceContainerQFrameVLayout.setSpacing(5)
+        self.ecSequenceContainerQFrameVLayout.setObjectName(u"ecSequenceContainerQFrameVLayout")
+        self.ecSequenceContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecSequenceLableContainerQFrame = QFrame(self.ecSequenceContainerQFrame)
+        self.ecSequenceLableContainerQFrame.setObjectName(u"ecSequenceLableContainerQFrame")
+        self.ecSequenceLableContainerQFrameHLayout = QHBoxLayout(self.ecSequenceLableContainerQFrame)
+        self.ecSequenceLableContainerQFrameHLayout.setSpacing(15)
+        self.ecSequenceLableContainerQFrameHLayout.setObjectName(u"ecSequenceLableContainerQFrameHLayout")
+        self.ecSequenceLableContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecSequenceQLabel = QLabel(self.ecSequenceLableContainerQFrame)
+        self.ecSequenceQLabel.setObjectName(u"ecSequenceQLabel")
+
+        self.ecSequenceLableContainerQFrameHLayout.addWidget(self.ecSequenceQLabel)
+
+        self.ecSequenceLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.ecSequenceLableContainerQFrameHLayout.addItem(self.ecSequenceLabelContainerQFrameHSpacer)
+
+
+        self.ecSequenceContainerQFrameVLayout.addWidget(self.ecSequenceLableContainerQFrame)
+
+        self.ecSequenceEditContainerQFrame = QFrame(self.ecSequenceContainerQFrame)
+        self.ecSequenceEditContainerQFrame.setObjectName(u"ecSequenceEditContainerQFrame")
+        self.ecSequenceEditContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecSequenceEditContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecSequenceEditContainerQFrameHLayout = QHBoxLayout(self.ecSequenceEditContainerQFrame)
+        self.ecSequenceEditContainerQFrameHLayout.setSpacing(0)
+        self.ecSequenceEditContainerQFrameHLayout.setObjectName(u"ecSequenceEditContainerQFrameHLayout")
+        self.ecSequenceEditContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecSequenceQLineEdit = QLineEdit(self.ecSequenceEditContainerQFrame)
+        self.ecSequenceQLineEdit.setObjectName(u"ecSequenceQLineEdit")
+        self.ecSequenceQLineEdit.setMinimumSize(QSize(0, 0))
+
+        self.ecSequenceEditContainerQFrameHLayout.addWidget(self.ecSequenceQLineEdit)
+
+
+        self.ecSequenceContainerQFrameVLayout.addWidget(self.ecSequenceEditContainerQFrame)
+
+
+        self.ecOwnerSaltMainContainerHLayout.addWidget(self.ecSequenceContainerQFrame)
+
+
+        self.ecVLayout.addWidget(self.ecSaltMainContainerQFrame)
+
+        self.ecIPAndConfirmMainContainerQFrame = QFrame(self.ecQWidget)
+        self.ecIPAndConfirmMainContainerQFrame.setObjectName(u"ecIPAndConfirmMainContainerQFrame")
+        self.ecIPAndConfirmMainContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecIPAndConfirmMainContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecIntermidatMainContainerQFrameHLayout = QHBoxLayout(self.ecIPAndConfirmMainContainerQFrame)
+        self.ecIntermidatMainContainerQFrameHLayout.setSpacing(15)
+        self.ecIntermidatMainContainerQFrameHLayout.setObjectName(u"ecIntermidatMainContainerQFrameHLayout")
+        self.ecIntermidatMainContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecIPassphraseContainerQFrame = QFrame(self.ecIPAndConfirmMainContainerQFrame)
+        self.ecIPassphraseContainerQFrame.setObjectName(u"ecIPassphraseContainerQFrame")
+        self.ecIPassphraseContainerQFrameVLayout = QVBoxLayout(self.ecIPassphraseContainerQFrame)
+        self.ecIPassphraseContainerQFrameVLayout.setSpacing(5)
+        self.ecIPassphraseContainerQFrameVLayout.setObjectName(u"ecIPassphraseContainerQFrameVLayout")
+        self.ecIPassphraseContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecIPassphraseLableContainerQFrame = QFrame(self.ecIPassphraseContainerQFrame)
+        self.ecIPassphraseLableContainerQFrame.setObjectName(u"ecIPassphraseLableContainerQFrame")
+        self.ecIPassphraseLableContainerQFrameHLayout = QHBoxLayout(self.ecIPassphraseLableContainerQFrame)
+        self.ecIPassphraseLableContainerQFrameHLayout.setSpacing(15)
+        self.ecIPassphraseLableContainerQFrameHLayout.setObjectName(u"ecIPassphraseLableContainerQFrameHLayout")
+        self.ecIPassphraseLableContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecIPassphraseQLabel = QLabel(self.ecIPassphraseLableContainerQFrame)
+        self.ecIPassphraseQLabel.setObjectName(u"ecIPassphraseQLabel")
+
+        self.ecIPassphraseLableContainerQFrameHLayout.addWidget(self.ecIPassphraseQLabel)
+
+        self.ecIPassphraseLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.ecIPassphraseLableContainerQFrameHLayout.addItem(self.ecIPassphraseLabelContainerQFrameHSpacer)
+
+
+        self.ecIPassphraseContainerQFrameVLayout.addWidget(self.ecIPassphraseLableContainerQFrame)
+
+        self.ecIPassphraseAndGenerateContainerQFrameHLayout = QFrame(self.ecIPassphraseContainerQFrame)
+        self.ecIPassphraseAndGenerateContainerQFrameHLayout.setObjectName(u"ecIPassphraseAndGenerateContainerQFrameHLayout")
+        self.ecIPassphraseAndGenerateContainerQFrameHLayout.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecIPassphraseAndGenerateContainerQFrameHLayout.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecIntermediatePassphraseAndGenerateHLayout = QHBoxLayout(self.ecIPassphraseAndGenerateContainerQFrameHLayout)
+        self.ecIntermediatePassphraseAndGenerateHLayout.setSpacing(15)
+        self.ecIntermediatePassphraseAndGenerateHLayout.setObjectName(u"ecIntermediatePassphraseAndGenerateHLayout")
+        self.ecIntermediatePassphraseAndGenerateHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecIPassphraseQLineEdit = QLineEdit(self.ecIPassphraseAndGenerateContainerQFrameHLayout)
+        self.ecIPassphraseQLineEdit.setObjectName(u"ecIPassphraseQLineEdit")
+
+        self.ecIntermediatePassphraseAndGenerateHLayout.addWidget(self.ecIPassphraseQLineEdit)
+
+        self.ecIPassphraseGenerateQPushButton = QPushButton(self.ecIPassphraseAndGenerateContainerQFrameHLayout)
+        self.ecIPassphraseGenerateQPushButton.setObjectName(u"ecIPassphraseGenerateQPushButton")
+        sizePolicy.setHeightForWidth(self.ecIPassphraseGenerateQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecIPassphraseGenerateQPushButton.setSizePolicy(sizePolicy)
+        self.ecIPassphraseGenerateQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.ecIntermediatePassphraseAndGenerateHLayout.addWidget(self.ecIPassphraseGenerateQPushButton)
+
+
+        self.ecIPassphraseContainerQFrameVLayout.addWidget(self.ecIPassphraseAndGenerateContainerQFrameHLayout)
+
+
+        self.ecIntermidatMainContainerQFrameHLayout.addWidget(self.ecIPassphraseContainerQFrame)
+
+        self.ecConfirmCodeContainerQFrame = QFrame(self.ecIPAndConfirmMainContainerQFrame)
+        self.ecConfirmCodeContainerQFrame.setObjectName(u"ecConfirmCodeContainerQFrame")
+        self.ecConfirmCodeContainerQFrameVLayout = QVBoxLayout(self.ecConfirmCodeContainerQFrame)
+        self.ecConfirmCodeContainerQFrameVLayout.setSpacing(5)
+        self.ecConfirmCodeContainerQFrameVLayout.setObjectName(u"ecConfirmCodeContainerQFrameVLayout")
+        self.ecConfirmCodeContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecCodeLableContainerQFrame = QFrame(self.ecConfirmCodeContainerQFrame)
+        self.ecCodeLableContainerQFrame.setObjectName(u"ecCodeLableContainerQFrame")
+        self.ecCodeLableContainerQFrameHLayout = QHBoxLayout(self.ecCodeLableContainerQFrame)
+        self.ecCodeLableContainerQFrameHLayout.setSpacing(15)
+        self.ecCodeLableContainerQFrameHLayout.setObjectName(u"ecCodeLableContainerQFrameHLayout")
+        self.ecCodeLableContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecConfirmCodeQLabel = QLabel(self.ecCodeLableContainerQFrame)
+        self.ecConfirmCodeQLabel.setObjectName(u"ecConfirmCodeQLabel")
+
+        self.ecCodeLableContainerQFrameHLayout.addWidget(self.ecConfirmCodeQLabel)
+
+        self.ecConfirmCodeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.ecCodeLableContainerQFrameHLayout.addItem(self.ecConfirmCodeLabelContainerQFrameHSpacer)
+
+
+        self.ecConfirmCodeContainerQFrameVLayout.addWidget(self.ecCodeLableContainerQFrame)
+
+        self.ecConfirmCodeAndVerifyContainerQFrame = QFrame(self.ecConfirmCodeContainerQFrame)
+        self.ecConfirmCodeAndVerifyContainerQFrame.setObjectName(u"ecConfirmCodeAndVerifyContainerQFrame")
+        self.ecConfirmCodeAndVerifyContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ecConfirmCodeAndVerifyContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.ecConfirmCodeAndVerifyContainerQFrameHLayout = QHBoxLayout(self.ecConfirmCodeAndVerifyContainerQFrame)
+        self.ecConfirmCodeAndVerifyContainerQFrameHLayout.setSpacing(15)
+        self.ecConfirmCodeAndVerifyContainerQFrameHLayout.setObjectName(u"ecConfirmCodeAndVerifyContainerQFrameHLayout")
+        self.ecConfirmCodeAndVerifyContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.ecConfirmCodeQLineEdit = QLineEdit(self.ecConfirmCodeAndVerifyContainerQFrame)
+        self.ecConfirmCodeQLineEdit.setObjectName(u"ecConfirmCodeQLineEdit")
+
+        self.ecConfirmCodeAndVerifyContainerQFrameHLayout.addWidget(self.ecConfirmCodeQLineEdit)
+
+        self.ecConfirmCodeVerifyQPushButton = QPushButton(self.ecConfirmCodeAndVerifyContainerQFrame)
+        self.ecConfirmCodeVerifyQPushButton.setObjectName(u"ecConfirmCodeVerifyQPushButton")
+        sizePolicy.setHeightForWidth(self.ecConfirmCodeVerifyQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecConfirmCodeVerifyQPushButton.setSizePolicy(sizePolicy)
+        self.ecConfirmCodeVerifyQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.ecConfirmCodeAndVerifyContainerQFrameHLayout.addWidget(self.ecConfirmCodeVerifyQPushButton)
+
+
+        self.ecConfirmCodeContainerQFrameVLayout.addWidget(self.ecConfirmCodeAndVerifyContainerQFrame)
+
+
+        self.ecIntermidatMainContainerQFrameHLayout.addWidget(self.ecConfirmCodeContainerQFrame)
+
+
+        self.ecVLayout.addWidget(self.ecIPAndConfirmMainContainerQFrame)
+
         self.modeQStackedWidget.addWidget(self.ecQWidget)
 
         self.verticalLayout.addWidget(self.modeQStackedWidget)
@@ -386,7 +705,7 @@ class Ui_MainWindow(object):
 
         self.decryptWIFLabelContainerQFrameHLayout.addWidget(self.decryptWIFQLabel)
 
-        self.decryptWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.decryptWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.decryptWIFLabelContainerQFrameHLayout.addItem(self.decryptWIFLabelContainerQFrameHSpacer)
 
@@ -410,7 +729,7 @@ class Ui_MainWindow(object):
         self.decryptWIFQPushButton.setObjectName(u"decryptWIFQPushButton")
         sizePolicy.setHeightForWidth(self.decryptWIFQPushButton.sizePolicy().hasHeightForWidth())
         self.decryptWIFQPushButton.setSizePolicy(sizePolicy)
-        self.decryptWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.decryptWIFQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.decryptWIFHLayout.addWidget(self.decryptWIFQPushButton)
 
@@ -445,7 +764,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.modeQStackedWidget.setCurrentIndex(0)
+        self.modeQStackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -466,6 +785,16 @@ class Ui_MainWindow(object):
         self.noECPrivateKeyConvertQPushButton.setText(QCoreApplication.translate("MainWindow", u"Convert", None))
         self.noECWIFQLabel.setText(QCoreApplication.translate("MainWindow", u"WIF", None))
         self.noECEncryptQPushButton.setText(QCoreApplication.translate("MainWindow", u"Encrypt", None))
+        self.ecOwnerSaltQLabel.setText(QCoreApplication.translate("MainWindow", u"Owner Salt", None))
+        self.ecOwnerSaltGenerateQPushButton.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
+        self.ecSeedQLabel.setText(QCoreApplication.translate("MainWindow", u"Seed", None))
+        self.ecSeedGenerateQPushButton.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
+        self.ecLotQLabel.setText(QCoreApplication.translate("MainWindow", u"Lot", None))
+        self.ecSequenceQLabel.setText(QCoreApplication.translate("MainWindow", u"Sequence", None))
+        self.ecIPassphraseQLabel.setText(QCoreApplication.translate("MainWindow", u"Intermediate Passphrase", None))
+        self.ecIPassphraseGenerateQPushButton.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
+        self.ecConfirmCodeQLabel.setText(QCoreApplication.translate("MainWindow", u"Confirm Code", None))
+        self.ecConfirmCodeVerifyQPushButton.setText(QCoreApplication.translate("MainWindow", u"Verify", None))
         self.decryptWIFQLabel.setText(QCoreApplication.translate("MainWindow", u"Encrypted WIF", None))
         self.decryptWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Decrypt", None))
         self.outputQGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Output", None))
