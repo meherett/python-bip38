@@ -5,6 +5,7 @@
 # file COPYING or https://opensource.org/license/mit
 
 import re
+import os
 import json
 import inspect
 from typing import (
@@ -24,6 +25,8 @@ from bip38.wif import private_key_to_wif
 
 from desktop.core import Application
 
+
+str_to_int = lambda s: int(s) if s.isdigit() else None
 
 class BIP38Application:
     """
@@ -85,15 +88,60 @@ class BIP38Application:
         self.ui.noECWIFTypeQComboBox.addItems(self.wif_types)
         self.ui.noECWIFTypeQComboBox.setCurrentIndex(0)
 
+
+        self.ui.ecLotQLineEdit.textEdited.connect(
+            lambda: self.validate_int(self.ui.ecLotQLineEdit)
+        )
+        self.ui.ecLotQLineEdit.editingFinished.connect(
+            lambda: self.enforce_int_range(self.ui.ecLotQLineEdit, 100000, 999999)
+        )
+
+        self.ui.ecSequenceQLineEdit.textEdited.connect(
+            lambda: self.validate_int(self.ui.ecSequenceQLineEdit)
+        )
+        self.ui.ecSequenceQLineEdit.editingFinished.connect(
+            lambda: self.enforce_int_range(self.ui.ecSequenceQLineEdit, 0, 4095)
+        )
+
         # button bindings
         self.ui.noECPrivateKeyConvertQPushButton.clicked.connect(self.noec_convert_private_key)
         self.ui.noECEncryptQPushButton.clicked.connect(self.noec_encrypt)
+
+        self.ui.ecOwnerSaltGenerateQPushButton.clicked.connect(
+            lambda: self.ui.ecOwnerSaltQLineEdit.setText(
+                os.urandom(8).hex()
+            )
+        )
+        self.ui.ecSeedGenerateQPushButton.clicked.connect(
+            lambda: self.ui.ecSeedQLineEdit.setText(
+                os.urandom(24).hex()
+            )
+        )
+
+        self.ui.ecIPassphraseGenerateQPushButton.clicked.connect(self.ec_generate_ipassphrase)
+
+
         self.ui.decryptWIFQPushButton.clicked.connect(self.decrypt)
+
         ## setting defualt values
 
         # will update network combo too
         self.ui.cryptocurrencyQComboBox.setCurrentText("Bitcoin")
         self.ui.modeQComboBox.setCurrentIndex(0)
+
+    def validate_int(self, line_edit):
+        text = line_edit.text()
+        if not text.isdigit():
+            line_edit.setText(''.join(filter(str.isdigit, text)))
+
+    def enforce_int_range(self, line_edit, min_value, max_value):
+        text = line_edit.text()
+        validator = line_edit.validator()
+
+        if text.isdigit():
+            value = int(text)
+            value = max(min_value, min(value, max_value)) # clamp
+            line_edit.setText(str(value))
 
     def change_cryptocurrency(self, cryptocurrency: str) -> None:
         cryptocurrency_class: ICryptocurrency = self.cryptocurrencies[cryptocurrency]
@@ -105,6 +153,7 @@ class BIP38Application:
         self.ui.networkQComboBox.setCurrentIndex(0)
 
     def change_mode(self, mode: str) -> None:
+        self.ui.createEncryptedWIFQPushButton.setVisible("EC-Multiply" == mode)
         self.ui.modeQStackedWidget.setCurrentWidget(self.modes[mode])
 
     def noec_convert_private_key(self):
@@ -140,6 +189,30 @@ class BIP38Application:
             self.log(encrypted_wif)
         except ValueError as e:
             self.logerr(f"Error: Invalid WIF")
+
+    def ec_generate_ipassphrase(self):
+
+        passphrase: str = self.ui.passphraseQLineEdit.text().strip()
+        owner_salt: str = self.ui.ecOwnerSaltQLineEdit.text().strip()
+        lot: Optional[int] = str_to_int(self.ui.ecLotQLineEdit.text())
+        sequence: Optional[int] = str_to_int(self.ui.ecSequenceQLineEdit.text())
+
+        bip38: BIP38 = BIP38(
+            cryptocurrency=self.get_cryptocurrency(),
+            network=self.get_netowrk()
+        )
+
+        try:
+            intermediate_passphrase: str = bip38.intermediate_code(
+                passphrase=passphrase,
+                owner_salt=owner_salt,
+                lot=lot,
+                sequence=sequence
+            )
+            self.ui.ecIPassphraseQLineEdit.setText(intermediate_passphrase)
+            self.log(intermediate_passphrase)
+        except ValueError as e:
+            self.logerr(f"Error: Failed to generate intermediate passphrase")
 
     def decrypt(self):
         encrypted_wif: str = self.ui.decryptWIFQLineEdit.text().strip()

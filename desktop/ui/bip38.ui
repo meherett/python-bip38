@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>804</width>
-    <height>409</height>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1590,6 +1590,16 @@
                 </property>
                 <item>
                  <widget class="QLineEdit" name="decryptWIFQLineEdit"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="createEncryptedWIFQPushButton">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="text">
+                   <string>Create Encrypted WIF</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QPushButton" name="decryptWIFQPushButton">

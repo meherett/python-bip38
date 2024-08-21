@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(804, 409)
+        MainWindow.resize(804, 460)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centeralWidgetLayout = QVBoxLayout(self.centralwidget)
@@ -59,7 +59,7 @@ class Ui_MainWindow(object):
 
         self.cryptocurrencyLabelContainerQFrameHLayout.addWidget(self.cryptocurrencyQLabel)
 
-        self.cryptocurrencyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.cryptocurrencyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.cryptocurrencyLabelContainerQFrameHLayout.addItem(self.cryptocurrencyLabelContainerQFrameHSpacer)
 
@@ -92,7 +92,7 @@ class Ui_MainWindow(object):
 
         self.networkLabelContainerQFrameHLayout.addWidget(self.networkQLabel)
 
-        self.networkLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.networkLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.networkLabelContainerQFrameHLayout.addItem(self.networkLabelContainerQFrameHSpacer)
 
@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
 
         self.passphraseLabelContainerQFrameHLayout.addWidget(self.passphraseQLabel)
 
-        self.passphraseLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.passphraseLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.passphraseLabelContainerQFrameHLayout.addItem(self.passphraseLabelContainerQFrameHSpacer)
 
@@ -157,7 +157,7 @@ class Ui_MainWindow(object):
 
         self.modeLabelContainerQFrameHLayout.addWidget(self.modeQLabel)
 
-        self.modeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.modeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.modeLabelContainerQFrameHLayout.addItem(self.modeLabelContainerQFrameHSpacer)
 
@@ -208,7 +208,7 @@ class Ui_MainWindow(object):
 
         self.noECPrivateKeyLabelContainerQFrameHLayout.addWidget(self.noECPrivateKeyQLabel)
 
-        self.noECPrivateKeyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.noECPrivateKeyLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.noECPrivateKeyLabelContainerQFrameHLayout.addItem(self.noECPrivateKeyLabelContainerQFrameHSpacer)
 
@@ -241,7 +241,7 @@ class Ui_MainWindow(object):
 
         self.noECWIFTypeLabelContainerQFrameHLayout.addWidget(self.noECWIFTypeQLabel)
 
-        self.noECWIFTypeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.noECWIFTypeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.noECWIFTypeLabelContainerQFrameHLayout.addItem(self.noECWIFTypeLabelContainerQFrameHSpacer)
 
@@ -270,13 +270,13 @@ class Ui_MainWindow(object):
         self.noECPrivateKeyButtonHLayout.setSpacing(5)
         self.noECPrivateKeyButtonHLayout.setObjectName(u"noECPrivateKeyButtonHLayout")
         self.noECPrivateKeyButtonHLayout.setContentsMargins(0, 0, 0, 0)
-        self.noECPrivateKeyButtonSpacer = QSpacerItem(20, 40, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.noECPrivateKeyButtonSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.noECPrivateKeyButtonHLayout.addItem(self.noECPrivateKeyButtonSpacer)
 
         self.noECPrivateKeyConvertQPushButton = QPushButton(self.noECPrivateKeyButtonContainerQFrame)
         self.noECPrivateKeyConvertQPushButton.setObjectName(u"noECPrivateKeyConvertQPushButton")
-        self.noECPrivateKeyConvertQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.noECPrivateKeyConvertQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.noECPrivateKeyButtonHLayout.addWidget(self.noECPrivateKeyConvertQPushButton)
 
@@ -314,7 +314,7 @@ class Ui_MainWindow(object):
 
         self.noECWIFLabelContainerQFrameHLayout.addWidget(self.noECWIFQLabel)
 
-        self.noECWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.noECWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.noECWIFLabelContainerQFrameHLayout.addItem(self.noECWIFLabelContainerQFrameHSpacer)
 
@@ -336,12 +336,12 @@ class Ui_MainWindow(object):
 
         self.noECEncryptQPushButton = QPushButton(self.noECWIFAndEncyptContainerQFrame)
         self.noECEncryptQPushButton.setObjectName(u"noECEncryptQPushButton")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.noECEncryptQPushButton.sizePolicy().hasHeightForWidth())
         self.noECEncryptQPushButton.setSizePolicy(sizePolicy)
-        self.noECEncryptQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.noECEncryptQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.noECWIFContainerVLayout.addWidget(self.noECEncryptQPushButton)
 
@@ -386,7 +386,7 @@ class Ui_MainWindow(object):
 
         self.ecOwnerSaltLableContainerQFrameHLayout.addWidget(self.ecOwnerSaltQLabel)
 
-        self.ecOwnerSaltLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.ecOwnerSaltLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.ecOwnerSaltLableContainerQFrameHLayout.addItem(self.ecOwnerSaltLabelContainerQFrameHSpacer)
 
@@ -410,7 +410,7 @@ class Ui_MainWindow(object):
         self.ecOwnerSaltGenerateQPushButton.setObjectName(u"ecOwnerSaltGenerateQPushButton")
         sizePolicy.setHeightForWidth(self.ecOwnerSaltGenerateQPushButton.sizePolicy().hasHeightForWidth())
         self.ecOwnerSaltGenerateQPushButton.setSizePolicy(sizePolicy)
-        self.ecOwnerSaltGenerateQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.ecOwnerSaltGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecOwnerSaltAndGenerateContainerQFrameHLayout.addWidget(self.ecOwnerSaltGenerateQPushButton)
 
@@ -437,7 +437,7 @@ class Ui_MainWindow(object):
 
         self.ecSeedLabelContainerQFrameHLayout.addWidget(self.ecSeedQLabel)
 
-        self.ecSeedLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.ecSeedLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.ecSeedLabelContainerQFrameHLayout.addItem(self.ecSeedLabelContainerQFrameHSpacer)
 
@@ -461,7 +461,7 @@ class Ui_MainWindow(object):
         self.ecSeedGenerateQPushButton.setObjectName(u"ecSeedGenerateQPushButton")
         sizePolicy.setHeightForWidth(self.ecSeedGenerateQPushButton.sizePolicy().hasHeightForWidth())
         self.ecSeedGenerateQPushButton.setSizePolicy(sizePolicy)
-        self.ecSeedGenerateQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.ecSeedGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecSeedAndGenerateContainerQFrameHLayout.addWidget(self.ecSeedGenerateQPushButton)
 
@@ -489,7 +489,7 @@ class Ui_MainWindow(object):
 
         self.ecLotLableContainerQFrameHLayout.addWidget(self.ecLotQLabel)
 
-        self.ecLotLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.ecLotLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.ecLotLableContainerQFrameHLayout.addItem(self.ecLotLabelContainerQFrameHSpacer)
 
@@ -533,7 +533,7 @@ class Ui_MainWindow(object):
 
         self.ecSequenceLableContainerQFrameHLayout.addWidget(self.ecSequenceQLabel)
 
-        self.ecSequenceLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.ecSequenceLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.ecSequenceLableContainerQFrameHLayout.addItem(self.ecSequenceLabelContainerQFrameHSpacer)
 
@@ -588,7 +588,7 @@ class Ui_MainWindow(object):
 
         self.ecIPassphraseLableContainerQFrameHLayout.addWidget(self.ecIPassphraseQLabel)
 
-        self.ecIPassphraseLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.ecIPassphraseLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.ecIPassphraseLableContainerQFrameHLayout.addItem(self.ecIPassphraseLabelContainerQFrameHSpacer)
 
@@ -612,7 +612,7 @@ class Ui_MainWindow(object):
         self.ecIPassphraseGenerateQPushButton.setObjectName(u"ecIPassphraseGenerateQPushButton")
         sizePolicy.setHeightForWidth(self.ecIPassphraseGenerateQPushButton.sizePolicy().hasHeightForWidth())
         self.ecIPassphraseGenerateQPushButton.setSizePolicy(sizePolicy)
-        self.ecIPassphraseGenerateQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.ecIPassphraseGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecIntermediatePassphraseAndGenerateHLayout.addWidget(self.ecIPassphraseGenerateQPushButton)
 
@@ -639,7 +639,7 @@ class Ui_MainWindow(object):
 
         self.ecCodeLableContainerQFrameHLayout.addWidget(self.ecConfirmCodeQLabel)
 
-        self.ecConfirmCodeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.ecConfirmCodeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.ecCodeLableContainerQFrameHLayout.addItem(self.ecConfirmCodeLabelContainerQFrameHSpacer)
 
@@ -663,7 +663,7 @@ class Ui_MainWindow(object):
         self.ecConfirmCodeVerifyQPushButton.setObjectName(u"ecConfirmCodeVerifyQPushButton")
         sizePolicy.setHeightForWidth(self.ecConfirmCodeVerifyQPushButton.sizePolicy().hasHeightForWidth())
         self.ecConfirmCodeVerifyQPushButton.setSizePolicy(sizePolicy)
-        self.ecConfirmCodeVerifyQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.ecConfirmCodeVerifyQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecConfirmCodeAndVerifyContainerQFrameHLayout.addWidget(self.ecConfirmCodeVerifyQPushButton)
 
@@ -705,7 +705,7 @@ class Ui_MainWindow(object):
 
         self.decryptWIFLabelContainerQFrameHLayout.addWidget(self.decryptWIFQLabel)
 
-        self.decryptWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.decryptWIFLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.decryptWIFLabelContainerQFrameHLayout.addItem(self.decryptWIFLabelContainerQFrameHSpacer)
 
@@ -725,11 +725,17 @@ class Ui_MainWindow(object):
 
         self.decryptWIFHLayout.addWidget(self.decryptWIFQLineEdit)
 
+        self.createEncryptedWIFQPushButton = QPushButton(self.decryptWIFAndButtonContainerQFrame)
+        self.createEncryptedWIFQPushButton.setObjectName(u"createEncryptedWIFQPushButton")
+        self.createEncryptedWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+
+        self.decryptWIFHLayout.addWidget(self.createEncryptedWIFQPushButton)
+
         self.decryptWIFQPushButton = QPushButton(self.decryptWIFAndButtonContainerQFrame)
         self.decryptWIFQPushButton.setObjectName(u"decryptWIFQPushButton")
         sizePolicy.setHeightForWidth(self.decryptWIFQPushButton.sizePolicy().hasHeightForWidth())
         self.decryptWIFQPushButton.setSizePolicy(sizePolicy)
-        self.decryptWIFQPushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.decryptWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.decryptWIFHLayout.addWidget(self.decryptWIFQPushButton)
 
@@ -796,6 +802,7 @@ class Ui_MainWindow(object):
         self.ecConfirmCodeQLabel.setText(QCoreApplication.translate("MainWindow", u"Confirm Code", None))
         self.ecConfirmCodeVerifyQPushButton.setText(QCoreApplication.translate("MainWindow", u"Verify", None))
         self.decryptWIFQLabel.setText(QCoreApplication.translate("MainWindow", u"Encrypted WIF", None))
+        self.createEncryptedWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Create Encrypted WIF", None))
         self.decryptWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Decrypt", None))
         self.outputQGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Output", None))
         self.outputQTextEdit.setPlaceholderText("")
