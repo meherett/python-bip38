@@ -12,6 +12,7 @@ from typing import (
     Optional, Union
 )
 
+from PySide6.QtWidgets import QWidget
 from PySide6.QtGui import (
     QTextCharFormat, QTextCursor, QColor,
     QTextFormat, QTextOption
@@ -38,7 +39,7 @@ class BIP38Application:
         # (re.compile(r'\".*?\"(?=\s*:)'), QColor(0, 191, 165)),  # keys
         (re.compile(r'\".*?\"'), QColor(0, 191, 165)),          # string
         (re.compile(r'\b\d+\b'), QColor(125, 211, 252)),        # numbers
-        (re.compile(r'\btrue\b|\bfalse\b|\bnull\b'), QColor(16, 182, 212)),  # booleans/null
+        (re.compile(r'\btrue\b|\bfalse\b|\bnull\b'), QColor(16, 182, 212)),  # boolean/null
         (re.compile(r'[{}[\],:]'), QColor(255, 255, 255))                    # punctuation
     ]
 
@@ -63,7 +64,10 @@ class BIP38Application:
             "EC-Multiply": self.ui.ecQWidget,
         }
 
-        self.wif_types = ["wif", "wif-compressed"]
+        self.wif_types = {
+            "wif": "uncompressed", 
+            "wif-compressed": "compressed"
+        }
 
         self.__init_ui()
 
@@ -85,7 +89,7 @@ class BIP38Application:
         )
         self.ui.modeQComboBox.currentTextChanged.connect(self.change_mode)
 
-        self.ui.noECWIFTypeQComboBox.addItems(self.wif_types)
+        self.ui.noECWIFTypeQComboBox.addItems(self.wif_types.keys())
         self.ui.noECWIFTypeQComboBox.setCurrentIndex(0)
 
 
@@ -102,6 +106,8 @@ class BIP38Application:
         self.ui.ecSequenceQLineEdit.editingFinished.connect(
             lambda: self.enforce_int_range(self.ui.ecSequenceQLineEdit, 0, 4095)
         )
+        self.ui.createEncryptedWIFTypeQComboBox.addItems(self.wif_types.keys())
+        self.ui.createEncryptedWIFTypeQComboBox.setCurrentIndex(0)
 
         # button bindings
         self.ui.noECPrivateKeyConvertQPushButton.clicked.connect(self.noec_convert_private_key)
@@ -119,11 +125,12 @@ class BIP38Application:
         )
 
         self.ui.ecIPassphraseGenerateQPushButton.clicked.connect(self.ec_generate_ipassphrase)
-
+        self.ui.ecConfirmCodeVerifyQPushButton.clicked.connect(self.ec_confirm_code)
+        self.ui.createEncryptedWIFQPushButton.clicked.connect(self.create_encrypted_wif)
 
         self.ui.decryptWIFQPushButton.clicked.connect(self.decrypt)
 
-        ## setting defualt values
+        ## setting default values
 
         # will update network combo too
         self.ui.cryptocurrencyQComboBox.setCurrentText("Bitcoin")
@@ -153,7 +160,9 @@ class BIP38Application:
         self.ui.networkQComboBox.setCurrentIndex(0)
 
     def change_mode(self, mode: str) -> None:
-        self.ui.createEncryptedWIFQPushButton.setVisible("EC-Multiply" == mode)
+        is_on_ec = "EC-Multiply" == mode
+        self.ui.createEncryptedWIFTypeQComboBox.setVisible(is_on_ec)
+        self.ui.createEncryptedWIFQPushButton.setVisible(is_on_ec)
         self.ui.modeQStackedWidget.setCurrentWidget(self.modes[mode])
 
     def noec_convert_private_key(self):
@@ -169,11 +178,15 @@ class BIP38Application:
             )
             self.ui.noECWIFQLineEdit.setText(wif)
         except ValueError as e:
-            self.logerr(f"Error: Invalid Private Key")
+            self.set_required(self.ui.noECPrivateKeyQLineEdit)
+            self.logerr(f"Error: {e}")
 
     def noec_encrypt(self):
         wif: str = self.ui.noECWIFQLineEdit.text().strip()
-        passphrase: str = self.ui.passphraseQLineEdit.text().strip()
+
+        # validate=True will show error if passphrase is not set
+        if not (passphrase := self.get_passphrase(validate=True)):
+            return None
 
         bip38: BIP38 = BIP38(
             cryptocurrency=self.get_cryptocurrency(),
@@ -188,11 +201,13 @@ class BIP38Application:
             self.ui.decryptWIFQLineEdit.setText(encrypted_wif)
             self.log(encrypted_wif)
         except ValueError as e:
-            self.logerr(f"Error: Invalid WIF")
+            self.set_required(self.ui.noECWIFQLineEdit)
+            self.logerr(f"Error: {e}")
 
     def ec_generate_ipassphrase(self):
+        if not (passphrase := self.get_passphrase(validate=True)):
+            return None
 
-        passphrase: str = self.ui.passphraseQLineEdit.text().strip()
         owner_salt: str = self.ui.ecOwnerSaltQLineEdit.text().strip()
         lot: Optional[int] = str_to_int(self.ui.ecLotQLineEdit.text())
         sequence: Optional[int] = str_to_int(self.ui.ecSequenceQLineEdit.text())
@@ -212,11 +227,58 @@ class BIP38Application:
             self.ui.ecIPassphraseQLineEdit.setText(intermediate_passphrase)
             self.log(intermediate_passphrase)
         except ValueError as e:
-            self.logerr(f"Error: Failed to generate intermediate passphrase")
+            self.logerr(f"Error: {e}")
+
+    def ec_confirm_code(self):
+        if not (passphrase := self.get_passphrase(validate=True)):
+            return None
+
+        confirmation_code: str = self.ui.ecConfirmCodeQLineEdit.text().strip()
+        encrypted_wif: str = self.ui.decryptWIFQLineEdit.text().strip()
+
+        bip38: BIP38 = BIP38(
+            cryptocurrency=self.get_cryptocurrency(),
+            network=self.get_netowrk()
+        )
+
+        try:
+            confirmation_code=bip38.confirm_code(
+                    passphrase=passphrase,
+                    confirmation_code=confirmation_code, 
+                    detail=True
+            )
+            self.log(confirmation_code)
+        except ValueError as e:
+            self.logerr(f"Error: {e}")
+
+
+    def create_encrypted_wif(self):
+        intermediate_passphrase: str = self.ui.ecIPassphraseQLineEdit.text().strip()
+        seed: str = self.ui.ecSeedQLineEdit.text().strip()
+        wif_type: str = self.ui.createEncryptedWIFTypeQComboBox.currentText()
+        wif_type = self.wif_types[wif_type]
+
+        bip38: BIP38 = BIP38(
+            cryptocurrency=self.get_cryptocurrency(),
+            network=self.get_netowrk()
+        )
+
+        try:
+            encrypted_wif: str = bip38.create_new_encrypted_wif(
+                intermediate_passphrase=intermediate_passphrase,
+                public_key_type=wif_type,
+                seed=seed,
+            )
+            self.ui.decryptWIFQLineEdit.setText(encrypted_wif["encrypted_wif"])
+            self.log(encrypted_wif)
+        except ValueError as e:
+            self.logerr(f"Error: {e}")
 
     def decrypt(self):
         encrypted_wif: str = self.ui.decryptWIFQLineEdit.text().strip()
-        passphrase: str = self.ui.passphraseQLineEdit.text().strip()
+
+        if not (passphrase := self.get_passphrase(validate=True)):
+            return None
 
         bip38: BIP38 = BIP38(
             cryptocurrency=self.get_cryptocurrency(),
@@ -231,7 +293,8 @@ class BIP38Application:
             )
             self.log(decrypted_wif)
         except ValueError as e:
-            self.logerr(f"Error: Invalid Encrypted WIF")
+            self.set_required(self.ui.decryptWIFQLineEdit)
+            self.logerr(f"Error: {e}")
 
     def get_cryptocurrency(self):
         cryptocurrency_name: str = self.ui.cryptocurrencyQComboBox.currentText()
@@ -240,6 +303,14 @@ class BIP38Application:
 
     def get_netowrk(self):
         return self.ui.networkQComboBox.currentText().lower()
+
+    def get_passphrase(self, validate):
+        passphrase: str = self.ui.passphraseQLineEdit.text().strip()
+        if validate and not passphrase:
+            self.set_required(self.ui.passphraseQLineEdit)
+            self.logerr("Error: Passphrase Required")
+
+        return passphrase
 
     def log(self, data: Optional[Union[str, dict]], end="\n") -> None:
         if isinstance(data, dict):
@@ -283,3 +354,9 @@ class BIP38Application:
 
         self.ui.outputQTextEdit.setTextCursor(cursor)
         self.ui.outputQTextEdit.ensureCursorVisible()
+
+    def set_required(self, widget, value=True):
+        widget.setProperty("required", value)
+        widget.style().unpolish(widget)
+        widget.style().polish(widget)
+        widget.update()

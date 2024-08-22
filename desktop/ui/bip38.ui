@@ -374,7 +374,7 @@
        <item>
         <widget class="QStackedWidget" name="modeQStackedWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="noECQWidget">
           <layout class="QVBoxLayout" name="noECVLayout">
@@ -1592,12 +1592,25 @@
                  <widget class="QLineEdit" name="decryptWIFQLineEdit"/>
                 </item>
                 <item>
+                 <widget class="QComboBox" name="createEncryptedWIFTypeQComboBox">
+                  <property name="minimumSize">
+                   <size>
+                    <width>145</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="placeholderText">
+                   <string>(Select)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="createEncryptedWIFQPushButton">
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="text">
-                   <string>Create Encrypted WIF</string>
+                   <string>Create</string>
                   </property>
                  </widget>
                 </item>

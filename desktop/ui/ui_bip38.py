@@ -725,6 +725,12 @@ class Ui_MainWindow(object):
 
         self.decryptWIFHLayout.addWidget(self.decryptWIFQLineEdit)
 
+        self.createEncryptedWIFTypeQComboBox = QComboBox(self.decryptWIFAndButtonContainerQFrame)
+        self.createEncryptedWIFTypeQComboBox.setObjectName(u"createEncryptedWIFTypeQComboBox")
+        self.createEncryptedWIFTypeQComboBox.setMinimumSize(QSize(145, 0))
+
+        self.decryptWIFHLayout.addWidget(self.createEncryptedWIFTypeQComboBox)
+
         self.createEncryptedWIFQPushButton = QPushButton(self.decryptWIFAndButtonContainerQFrame)
         self.createEncryptedWIFQPushButton.setObjectName(u"createEncryptedWIFQPushButton")
         self.createEncryptedWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
@@ -770,7 +776,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.modeQStackedWidget.setCurrentIndex(1)
+        self.modeQStackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -802,7 +808,8 @@ class Ui_MainWindow(object):
         self.ecConfirmCodeQLabel.setText(QCoreApplication.translate("MainWindow", u"Confirm Code", None))
         self.ecConfirmCodeVerifyQPushButton.setText(QCoreApplication.translate("MainWindow", u"Verify", None))
         self.decryptWIFQLabel.setText(QCoreApplication.translate("MainWindow", u"Encrypted WIF", None))
-        self.createEncryptedWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Create Encrypted WIF", None))
+        self.createEncryptedWIFTypeQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
+        self.createEncryptedWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Create", None))
         self.decryptWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Decrypt", None))
         self.outputQGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Output", None))
         self.outputQTextEdit.setPlaceholderText("")

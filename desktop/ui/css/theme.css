@@ -170,6 +170,10 @@ QLineEdit::disabled {
     background-color: rgba(25, 30, 36, 0.5);
 }
 
+QLineEdit[required="true"] {
+    border: 1px solid rgba(255, 96, 96, 0.8);
+}
+
 QTextEdit {
     background-color: transparent;
     border-color: rgb(25, 30, 36);
