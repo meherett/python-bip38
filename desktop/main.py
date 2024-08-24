@@ -85,19 +85,20 @@ class BIP38Application:
             },
             "WIF": {
                 "input": self.ui.noECWIFQLineEdit,
+                "validator": self.regex_validator("^[0-9A-Za-z]{1,52}$"), # alpha num only
                 "optional": False,
-                "min_length": 1
+                "min_length": 51
             },
             "Owner Salt": {
                 "input": self.ui.ecOwnerSaltQLineEdit,
                 "validator": self.regex_validator("^[0-9A-Fa-f]{1,16}$"), # hex only
-                "optional": True,
+                "optional": False,
                 "min_length": 16
             },
             "Seed": {
                 "input": self.ui.ecSeedQLineEdit,
                 "validator": self.regex_validator("^[0-9A-Fa-f]{1,48}$"), # hex only
-                "optional": True,
+                "optional": False,
                 "min_length": 48
             },
             "Lot": {
@@ -112,18 +113,21 @@ class BIP38Application:
             },
             "Intermediate Passphrase": {
                 "input": self.ui.ecIPassphraseQLineEdit,
+                "validator": self.regex_validator("^passphrase[0-9A-Za-z]{1,62}$"), # alpha num only with passphrase prefix
                 "optional": False,
-                "min_length": 1
+                "min_length": 72
             },
             "Confirmation Code": {
                 "input": self.ui.ecConfirmCodeQLineEdit,
+                "validator": self.regex_validator("^cfrm[0-9A-Za-z]{1,71}$"), # alpha num only with passphrase cfrm
                 "optional": False,
-                "min_length": 1
+                "min_length": 75
             },
             "Encrypted WIF": {
                 "input": self.ui.decryptWIFQLineEdit,
+                "validator": self.regex_validator("^[0-9A-Za-z]{1,58}$"), # alpha num only
                 "optional": False,
-                "min_length": 1
+                "min_length": 58
             }
         }
 
@@ -274,7 +278,7 @@ class BIP38Application:
             lot: Optional[int] = str_to_int(lot)
             sequence: Optional[int] = str_to_int(sequence)
 
-            if (lot and not sequence) or (not lot and sequence):
+            if (lot and sequence is None) or (lot is None and sequence):
                 self.set_required(self.ui.ecLotQLineEdit, True)
                 self.set_required(self.ui.ecSequenceQLineEdit, True)
                 raise BIP38Application.ValidationError("'Lot' and 'Sequence' must both be set or both left blank.")
@@ -294,8 +298,8 @@ class BIP38Application:
 
     def ec_confirm_code(self):
         try:
-            passphrase, confirmation_code, encrypted_wif = self.validate_and_get(
-                "Passphrase", "Confirmation Code", "Encrypted WIF"
+            passphrase, confirmation_code = self.validate_and_get(
+                "Passphrase", "Confirmation Code"
             )
 
             confirmation_code = self.bip38().confirm_code(
