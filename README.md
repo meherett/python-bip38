@@ -1,6 +1,6 @@
 # Bitcoin Improvement Proposal - 0038 / BIP38
 
-[![Build Status](https://app.travis-ci.com/meherett/python-bip38.svg?branch=master)](https://app.travis-ci.com/meherett/python-bip38)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml)](https://github.com/meherett/python-bip38/actions/workflows/build.yml)
 [![PyPI Version](https://img.shields.io/pypi/v/bip38.svg?color=blue)](https://pypi.org/project/bip38)
 [![Documentation Status](https://readthedocs.org/projects/bip38/badge/?version=master)](https://bip38.readthedocs.io)
 [![PyPI License](https://img.shields.io/pypi/l/bip38?color=black)](https://pypi.org/project/bip38)
@@ -141,21 +141,21 @@ bip38: BIP38 = BIP38(
 # List of owner salt, seed, public key type, lot, and sequence kwargs
 KWARGS: List[dict] = [
     # Random owner salt & seed, No compression, No lot & sequence
-    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "uncompressed", "lot": None, "sequence": None},
+    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif", "lot": None, "sequence": None},
     # Random owner salt & seed, No compression, With lot & sequence
-    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "uncompressed", "lot": 863741, "sequence": 1},
+    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif", "lot": 863741, "sequence": 1},
     # Random owner salt & seed, Compression, No lot & sequence
-    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "compressed", "lot": None, "sequence": None},
+    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif-compressed", "lot": None, "sequence": None},
     # Random owner salt & seed, Compression, With lot & sequence
-    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "compressed", "lot": 863741, "sequence": 1},
+    {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif-compressed", "lot": 863741, "sequence": 1},
     # With owner salt & seed, No compression, No lot & sequence
-    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": None, "sequence": None},
+    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif", "lot": None, "sequence": None},
     # With owner salt & seed, No compression, With lot & sequence
-    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": 567885, "sequence": 1},
+    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif", "lot": 567885, "sequence": 1},
     # With owner salt & seed, Compression, No lot & sequence
-    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": None, "sequence": None},
+    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif-compressed", "lot": None, "sequence": None},
     # With owner salt & seed, Compression, With lot & sequence
-    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": 369861, "sequence": 1},
+    {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif-compressed", "lot": 369861, "sequence": 1},
 ]
 
 for kwarg in KWARGS:
@@ -166,7 +166,7 @@ for kwarg in KWARGS:
     print("Intermediate Passphrase:", intermediate_passphrase)
 
     encrypted_wif: dict = bip38.create_new_encrypted_wif(
-        intermediate_passphrase=intermediate_passphrase, public_key_type=kwarg["public_key_type"], seed=kwarg["seed"],
+        intermediate_passphrase=intermediate_passphrase, wif_type=kwarg["wif_type"], seed=kwarg["seed"],
     )
     print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
 

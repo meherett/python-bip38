@@ -14,7 +14,7 @@ import importlib.util
 
 # requirements/{name}.txt
 def get_requirements(name: str) -> List[str]:
-    with open(f"requirements/{name}.txt", "r") as requirements:
+    with open(f"{name}.txt", "r") as requirements:
         return list(map(str.strip, requirements.read().split("\n")))
 
 
@@ -46,11 +46,11 @@ setup(
     keywords=info.__keywords__,
     python_requires=">=3.9,<4",
     packages=find_packages(exclude=["tests*"]),
-    install_requires=get_requirements(name="bip38"),
+    install_requires=get_requirements(name="requirements"),
     include_package_data=True,
     extras_require=dict(
-        docs=get_requirements(name="docs"),
-        tests=get_requirements(name="tests")
+        docs=get_requirements(name="requirements/docs"),
+        tests=get_requirements(name="requirements/tests")
     ),
     classifiers=[
         "Development Status :: 5 - Production/Stable",

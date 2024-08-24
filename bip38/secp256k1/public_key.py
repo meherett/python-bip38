@@ -12,9 +12,9 @@ from ecdsa import (
 )
 
 from ..const import (
-    COMPRESSED_PUBLIC_KEY_LENGTH,
-    UNCOMPRESSED_PUBLIC_KEY_LENGTH
+    COMPRESSED_PUBLIC_KEY_LENGTH, UNCOMPRESSED_PUBLIC_KEY_LENGTH
 )
+from ..exceptions import Secp256k1Error
 from .point import Point
 
 
@@ -51,7 +51,7 @@ class PublicKey:
                 )
             )
         except keys.MalformedPointError as ex:
-            raise ValueError("Invalid public key bytes") from ex
+            raise Secp256k1Error("Invalid public key bytes") from ex
 
     @classmethod
     def from_point(cls, point: Point) -> "PublicKey":
@@ -75,7 +75,7 @@ class PublicKey:
                 )
             )
         except keys.MalformedPointError as ex:
-            raise ValueError("Invalid public key point") from ex
+            raise Secp256k1Error("Invalid public key point") from ex
 
     @staticmethod
     def compressed_length() -> int:

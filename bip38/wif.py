@@ -5,7 +5,7 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Union, Tuple, Type, Optional
+    Union, Tuple, Type
 )
 
 from .libs.base58 import (
@@ -14,8 +14,13 @@ from .libs.base58 import (
 from .cryptocurrencies import (
     ICryptocurrency, Bitcoin
 )
-from .const import COMPRESSED_PRIVATE_KEY_PREFIX
+from .const import (
+    COMPRESSED_PRIVATE_KEY_PREFIX, WIF_TYPES
+)
 from .crypto import get_checksum
+from .exceptions import (
+    WIFError, Secp256k1Error
+)
 from .utils import (
     get_bytes, integer_to_bytes, bytes_to_string
 )
@@ -37,7 +42,7 @@ def encode_wif(
     """
 
     if len(get_bytes(private_key)) != 32:
-        raise ValueError(f"Invalid private key length (expected 64, got {len(private_key)!r})")
+        raise Secp256k1Error("Invalid private key length", expected=64, got=len(private_key))
 
     wif_payload: bytes = (
         integer_to_bytes(wif_prefix) + get_bytes(private_key)
@@ -68,21 +73,20 @@ def decode_wif(
 
     raw: bytes = decode(wif)
     if not raw.startswith(integer_to_bytes(wif_prefix)):
-        raise ValueError(f"Invalid wallet important format")
+        raise WIFError(f"Invalid Wallet Important Format (WIF)")
 
     prefix_length: int = len(integer_to_bytes(wif_prefix))
     prefix_got: bytes = raw[:prefix_length]
     if integer_to_bytes(wif_prefix) != prefix_got:
-        raise ValueError(f"Invalid WIF prefix (expected {prefix_length!r}, got {prefix_got!r})")
+        raise WIFError("Invalid WIF prefix", expected=prefix_length, got=prefix_got)
 
     raw_without_prefix: bytes = raw[prefix_length:]
-
     checksum: bytes = raw_without_prefix[-1 * 4:]
     private_key: bytes = raw_without_prefix[:-1 * 4]
     wif_type: str = "wif"
 
     if len(private_key) not in [33, 32]:
-        raise ValueError(f"Invalid wallet important format")
+        raise WIFError(f"Invalid Wallet Important Format (WIF)")
     elif len(private_key) == 33:
         private_key = private_key[:-len(integer_to_bytes(COMPRESSED_PRIVATE_KEY_PREFIX))]
         wif_type = "wif-compressed"
@@ -112,16 +116,12 @@ def private_key_to_wif(
     :rtype: str
     """
 
-    # Getting uncompressed and compressed
+    if wif_type not in WIF_TYPES:
+        raise WIFError("Wrong WIF type", expected=WIF_TYPES, got=wif_type)
     wif, wif_compressed = encode_wif(
         private_key=private_key, wif_prefix=cryptocurrency.NETWORKS[network]["wif_prefix"]
     )
-    if wif_type == "wif":
-        return wif
-    elif wif_type == "wif-compressed":
-        return wif_compressed
-    else:
-        raise ValueError("Invalid WIF type, choose only 'wif' or 'wif-compressed' types")
+    return wif if wif_type == "wif" else wif_compressed
 
 
 def wif_to_private_key(

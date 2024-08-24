@@ -4,8 +4,13 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
+import pytest
+
 from bip38.bip38 import BIP38
 from bip38.cryptocurrencies import Bitcoin
+from bip38.exceptions import (
+    Error, NetworkError, PassphraseError
+)
 
 
 def test_intermediate_code(_):
@@ -38,8 +43,14 @@ def test_bip38_encrypt(_):
         )
 
         assert isinstance(encrypted_wif, str)
-
         assert encrypted_wif == _["bip38"]["encrypt"][index]["encrypted_wif"]
+
+        with pytest.raises(NetworkError):
+            bip38.encrypt(
+                wif=_["bip38"]["encrypt"][index]["wif"],
+                passphrase=_["bip38"]["encrypt"][index]["passphrase"],
+                network="FAKE_NETWORK"
+            )
 
 
 def test_create_new_encrypted_wif(_):
@@ -50,7 +61,7 @@ def test_create_new_encrypted_wif(_):
         )
         encrypted_wif: dict = bip38.create_new_encrypted_wif(
             intermediate_passphrase=_["bip38"]["create_new_encrypted_wif"][index]["intermediate_passphrase"],
-            public_key_type=_["bip38"]["create_new_encrypted_wif"][index]["public_key_type"],
+            wif_type=_["bip38"]["create_new_encrypted_wif"][index]["wif_type"],
             seed=_["bip38"]["create_new_encrypted_wif"][index]["seed"]
         )
 
@@ -61,6 +72,21 @@ def test_create_new_encrypted_wif(_):
         assert encrypted_wif["public_key"] == _["bip38"]["create_new_encrypted_wif"][index]["public_key"]
         assert encrypted_wif["public_key_type"] == _["bip38"]["create_new_encrypted_wif"][index]["public_key_type"]
         assert encrypted_wif["address"] == _["bip38"]["create_new_encrypted_wif"][index]["address"]
+
+        with pytest.raises(PassphraseError):
+            bip38.create_new_encrypted_wif(
+                intermediate_passphrase="FAKE_PASSPHRASE",
+                wif_type=_["bip38"]["create_new_encrypted_wif"][index]["wif_type"],
+                seed=_["bip38"]["create_new_encrypted_wif"][index]["seed"]
+            )
+            
+        with pytest.raises(NetworkError):
+            bip38.create_new_encrypted_wif(
+                intermediate_passphrase=_["bip38"]["create_new_encrypted_wif"][index]["intermediate_passphrase"],
+                wif_type=_["bip38"]["create_new_encrypted_wif"][index]["wif_type"],
+                seed=_["bip38"]["create_new_encrypted_wif"][index]["seed"],
+                network="FAKE_NETWORK"
+            )
 
 
 def test_confirm_code(_):
@@ -92,6 +118,28 @@ def test_confirm_code(_):
         assert confirmed["address"] == _["bip38"]["confirm_code"][index]["address"]
         assert confirmed["lot"] == _["bip38"]["confirm_code"][index]["lot"]
         assert confirmed["sequence"] == _["bip38"]["confirm_code"][index]["sequence"]
+
+        with pytest.raises(NetworkError):
+            bip38.confirm_code(
+                passphrase=_["bip38"]["confirm_code"][index]["passphrase"],
+                confirmation_code=_["bip38"]["confirm_code"][index]["confirmation_code"],
+                detail=False,
+                network="FAKE_NETWORK"
+            )
+
+        with pytest.raises(Error):
+            bip38.confirm_code(
+                passphrase=_["bip38"]["confirm_code"][index]["passphrase"],
+                confirmation_code="FAKE_CONFIRMATION_CODE",
+                detail=False
+            )
+
+        with pytest.raises(PassphraseError):
+            bip38.confirm_code(
+                passphrase="FAKE_PASSPHRASE",
+                confirmation_code=_["bip38"]["confirm_code"][index]["confirmation_code"],
+                detail=False
+            )
 
 
 def test_bip38_decrypt(_):
@@ -127,3 +175,11 @@ def test_bip38_decrypt(_):
         assert decrypted["address"] == _["bip38"]["decrypt"][index]["address"]
         assert decrypted["lot"] == _["bip38"]["decrypt"][index]["lot"]
         assert decrypted["sequence"] == _["bip38"]["decrypt"][index]["sequence"]
+
+        with pytest.raises(NetworkError):
+            bip38.decrypt(
+                encrypted_wif=_["bip38"]["decrypt"][index]["encrypted_wif"],
+                passphrase=_["bip38"]["decrypt"][index]["passphrase"],
+                detail=True,
+                network="FAKE_NETWORK"
+            )

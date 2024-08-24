@@ -11,6 +11,7 @@ from ecdsa import (
 )
 
 from ..const import PRIVATE_KEY_LENGTH
+from ..exceptions import Secp256k1Error
 from .public_key import PublicKey
 
 
@@ -47,7 +48,7 @@ class PrivateKey:
                 )
             )
         except keys.MalformedPointError as ex:
-            raise ValueError("Invalid private key bytes") from ex
+            raise Secp256k1Error("Invalid private key bytes") from ex
 
     @staticmethod
     def length() -> int:

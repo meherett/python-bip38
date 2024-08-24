@@ -17,8 +17,8 @@ PASSPHRASE: str = "meherett"
 OWNER_SALT: Union[str, bytes] = os.urandom(8)  # Example: "75ed1cdeb254cb38"
 # Pick a random seed or use your own
 SEED: Union[str, bytes] = os.urandom(24)  # Example: "99241d58245c883896f80843d2846672d7312e6195ca1a6c"
-# Specify the public key type
-PUBLIC_KEY_TYPE: Literal["uncompressed", "compressed"] = "uncompressed"
+# Specify the WIF type
+WIF_TYPE: Literal["wif", "wif-compressed"] = "wif-compressed"
 # Define the network type
 NETWORK: str = "mainnet"
 # Specify the lot number (100000 <= lot <= 999999), or set to None
@@ -39,7 +39,7 @@ intermediate_passphrase: str = bip38.intermediate_code(
 print("Intermediate Passphrase:", intermediate_passphrase)
 # Create a new encrypted WIF (Wallet Import Format) using the intermediate passphrase
 encrypted_wif: dict = bip38.create_new_encrypted_wif(
-    intermediate_passphrase=intermediate_passphrase, public_key_type=PUBLIC_KEY_TYPE, seed=SEED
+    intermediate_passphrase=intermediate_passphrase, wif_type=WIF_TYPE, seed=SEED
 )
 print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
 # Confirm the encrypted WIF using the passphrase and confirmation code
