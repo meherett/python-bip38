@@ -4,8 +4,8 @@ Bitcoin Improvement Proposal - 0038 / BIP38
 
 |Build Status| |PyPI Version| |Documentation Status| |PyPI License| |PyPI Python Version| |Coverage Status|
 
-.. |Build Status| image:: https://travis-ci.org/meherett/python-bip38.svg?branch=master
-   :target: https://travis-ci.org/meherett/python-bip38?branch=master
+.. |Build Status| image:: https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml
+   :target: https://github.com/meherett/python-bip38/actions/workflows/build.yml
 
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/bip38.svg?color=blue
    :target: https://pypi.org/project/bip38
@@ -172,21 +172,21 @@ EC multiply:
     # List of owner salt, seed, public key type, lot, and sequence kwargs
     KWARGS: List[dict] = [
         # Random owner salt & seed, No compression, No lot & sequence
-        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "uncompressed", "lot": None, "sequence": None},
+        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif", "lot": None, "sequence": None},
         # Random owner salt & seed, No compression, With lot & sequence
-        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "uncompressed", "lot": 863741, "sequence": 1},
+        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif", "lot": 863741, "sequence": 1},
         # Random owner salt & seed, Compression, No lot & sequence
-        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "compressed", "lot": None, "sequence": None},
+        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif-compressed", "lot": None, "sequence": None},
         # Random owner salt & seed, Compression, With lot & sequence
-        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "public_key_type": "compressed", "lot": 863741, "sequence": 1},
+        {"owner_salt": os.urandom(8), "seed": os.urandom(24), "wif_type": "wif-compressed", "lot": 863741, "sequence": 1},
         # With owner salt & seed, No compression, No lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": None, "sequence": None},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif", "lot": None, "sequence": None},
         # With owner salt & seed, No compression, With lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "uncompressed", "lot": 567885, "sequence": 1},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif", "lot": 567885, "sequence": 1},
         # With owner salt & seed, Compression, No lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": None, "sequence": None},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif-compressed", "lot": None, "sequence": None},
         # With owner salt & seed, Compression, With lot & sequence
-        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "public_key_type": "compressed", "lot": 369861, "sequence": 1},
+        {"owner_salt": "75ed1cdeb254cb38", "seed": "99241d58245c883896f80843d2846672d7312e6195ca1a6c", "wif_type": "wif-compressed", "lot": 369861, "sequence": 1},
     ]
 
     for kwarg in KWARGS:
@@ -197,7 +197,7 @@ EC multiply:
         print("Intermediate Passphrase:", intermediate_passphrase)
 
         encrypted_wif: dict = bip38.create_new_encrypted_wif(
-            intermediate_passphrase=intermediate_passphrase, public_key_type=kwarg["public_key_type"], seed=kwarg["seed"],
+            intermediate_passphrase=intermediate_passphrase, wif_type=kwarg["wif_type"], seed=kwarg["seed"],
         )
         print("Encrypted WIF:", json.dumps(encrypted_wif, indent=4))
 
