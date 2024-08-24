@@ -12,6 +12,7 @@ from ecdsa.ellipticcurve import (
 from ecdsa import keys
 
 from ..const import COORDINATE_POINT_LENGTH
+from ..exceptions import Secp256k1Error
 from ..utils import (
     bytes_to_integer, integer_to_bytes
 )
@@ -49,7 +50,7 @@ class Point:
                 )
             )
         except keys.MalformedPointError as ex:
-            raise ValueError("Invalid point key bytes") from ex
+            raise Secp256k1Error("Invalid point key bytes") from ex
         except AttributeError:
             return cls.from_coordinates(
                 bytes_to_integer(point[:COORDINATE_POINT_LENGTH]),
