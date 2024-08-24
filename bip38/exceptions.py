@@ -12,12 +12,8 @@ from typing import (
 class Error(Exception):
 
     def __init__(
-        self,
-        message: str,
-        detail: Optional[str] = None,
-        expected: Any = None,
-        got: Any = None
-    ):
+        self, message: str, detail: Optional[str] = None, expected: Any = None, got: Any = None
+    ) -> None:
         self._message, self._detail, self._expected, self._got = (
             message, detail, None, f"'{got}'"
         )
@@ -42,8 +38,23 @@ class Error(Exception):
             return f"{self._message}"
 
 
+class CryptocurrencyError(Error):
+    pass
+
+
+class NetworkError(Error):
+    pass
+
+
+class Secp256k1Error(Error):
+    pass
+
 
 class AddressError(Error):
+    pass
+
+
+class WIFError(Error):
     pass
 
 

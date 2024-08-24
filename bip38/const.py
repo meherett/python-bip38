@@ -40,6 +40,10 @@ ODD_COMPRESSED_PUBLIC_KEY_PREFIX: int = 0x03
 UNCOMPRESSED_PUBLIC_KEY_PREFIX: int = 0x04
 # Checksum byte length
 CHECKSUM_BYTE_LENGTH: int = 4
+# Wallet Important Format (WIF) types
+WIF_TYPES = ["wif", "wif-compressed"]
+# Public Key types
+PUBLIC_KEY_TYPES = ["uncompressed", "compressed"]
 # List of compression, lot_and_sequence, non_ec, ec, & illegal flags
 FLAGS: Dict[str, List[int]] = {
     "compression": [
