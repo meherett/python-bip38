@@ -8,14 +8,16 @@ import re
 import os
 import json
 import inspect
+import functools
 from typing import (
     Optional, Union
 )
 
+from PySide6.QtCore import QRegularExpression
 from PySide6.QtWidgets import QWidget
 from PySide6.QtGui import (
     QTextCharFormat, QTextCursor, QColor,
-    QTextFormat, QTextOption
+    QTextFormat, QTextOption, QRegularExpressionValidator
 )
 
 from bip38 import (
@@ -69,6 +71,62 @@ class BIP38Application:
             "wif-compressed": "compressed"
         }
 
+        self.inputs = {
+            "Passphrase": {
+                "input": self.ui.passphraseQLineEdit,
+                "optional": False, # cant be empty
+                "min_length": 1
+            },
+            "Private Key": {
+                "input": self.ui.noECPrivateKeyQLineEdit,
+                "validator": self.regex_validator("^[0-9A-Fa-f]{1,64}$"), # hex only
+                "optional": False,
+                "min_length": 64
+            },
+            "WIF": {
+                "input": self.ui.noECWIFQLineEdit,
+                "optional": False,
+                "min_length": 1
+            },
+            "Owner Salt": {
+                "input": self.ui.ecOwnerSaltQLineEdit,
+                "validator": self.regex_validator("^[0-9A-Fa-f]{1,16}$"), # hex only
+                "optional": True,
+                "min_length": 16
+            },
+            "Seed": {
+                "input": self.ui.ecSeedQLineEdit,
+                "validator": self.regex_validator("^[0-9A-Fa-f]{1,48}$"), # hex only
+                "optional": True,
+                "min_length": 48
+            },
+            "Lot": {
+                "input": self.ui.ecLotQLineEdit,
+                "optional": True,
+                "min_length": 6
+            },
+            "Sequence": {
+                "input": self.ui.ecSequenceQLineEdit,
+                "optional": True,
+                "min_length": 1
+            },
+            "Intermediate Passphrase": {
+                "input": self.ui.ecIPassphraseQLineEdit,
+                "optional": False,
+                "min_length": 1
+            },
+            "Confirmation Code": {
+                "input": self.ui.ecConfirmCodeQLineEdit,
+                "optional": False,
+                "min_length": 1
+            },
+            "Encrypted WIF": {
+                "input": self.ui.decryptWIFQLineEdit,
+                "optional": False,
+                "min_length": 1
+            }
+        }
+
         self.__init_ui()
 
     def __init_ui(self) -> None:
@@ -92,6 +150,17 @@ class BIP38Application:
         self.ui.noECWIFTypeQComboBox.addItems(self.wif_types.keys())
         self.ui.noECWIFTypeQComboBox.setCurrentIndex(0)
 
+        self.ui.createEncryptedWIFTypeQComboBox.addItems(self.wif_types.keys())
+        self.ui.createEncryptedWIFTypeQComboBox.setCurrentIndex(0)
+
+        # validation stuff
+
+        for key, item in self.inputs.items():
+            qt_input = item["input"]
+            
+            if "validator" in item:
+                qt_input.setValidator(item["validator"])
+            qt_input.textChanged.connect(functools.partial(self.validate_input, key))
 
         self.ui.ecLotQLineEdit.textEdited.connect(
             lambda: self.validate_int(self.ui.ecLotQLineEdit)
@@ -106,8 +175,6 @@ class BIP38Application:
         self.ui.ecSequenceQLineEdit.editingFinished.connect(
             lambda: self.enforce_int_range(self.ui.ecSequenceQLineEdit, 0, 4095)
         )
-        self.ui.createEncryptedWIFTypeQComboBox.addItems(self.wif_types.keys())
-        self.ui.createEncryptedWIFTypeQComboBox.setCurrentIndex(0)
 
         # button bindings
         self.ui.noECPrivateKeyConvertQPushButton.clicked.connect(self.noec_convert_private_key)
@@ -136,20 +203,6 @@ class BIP38Application:
         self.ui.cryptocurrencyQComboBox.setCurrentText("Bitcoin")
         self.ui.modeQComboBox.setCurrentIndex(0)
 
-    def validate_int(self, line_edit):
-        text = line_edit.text()
-        if not text.isdigit():
-            line_edit.setText(''.join(filter(str.isdigit, text)))
-
-    def enforce_int_range(self, line_edit, min_value, max_value):
-        text = line_edit.text()
-        validator = line_edit.validator()
-
-        if text.isdigit():
-            value = int(text)
-            value = max(min_value, min(value, max_value)) # clamp
-            line_edit.setText(str(value))
-
     def change_cryptocurrency(self, cryptocurrency: str) -> None:
         cryptocurrency_class: ICryptocurrency = self.cryptocurrencies[cryptocurrency]
 
@@ -164,61 +217,69 @@ class BIP38Application:
         self.ui.createEncryptedWIFTypeQComboBox.setVisible(is_on_ec)
         self.ui.createEncryptedWIFQPushButton.setVisible(is_on_ec)
         self.ui.modeQStackedWidget.setCurrentWidget(self.modes[mode])
+        self.clean_all_required()
 
-    def noec_convert_private_key(self):
-        private_key: str = self.ui.noECPrivateKeyQLineEdit.text().strip()
-        wif_type: str = self.ui.noECWIFTypeQComboBox.currentText()
-   
+    def cryptocurrency(self):
+        cryptocurrency_name: str = self.ui.cryptocurrencyQComboBox.currentText()
+        cryptocurrency: ICryptocurrency = self.cryptocurrencies[cryptocurrency_name]
+        return cryptocurrency
+
+    def netowrk(self):
+        return self.ui.networkQComboBox.currentText().lower()
+
+
+    def bip38(self):
+        return BIP38(
+            cryptocurrency=self.cryptocurrency(),
+            network=self.netowrk()
+        )
+
+    def noec_convert_private_key(self):   
         try:
+            private_key, = self.validate_and_get("Private Key")
+            
             wif: str = private_key_to_wif(
                 private_key=private_key,
-                cryptocurrency=self.get_cryptocurrency(),
-                network=self.get_netowrk(),
-                wif_type=wif_type
+                cryptocurrency=self.cryptocurrency(),
+                network=self.netowrk(),
+                wif_type=self.ui.noECWIFTypeQComboBox.currentText()
             )
             self.ui.noECWIFQLineEdit.setText(wif)
-        except ValueError as e:
-            self.set_required(self.ui.noECPrivateKeyQLineEdit)
+        except (ValueError, BIP38Application.ValidationError) as e:
             self.logerr(f"Error: {e}")
 
     def noec_encrypt(self):
-        wif: str = self.ui.noECWIFQLineEdit.text().strip()
-
-        # validate=True will show error if passphrase is not set
-        if not (passphrase := self.get_passphrase(validate=True)):
-            return None
-
-        bip38: BIP38 = BIP38(
-            cryptocurrency=self.get_cryptocurrency(),
-            network=self.get_netowrk()
-        )
-
         try:
-            encrypted_wif: str = bip38.encrypt(
+            wif, passphrase = self.validate_and_get("WIF", "Passphrase")
+
+            encrypted_wif: str = self.bip38().encrypt(
                 wif=wif,
                 passphrase=passphrase
             )
             self.ui.decryptWIFQLineEdit.setText(encrypted_wif)
             self.log(encrypted_wif)
         except ValueError as e:
-            self.set_required(self.ui.noECWIFQLineEdit)
+            self.set_required(self.ui.noECWIFQLineEdit, True)
             self.logerr(f"Error: {e}")
+        except BIP38Application.ValidationError as ve:
+            self.logerr(f"Error: {ve}")
 
     def ec_generate_ipassphrase(self):
-        if not (passphrase := self.get_passphrase(validate=True)):
-            return None
-
-        owner_salt: str = self.ui.ecOwnerSaltQLineEdit.text().strip()
-        lot: Optional[int] = str_to_int(self.ui.ecLotQLineEdit.text())
-        sequence: Optional[int] = str_to_int(self.ui.ecSequenceQLineEdit.text())
-
-        bip38: BIP38 = BIP38(
-            cryptocurrency=self.get_cryptocurrency(),
-            network=self.get_netowrk()
-        )
-
         try:
-            intermediate_passphrase: str = bip38.intermediate_code(
+
+            passphrase, owner_salt, lot, sequence = self.validate_and_get(
+                "Passphrase", "Owner Salt", "Lot", "Sequence"
+            )
+
+            lot: Optional[int] = str_to_int(lot)
+            sequence: Optional[int] = str_to_int(sequence)
+
+            if (lot and not sequence) or (not lot and sequence):
+                self.set_required(self.ui.ecLotQLineEdit, True)
+                self.set_required(self.ui.ecSequenceQLineEdit, True)
+                raise BIP38Application.ValidationError("'Lot' and 'Sequence' must both be set or both left blank.")
+
+            intermediate_passphrase: str = self.bip38().intermediate_code(
                 passphrase=passphrase,
                 owner_salt=owner_salt,
                 lot=lot,
@@ -226,45 +287,39 @@ class BIP38Application:
             )
             self.ui.ecIPassphraseQLineEdit.setText(intermediate_passphrase)
             self.log(intermediate_passphrase)
-        except ValueError as e:
+        except ValueError  as e:
             self.logerr(f"Error: {e}")
+        except BIP38Application.ValidationError as ve:
+            self.logerr(f"Error: {ve}")
 
     def ec_confirm_code(self):
-        if not (passphrase := self.get_passphrase(validate=True)):
-            return None
-
-        confirmation_code: str = self.ui.ecConfirmCodeQLineEdit.text().strip()
-        encrypted_wif: str = self.ui.decryptWIFQLineEdit.text().strip()
-
-        bip38: BIP38 = BIP38(
-            cryptocurrency=self.get_cryptocurrency(),
-            network=self.get_netowrk()
-        )
-
         try:
-            confirmation_code=bip38.confirm_code(
+            passphrase, confirmation_code, encrypted_wif = self.validate_and_get(
+                "Passphrase", "Confirmation Code", "Encrypted WIF"
+            )
+
+            confirmation_code = self.bip38().confirm_code(
                     passphrase=passphrase,
                     confirmation_code=confirmation_code, 
                     detail=True
             )
             self.log(confirmation_code)
         except ValueError as e:
+            self.set_required(self.ui.ecConfirmCodeQLineEdit, True)
             self.logerr(f"Error: {e}")
-
+        except BIP38Application.ValidationError as ve:
+            self.logerr(f"Error: {ve}")
 
     def create_encrypted_wif(self):
-        intermediate_passphrase: str = self.ui.ecIPassphraseQLineEdit.text().strip()
-        seed: str = self.ui.ecSeedQLineEdit.text().strip()
-        wif_type: str = self.ui.createEncryptedWIFTypeQComboBox.currentText()
-        wif_type = self.wif_types[wif_type]
-
-        bip38: BIP38 = BIP38(
-            cryptocurrency=self.get_cryptocurrency(),
-            network=self.get_netowrk()
-        )
-
         try:
-            encrypted_wif: str = bip38.create_new_encrypted_wif(
+            seed, intermediate_passphrase = self.validate_and_get(
+                "Seed", "Intermediate Passphrase"
+            )
+
+            wif_type: str = self.ui.createEncryptedWIFTypeQComboBox.currentText()
+            wif_type = self.wif_types[wif_type]
+
+            encrypted_wif: str = self.bip38().create_new_encrypted_wif(
                 intermediate_passphrase=intermediate_passphrase,
                 public_key_type=wif_type,
                 seed=seed,
@@ -272,45 +327,26 @@ class BIP38Application:
             self.ui.decryptWIFQLineEdit.setText(encrypted_wif["encrypted_wif"])
             self.log(encrypted_wif)
         except ValueError as e:
+            self.set_required(self.ui.ecIPassphraseQLineEdit, True)
             self.logerr(f"Error: {e}")
+        except BIP38Application.ValidationError as ve:
+            self.logerr(f"Error: {ve}")
+
 
     def decrypt(self):
-        encrypted_wif: str = self.ui.decryptWIFQLineEdit.text().strip()
-
-        if not (passphrase := self.get_passphrase(validate=True)):
-            return None
-
-        bip38: BIP38 = BIP38(
-            cryptocurrency=self.get_cryptocurrency(),
-            network=self.get_netowrk()
-        )
-
         try:
-            decrypted_wif: dict = bip38.decrypt(
+            encrypted_wif, passphrase = self.validate_and_get("Encrypted WIF", "Passphrase")
+            decrypted_wif: dict = self.bip38().decrypt(
                 encrypted_wif=encrypted_wif,
                 passphrase=passphrase,
                 detail=True
             )
             self.log(decrypted_wif)
         except ValueError as e:
-            self.set_required(self.ui.decryptWIFQLineEdit)
+            self.set_required(self.ui.decryptWIFQLineEdit, True)
             self.logerr(f"Error: {e}")
-
-    def get_cryptocurrency(self):
-        cryptocurrency_name: str = self.ui.cryptocurrencyQComboBox.currentText()
-        cryptocurrency: ICryptocurrency = self.cryptocurrencies[cryptocurrency_name]
-        return cryptocurrency
-
-    def get_netowrk(self):
-        return self.ui.networkQComboBox.currentText().lower()
-
-    def get_passphrase(self, validate):
-        passphrase: str = self.ui.passphraseQLineEdit.text().strip()
-        if validate and not passphrase:
-            self.set_required(self.ui.passphraseQLineEdit)
-            self.logerr("Error: Passphrase Required")
-
-        return passphrase
+        except BIP38Application.ValidationError as ve:
+            self.logerr(f"Error: {ve}")
 
     def log(self, data: Optional[Union[str, dict]], end="\n") -> None:
         if isinstance(data, dict):
@@ -355,8 +391,65 @@ class BIP38Application:
         self.ui.outputQTextEdit.setTextCursor(cursor)
         self.ui.outputQTextEdit.ensureCursorVisible()
 
+    ## validation related functions 
+
+    class ValidationError(Exception):
+        def __init__(self, message):
+            super().__init__(message)
+
+    def validate_and_get(self, *args):
+        self.clean_all_required() # forget old validations
+        
+        all_data = ()
+        valid_inputs = 0
+
+        for input_key in args:
+            input_data = self.inputs[input_key]
+            text = input_data["input"].text()
+
+            all_data += (text,)
+            valid_inputs += self.validate_input(input_key, text)
+
+        if len(args) != valid_inputs:
+            raise BIP38Application.ValidationError("Please Fill All Required Fields!")
+
+        return all_data
+
+    def validate_input(self, input_key, text):
+        input_data = self.inputs[input_key]
+
+        qt_input = input_data["input"]
+        optional = input_data["optional"]
+        min_length = input_data["min_length"]
+
+        is_valid = len(text) >= min_length or (optional and len(text) == 0)
+        self.set_required(qt_input, not is_valid)
+
+        return is_valid
+
     def set_required(self, widget, value=True):
         widget.setProperty("required", value)
         widget.style().unpolish(widget)
         widget.style().polish(widget)
         widget.update()
+
+    def clean_all_required(self):
+        for key, item in self.inputs.items():
+            self.set_required(item["input"], False)
+
+    def validate_int(self, line_edit):
+        text = line_edit.text()
+        if not text.isdigit():
+            line_edit.setText(''.join(filter(str.isdigit, text)))
+
+    def enforce_int_range(self, line_edit, min_value, max_value):
+        text = line_edit.text()
+        validator = line_edit.validator()
+
+        if text.isdigit():
+            value = int(text)
+            value = max(min_value, min(value, max_value)) # clamp
+            line_edit.setText(str(value))
+
+    def regex_validator(self, regex):
+        return QRegularExpressionValidator(QRegularExpression(regex))
