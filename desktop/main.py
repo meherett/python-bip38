@@ -23,6 +23,9 @@ from PySide6.QtGui import (
 from bip38 import (
     cryptocurrencies, BIP38
 )
+from bip38.exceptions import (
+    Error, PassphraseError, WIFError
+)
 from bip38.cryptocurrencies import ICryptocurrency
 from bip38.wif import private_key_to_wif
 
@@ -66,10 +69,7 @@ class BIP38Application:
             "EC-Multiply": self.ui.ecQWidget,
         }
 
-        self.wif_types = {
-            "wif": "uncompressed", 
-            "wif-compressed": "compressed"
-        }
+        self.wif_types = ["wif", "wif-compressed"]
 
         self.inputs = {
             "Passphrase": {
@@ -151,10 +151,10 @@ class BIP38Application:
         )
         self.ui.modeQComboBox.currentTextChanged.connect(self.change_mode)
 
-        self.ui.noECWIFTypeQComboBox.addItems(self.wif_types.keys())
+        self.ui.noECWIFTypeQComboBox.addItems(self.wif_types)
         self.ui.noECWIFTypeQComboBox.setCurrentIndex(0)
 
-        self.ui.createEncryptedWIFTypeQComboBox.addItems(self.wif_types.keys())
+        self.ui.createEncryptedWIFTypeQComboBox.addItems(self.wif_types)
         self.ui.createEncryptedWIFTypeQComboBox.setCurrentIndex(0)
 
         # validation stuff
@@ -249,7 +249,7 @@ class BIP38Application:
                 wif_type=self.ui.noECWIFTypeQComboBox.currentText()
             )
             self.ui.noECWIFQLineEdit.setText(wif)
-        except (ValueError, BIP38Application.ValidationError) as e:
+        except (Error, BIP38Application.ValidationError) as e:
             self.logerr(f"Error: {e}")
 
     def noec_encrypt(self):
@@ -262,11 +262,11 @@ class BIP38Application:
             )
             self.ui.decryptWIFQLineEdit.setText(encrypted_wif)
             self.log(encrypted_wif)
-        except ValueError as e:
+        except WIFError as we:
             self.set_required(self.ui.noECWIFQLineEdit, True)
+            self.logerr(f"Error: {we}")
+        except (Error, BIP38Application.ValidationError) as e:
             self.logerr(f"Error: {e}")
-        except BIP38Application.ValidationError as ve:
-            self.logerr(f"Error: {ve}")
 
     def ec_generate_ipassphrase(self):
         try:
@@ -291,10 +291,8 @@ class BIP38Application:
             )
             self.ui.ecIPassphraseQLineEdit.setText(intermediate_passphrase)
             self.log(intermediate_passphrase)
-        except ValueError  as e:
+        except (Error, BIP38Application.ValidationError) as e:
             self.logerr(f"Error: {e}")
-        except BIP38Application.ValidationError as ve:
-            self.logerr(f"Error: {ve}")
 
     def ec_confirm_code(self):
         try:
@@ -308,7 +306,11 @@ class BIP38Application:
                     detail=True
             )
             self.log(confirmation_code)
-        except ValueError as e:
+
+        except PassphraseError as pe:
+            self.set_required(self.ui.passphraseQLineEdit, True)
+            self.logerr(f"Error: {pe}") 
+        except Error as e:
             self.set_required(self.ui.ecConfirmCodeQLineEdit, True)
             self.logerr(f"Error: {e}")
         except BIP38Application.ValidationError as ve:
@@ -321,21 +323,20 @@ class BIP38Application:
             )
 
             wif_type: str = self.ui.createEncryptedWIFTypeQComboBox.currentText()
-            wif_type = self.wif_types[wif_type]
 
             encrypted_wif: str = self.bip38().create_new_encrypted_wif(
                 intermediate_passphrase=intermediate_passphrase,
-                public_key_type=wif_type,
+                wif_type=wif_type,
                 seed=seed,
             )
             self.ui.decryptWIFQLineEdit.setText(encrypted_wif["encrypted_wif"])
             self.log(encrypted_wif)
-        except ValueError as e:
-            self.set_required(self.ui.ecIPassphraseQLineEdit, True)
-            self.logerr(f"Error: {e}")
-        except BIP38Application.ValidationError as ve:
-            self.logerr(f"Error: {ve}")
 
+        except PassphraseError as pe:
+            self.set_required(self.ui.ecIPassphraseQLineEdit, True)
+            self.logerr(f"Error: {pe}") 
+        except (Error, BIP38Application.ValidationError) as e:
+            self.logerr(f"Error: {e}")
 
     def decrypt(self):
         try:
@@ -346,11 +347,14 @@ class BIP38Application:
                 detail=True
             )
             self.log(decrypted_wif)
-        except ValueError as e:
+        except WIFError as we:
             self.set_required(self.ui.decryptWIFQLineEdit, True)
+            self.logerr(f"Error: {we}")
+        except PassphraseError as pe:
+            self.set_required(self.ui.passphraseQLineEdit, True)
+            self.logerr(f"Error: {pe}") 
+        except (Error, BIP38Application.ValidationError) as e:
             self.logerr(f"Error: {e}")
-        except BIP38Application.ValidationError as ve:
-            self.logerr(f"Error: {ve}")
 
     def log(self, data: Optional[Union[str, dict]], end="\n") -> None:
         if isinstance(data, dict):
