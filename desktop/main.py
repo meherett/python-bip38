@@ -218,7 +218,7 @@ class BIP38Application:
 
     def change_mode(self, mode: str) -> None:
         is_on_ec = "EC-Multiply" == mode
-        self.ui.createEncryptedWIFTypeQComboBox.setVisible(is_on_ec)
+        self.ui.decryptWIFTypeContainerQFrame.setVisible(is_on_ec)
         self.ui.createEncryptedWIFQPushButton.setVisible(is_on_ec)
         self.ui.modeQStackedWidget.setCurrentWidget(self.modes[mode])
         self.clean_all_required()

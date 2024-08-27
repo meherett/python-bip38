@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         self.centeralWidgetLayout = QVBoxLayout(self.centralwidget)
         self.centeralWidgetLayout.setSpacing(0)
         self.centeralWidgetLayout.setObjectName(u"centeralWidgetLayout")
-        self.centeralWidgetLayout.setContentsMargins(10, 10, 10, 10)
+        self.centeralWidgetLayout.setContentsMargins(15, 15, 15, 15)
         self.bip38ContainerQFrame = QFrame(self.centralwidget)
         self.bip38ContainerQFrame.setObjectName(u"bip38ContainerQFrame")
         self.bip38ContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -682,14 +682,14 @@ class Ui_MainWindow(object):
 
         self.decryptWIFAndButtonsContainerQFrame = QFrame(self.bip38ContainerQFrame)
         self.decryptWIFAndButtonsContainerQFrame.setObjectName(u"decryptWIFAndButtonsContainerQFrame")
-        self.decryptWIFAndButtonsContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.decryptWIFAndButtonsContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
-        self.decryptWIFfHorizontalLayout = QHBoxLayout(self.decryptWIFAndButtonsContainerQFrame)
-        self.decryptWIFfHorizontalLayout.setSpacing(15)
-        self.decryptWIFfHorizontalLayout.setObjectName(u"decryptWIFfHorizontalLayout")
-        self.decryptWIFfHorizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.decryptWIFAndButtonsQFrameHLayout = QHBoxLayout(self.decryptWIFAndButtonsContainerQFrame)
+        self.decryptWIFAndButtonsQFrameHLayout.setSpacing(15)
+        self.decryptWIFAndButtonsQFrameHLayout.setObjectName(u"decryptWIFAndButtonsQFrameHLayout")
+        self.decryptWIFAndButtonsQFrameHLayout.setContentsMargins(0, 0, 0, 0)
         self.decryptWIFContainerQFrame = QFrame(self.decryptWIFAndButtonsContainerQFrame)
         self.decryptWIFContainerQFrame.setObjectName(u"decryptWIFContainerQFrame")
+        self.decryptWIFContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.decryptWIFContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.decryptWIFContainerQFrameVLayout = QVBoxLayout(self.decryptWIFContainerQFrame)
         self.decryptWIFContainerQFrameVLayout.setSpacing(5)
         self.decryptWIFContainerQFrameVLayout.setObjectName(u"decryptWIFContainerQFrameVLayout")
@@ -712,44 +712,87 @@ class Ui_MainWindow(object):
 
         self.decryptWIFContainerQFrameVLayout.addWidget(self.decryptWIFLableContainerQFrame)
 
-        self.decryptWIFAndButtonContainerQFrame = QFrame(self.decryptWIFContainerQFrame)
-        self.decryptWIFAndButtonContainerQFrame.setObjectName(u"decryptWIFAndButtonContainerQFrame")
-        self.decryptWIFAndButtonContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.decryptWIFAndButtonContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
-        self.decryptWIFHLayout = QHBoxLayout(self.decryptWIFAndButtonContainerQFrame)
-        self.decryptWIFHLayout.setSpacing(15)
-        self.decryptWIFHLayout.setObjectName(u"decryptWIFHLayout")
-        self.decryptWIFHLayout.setContentsMargins(0, 0, 0, 0)
-        self.decryptWIFQLineEdit = QLineEdit(self.decryptWIFAndButtonContainerQFrame)
+        self.decryptWIFQLineEdit = QLineEdit(self.decryptWIFContainerQFrame)
         self.decryptWIFQLineEdit.setObjectName(u"decryptWIFQLineEdit")
 
-        self.decryptWIFHLayout.addWidget(self.decryptWIFQLineEdit)
+        self.decryptWIFContainerQFrameVLayout.addWidget(self.decryptWIFQLineEdit)
 
-        self.createEncryptedWIFTypeQComboBox = QComboBox(self.decryptWIFAndButtonContainerQFrame)
+
+        self.decryptWIFAndButtonsQFrameHLayout.addWidget(self.decryptWIFContainerQFrame)
+
+        self.decryptWIFTypeContainerQFrame = QFrame(self.decryptWIFAndButtonsContainerQFrame)
+        self.decryptWIFTypeContainerQFrame.setObjectName(u"decryptWIFTypeContainerQFrame")
+        self.decryptWIFTypeContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.decryptWIFTypeContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.decryptWIFTypeContainerQFrameVLayout = QVBoxLayout(self.decryptWIFTypeContainerQFrame)
+        self.decryptWIFTypeContainerQFrameVLayout.setObjectName(u"decryptWIFTypeContainerQFrameVLayout")
+        self.decryptWIFTypeContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
+        self.wifTypeLableContainerQFrame = QFrame(self.decryptWIFTypeContainerQFrame)
+        self.wifTypeLableContainerQFrame.setObjectName(u"wifTypeLableContainerQFrame")
+        self.wifTypeLabelContainerQFrameHLayout2 = QHBoxLayout(self.wifTypeLableContainerQFrame)
+        self.wifTypeLabelContainerQFrameHLayout2.setSpacing(15)
+        self.wifTypeLabelContainerQFrameHLayout2.setObjectName(u"wifTypeLabelContainerQFrameHLayout2")
+        self.wifTypeLabelContainerQFrameHLayout2.setContentsMargins(0, 0, 0, 0)
+        self.wifTypeQLabel = QLabel(self.wifTypeLableContainerQFrame)
+        self.wifTypeQLabel.setObjectName(u"wifTypeQLabel")
+
+        self.wifTypeLabelContainerQFrameHLayout2.addWidget(self.wifTypeQLabel)
+
+        self.wifTypeLabelContainerQFrameHSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.wifTypeLabelContainerQFrameHLayout2.addItem(self.wifTypeLabelContainerQFrameHSpacer)
+
+
+        self.decryptWIFTypeContainerQFrameVLayout.addWidget(self.wifTypeLableContainerQFrame)
+
+        self.createEncryptedWIFTypeQComboBox = QComboBox(self.decryptWIFTypeContainerQFrame)
         self.createEncryptedWIFTypeQComboBox.setObjectName(u"createEncryptedWIFTypeQComboBox")
         self.createEncryptedWIFTypeQComboBox.setMinimumSize(QSize(145, 0))
 
-        self.decryptWIFHLayout.addWidget(self.createEncryptedWIFTypeQComboBox)
+        self.decryptWIFTypeContainerQFrameVLayout.addWidget(self.createEncryptedWIFTypeQComboBox)
 
-        self.createEncryptedWIFQPushButton = QPushButton(self.decryptWIFAndButtonContainerQFrame)
+
+        self.decryptWIFAndButtonsQFrameHLayout.addWidget(self.decryptWIFTypeContainerQFrame)
+
+        self.decryptWIFButtonsContainerQFrame = QFrame(self.decryptWIFAndButtonsContainerQFrame)
+        self.decryptWIFButtonsContainerQFrame.setObjectName(u"decryptWIFButtonsContainerQFrame")
+        self.decryptWIFButtonsContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.decryptWIFButtonsContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.decryptWIFButtonsContainerQFrameVLayout = QVBoxLayout(self.decryptWIFButtonsContainerQFrame)
+        self.decryptWIFButtonsContainerQFrameVLayout.setSpacing(5)
+        self.decryptWIFButtonsContainerQFrameVLayout.setObjectName(u"decryptWIFButtonsContainerQFrameVLayout")
+        self.decryptWIFButtonsContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalSpacer = QSpacerItem(20, 49, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.decryptWIFButtonsContainerQFrameVLayout.addItem(self.verticalSpacer)
+
+        self.decryptWIFButtonsQFrame = QFrame(self.decryptWIFButtonsContainerQFrame)
+        self.decryptWIFButtonsQFrame.setObjectName(u"decryptWIFButtonsQFrame")
+        self.decryptWIFButtonsQFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.decryptWIFButtonsQFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.decryptWIFButtonsQFrameHLayout = QHBoxLayout(self.decryptWIFButtonsQFrame)
+        self.decryptWIFButtonsQFrameHLayout.setSpacing(15)
+        self.decryptWIFButtonsQFrameHLayout.setObjectName(u"decryptWIFButtonsQFrameHLayout")
+        self.decryptWIFButtonsQFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.createEncryptedWIFQPushButton = QPushButton(self.decryptWIFButtonsQFrame)
         self.createEncryptedWIFQPushButton.setObjectName(u"createEncryptedWIFQPushButton")
         self.createEncryptedWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
-        self.decryptWIFHLayout.addWidget(self.createEncryptedWIFQPushButton)
+        self.decryptWIFButtonsQFrameHLayout.addWidget(self.createEncryptedWIFQPushButton)
 
-        self.decryptWIFQPushButton = QPushButton(self.decryptWIFAndButtonContainerQFrame)
+        self.decryptWIFQPushButton = QPushButton(self.decryptWIFButtonsQFrame)
         self.decryptWIFQPushButton.setObjectName(u"decryptWIFQPushButton")
         sizePolicy.setHeightForWidth(self.decryptWIFQPushButton.sizePolicy().hasHeightForWidth())
         self.decryptWIFQPushButton.setSizePolicy(sizePolicy)
         self.decryptWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
-        self.decryptWIFHLayout.addWidget(self.decryptWIFQPushButton)
+        self.decryptWIFButtonsQFrameHLayout.addWidget(self.decryptWIFQPushButton)
 
 
-        self.decryptWIFContainerQFrameVLayout.addWidget(self.decryptWIFAndButtonContainerQFrame)
+        self.decryptWIFButtonsContainerQFrameVLayout.addWidget(self.decryptWIFButtonsQFrame)
 
 
-        self.decryptWIFfHorizontalLayout.addWidget(self.decryptWIFContainerQFrame)
+        self.decryptWIFAndButtonsQFrameHLayout.addWidget(self.decryptWIFButtonsContainerQFrame)
 
 
         self.verticalLayout.addWidget(self.decryptWIFAndButtonsContainerQFrame)
@@ -776,7 +819,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.modeQStackedWidget.setCurrentIndex(0)
+        self.modeQStackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -810,6 +853,7 @@ class Ui_MainWindow(object):
         self.ecConfirmCodeQLabel.setText(QCoreApplication.translate("MainWindow", u"Confirm Code", None))
         self.ecConfirmCodeVerifyQPushButton.setText(QCoreApplication.translate("MainWindow", u"Verify", None))
         self.decryptWIFQLabel.setText(QCoreApplication.translate("MainWindow", u"Encrypted WIF", None))
+        self.wifTypeQLabel.setText(QCoreApplication.translate("MainWindow", u"WIF Type", None))
         self.createEncryptedWIFTypeQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.createEncryptedWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Create", None))
         self.decryptWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Decrypt", None))
