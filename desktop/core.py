@@ -66,10 +66,6 @@ class Application(QMainWindow):
         self.theme_watcher.fileChanged.connect(lambda: self.load_stylesheet(css_path))
         self.load_stylesheet(css_path)
 
-        # Remove Combo shadow
-        for combo in self.findChildren(QComboBox):
-            combo.findChild(QFrame).setWindowFlags(Qt.Popup | Qt.NoDropShadowWindowHint)
-
     def load_stylesheet(self, path: str) -> None:
         """
         Load and apply a stylesheet from the specified path.
