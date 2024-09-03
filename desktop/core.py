@@ -13,6 +13,9 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import (
     Qt, QFileSystemWatcher
 )
+from PySide6.QtGui import (
+    QFontDatabase
+)
 
 from desktop.utils import resolve_path
 from desktop.ui.ui_bip38 import Ui_MainWindow
@@ -64,6 +67,7 @@ class Application(QMainWindow):
         css_path = resolve_path("desktop/ui/css/theme.css")
         self.theme_watcher = QFileSystemWatcher([css_path])
         self.theme_watcher.fileChanged.connect(lambda: self.load_stylesheet(css_path))
+        QFontDatabase.addApplicationFont(resolve_path("desktop/ui/font/HD Wallet-Regular.ttf"))
         self.load_stylesheet(css_path)
 
     def load_stylesheet(self, path: str) -> None:
