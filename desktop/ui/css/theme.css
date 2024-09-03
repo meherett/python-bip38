@@ -13,7 +13,8 @@ QFrame{
 }
 
 QLabel {
-    font: 11pt "Segoe UI";
+    font: 10pt "HDWallet";
+    letter-spacing: 1px;
     color: rgb(255, 255, 255);
 }
 
@@ -23,7 +24,8 @@ QGroupBox {
     border: 1px solid rgba(0, 191, 165, 0.8);
     border-radius: 3px;
     margin-top: 8px;
-    font: 11pt "Segoe UI";
+    font: 10pt "HDWallet";
+    letter-spacing: 1px;
 }
 
 QGroupBox::title {
@@ -188,7 +190,8 @@ QTextEdit {
 }
 
 QPushButton {
-    font: 10pt "Segoe UI";
+    font: 10pt "HDWallet";
+    letter-spacing: 1px;
     font-weight: lighter;
     letter-spacing: 1px;
     background-color: rgb(25, 30, 36);
