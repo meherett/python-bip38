@@ -16,6 +16,7 @@ QLabel {
     font: 10pt "HDWallet";
     letter-spacing: 1px;
     color: rgb(255, 255, 255);
+    text-transform: uppercase;
 }
 
 
