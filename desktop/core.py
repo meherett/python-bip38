@@ -14,7 +14,7 @@ from PySide6.QtCore import (
     Qt, QFileSystemWatcher
 )
 from PySide6.QtGui import (
-    QFontDatabase
+    QFontDatabase, QIcon
 )
 
 from desktop.utils import resolve_path
@@ -63,7 +63,10 @@ class Application(QMainWindow):
 
         self.detached_window = None
 
-        self.setWindowTitle("BIP38")
+        self.setWindowTitle("Bitcoin Improvement Proposal - 0038")
+        self.bip38_icon = QIcon(resolve_path("desktop/ui/images/icon/icon.ico"))
+        self.setWindowIcon(self.bip38_icon)
+
         css_path = resolve_path("desktop/ui/css/theme.css")
         self.theme_watcher = QFileSystemWatcher([css_path])
         self.theme_watcher.fileChanged.connect(lambda: self.load_stylesheet(css_path))
