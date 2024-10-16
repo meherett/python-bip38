@@ -67,7 +67,7 @@ class Application(QMainWindow):
         css_path = resolve_path("desktop/ui/css/theme.css")
         self.theme_watcher = QFileSystemWatcher([css_path])
         self.theme_watcher.fileChanged.connect(lambda: self.load_stylesheet(css_path))
-        QFontDatabase.addApplicationFont(resolve_path("desktop/ui/font/HD Wallet-Regular.ttf"))
+        QFontDatabase.addApplicationFont(resolve_path("desktop/ui/font/HDWallet.ttf"))
         self.load_stylesheet(css_path)
 
     def load_stylesheet(self, path: str) -> None:
