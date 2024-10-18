@@ -41,10 +41,10 @@ class BIP38Application:
     TEXT_COLOR: QColor = QColor(255, 255, 255)
     ERROR_COLOR: QColor = QColor(255, 96, 96)
     JSON_PATTERNS = [
-        # (re.compile(r'\".*?\"(?=\s*:)'), QColor(0, 191, 165)),  # keys
-        (re.compile(r'\".*?\"'), QColor(0, 191, 165)),          # string
-        (re.compile(r'\b\d+\b'), QColor(125, 211, 252)),        # numbers
-        (re.compile(r'\btrue\b|\bfalse\b|\bnull\b'), QColor(16, 182, 212)),  # boolean/null
+        (re.compile(r'\".*?\"(?=\s*:)'), QColor(101, 97, 156)),  # keys
+        (re.compile(r'\".*?\"'), QColor(255, 255, 255)),         # string
+        (re.compile(r'\b\d+\b'), QColor(125, 211, 252)),         # numbers
+        (re.compile(r'\btrue\b|\bfalse\b|\bnull\b'), QColor(21, 128, 61)),  # boolean/null
         (re.compile(r'[{}[\],:]'), QColor(255, 255, 255))                    # punctuation
     ]
 
@@ -250,7 +250,7 @@ class BIP38Application:
             )
             self.ui.noECWIFQLineEdit.setText(wif)
         except (Error, BIP38Application.ValidationError) as e:
-            self.logerr(f"Error: {e}")
+            self.logerr(e)
 
     def noec_encrypt(self):
         try:
@@ -264,9 +264,9 @@ class BIP38Application:
             self.log(encrypted_wif)
         except WIFError as we:
             self.set_required(self.ui.noECWIFQLineEdit, True)
-            self.logerr(f"Error: {we}")
+            self.logerr(we)
         except (Error, BIP38Application.ValidationError) as e:
-            self.logerr(f"Error: {e}")
+            self.logerr(e)
 
     def ec_generate_ipassphrase(self):
         try:
@@ -292,7 +292,7 @@ class BIP38Application:
             self.ui.ecIPassphraseQLineEdit.setText(intermediate_passphrase)
             self.log(intermediate_passphrase)
         except (Error, BIP38Application.ValidationError) as e:
-            self.logerr(f"Error: {e}")
+            self.logerr(e)
 
     def ec_confirm_code(self):
         try:
@@ -309,12 +309,12 @@ class BIP38Application:
 
         except PassphraseError as pe:
             self.set_required(self.ui.passphraseQLineEdit, True)
-            self.logerr(f"Error: {pe}") 
+            self.logerr(pe) 
         except Error as e:
             self.set_required(self.ui.ecConfirmCodeQLineEdit, True)
-            self.logerr(f"Error: {e}")
+            self.logerr(e)
         except BIP38Application.ValidationError as ve:
-            self.logerr(f"Error: {ve}")
+            self.logerr(ve)
 
     def create_encrypted_wif(self):
         try:
@@ -334,9 +334,9 @@ class BIP38Application:
 
         except PassphraseError as pe:
             self.set_required(self.ui.ecIPassphraseQLineEdit, True)
-            self.logerr(f"Error: {pe}") 
+            self.logerr(pe) 
         except (Error, BIP38Application.ValidationError) as e:
-            self.logerr(f"Error: {e}")
+            self.logerr(e)
 
     def decrypt(self):
         try:
@@ -349,12 +349,12 @@ class BIP38Application:
             self.log(decrypted_wif)
         except WIFError as we:
             self.set_required(self.ui.decryptWIFQLineEdit, True)
-            self.logerr(f"Error: {we}")
+            self.logerr(we)
         except PassphraseError as pe:
             self.set_required(self.ui.passphraseQLineEdit, True)
-            self.logerr(f"Error: {pe}") 
+            self.logerr(pe) 
         except (Error, BIP38Application.ValidationError) as e:
-            self.logerr(f"Error: {e}")
+            self.logerr(e)
 
     def log(self, data: Optional[Union[str, dict]], end="\n") -> None:
         if isinstance(data, dict):
@@ -392,9 +392,13 @@ class BIP38Application:
         cformat = QTextCharFormat()
         cformat.setForeground(BIP38Application.ERROR_COLOR)
 
+        default_format = QTextCharFormat()
+        default_format.setForeground(BIP38Application.TEXT_COLOR)  
+
         cursor = self.ui.outputQTextEdit.textCursor()
         cursor.movePosition(QTextCursor.End)
-        cursor.insertText(err + end, cformat)
+        cursor.insertText("ERROR", cformat)
+        cursor.insertText(f": {err}{end}", default_format)
 
         self.ui.outputQTextEdit.setTextCursor(cursor)
         self.ui.outputQTextEdit.ensureCursorVisible()
