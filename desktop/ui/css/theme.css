@@ -20,32 +20,12 @@ QLabel {
 }
 
 
-QGroupBox {
-    background-color: rgb(0, 0, 0);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-    margin-top: 8px;
-    font: 10pt "HDWallet";
-    letter-spacing: 1px;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}
-
-QGroupBox:disabled{
-    color: rgba(255, 255, 255, 0.5);
-    background-color: rgba(16, 21, 27, 0.5);
-}
-
 /* Scroll bar */
 QScrollBar:vertical {
     border: none;
     background: rgb(16, 21, 27);
     width: 8px;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
  QScrollBar::handle:vertical {
@@ -87,7 +67,7 @@ QScrollBar:horizontal {
     border: none;
     background: rgb(16, 21, 27);
     width: 8px;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 /* Inputs */
@@ -128,7 +108,7 @@ QComboBox QAbstractItemView  {
     color: white;
     border: none;
     padding: 10px;
-    background-color: rgba(25, 30, 36, 1);
+    background-color: rgba(28, 28, 37, 1);
     outline: none;
 }
 
@@ -173,16 +153,12 @@ QLineEdit[required="true"] {
 }
 
 QTextEdit {
-    background-color: transparent;
+    background-color: black;
     border-color: rgb(25, 30, 36);
-    border-radius: 10px;
     color: rgb(255, 255, 255);
-    padding: 0px 10px;
-    height: 25px;
+    padding: 5;
     selection-color: #DDD;
     selection-background-color: #65619c;
-    margin-top: 10px;
-    margin-bottom: 5px;
 }
 
 QPushButton {
