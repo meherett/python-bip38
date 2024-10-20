@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+################################################################################
+## Form generated from reading UI file 'bip38yuvTyc.ui'
+##
+## Created by: Qt User Interface Compiler version 6.7.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -7,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGroupBox,
-    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHBoxLayout,
+    QLabel, QLineEdit, QMainWindow, QPushButton,
+    QSizePolicy, QSpacerItem, QStackedWidget, QTextEdit,
+    QVBoxLayout, QWidget)
 
 from .resources_rc import *
 
@@ -18,21 +26,35 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(804, 460)
+        MainWindow.resize(900, 521)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QSize(900, 0))
+        MainWindow.setMaximumSize(QSize(900, 16777215))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centeralWidgetLayout = QVBoxLayout(self.centralwidget)
-        self.centeralWidgetLayout.setSpacing(0)
+        self.centeralWidgetLayout.setSpacing(10)
         self.centeralWidgetLayout.setObjectName(u"centeralWidgetLayout")
-        self.centeralWidgetLayout.setContentsMargins(15, 15, 15, 15)
+        self.centeralWidgetLayout.setContentsMargins(0, 0, 0, 0)
         self.bip38ContainerQFrame = QFrame(self.centralwidget)
         self.bip38ContainerQFrame.setObjectName(u"bip38ContainerQFrame")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.bip38ContainerQFrame.sizePolicy().hasHeightForWidth())
+        self.bip38ContainerQFrame.setSizePolicy(sizePolicy1)
+        self.bip38ContainerQFrame.setMinimumSize(QSize(0, 290))
+        self.bip38ContainerQFrame.setMaximumSize(QSize(16777215, 290))
         self.bip38ContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.bip38ContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout = QVBoxLayout(self.bip38ContainerQFrame)
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setContentsMargins(15, 15, 15, 5)
         self.cryptoAndNetworkContainerQFrame = QFrame(self.bip38ContainerQFrame)
         self.cryptoAndNetworkContainerQFrame.setObjectName(u"cryptoAndNetworkContainerQFrame")
         self.cryptoAndNetworkContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -336,11 +358,11 @@ class Ui_MainWindow(object):
 
         self.noECEncryptQPushButton = QPushButton(self.noECWIFAndEncyptContainerQFrame)
         self.noECEncryptQPushButton.setObjectName(u"noECEncryptQPushButton")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.noECEncryptQPushButton.sizePolicy().hasHeightForWidth())
-        self.noECEncryptQPushButton.setSizePolicy(sizePolicy)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.noECEncryptQPushButton.sizePolicy().hasHeightForWidth())
+        self.noECEncryptQPushButton.setSizePolicy(sizePolicy2)
         self.noECEncryptQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.noECWIFContainerVLayout.addWidget(self.noECEncryptQPushButton)
@@ -408,8 +430,8 @@ class Ui_MainWindow(object):
 
         self.ecOwnerSaltGenerateQPushButton = QPushButton(self.ecOwnerSaltAndGenerateContainerQFrame)
         self.ecOwnerSaltGenerateQPushButton.setObjectName(u"ecOwnerSaltGenerateQPushButton")
-        sizePolicy.setHeightForWidth(self.ecOwnerSaltGenerateQPushButton.sizePolicy().hasHeightForWidth())
-        self.ecOwnerSaltGenerateQPushButton.setSizePolicy(sizePolicy)
+        sizePolicy2.setHeightForWidth(self.ecOwnerSaltGenerateQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecOwnerSaltGenerateQPushButton.setSizePolicy(sizePolicy2)
         self.ecOwnerSaltGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecOwnerSaltAndGenerateContainerQFrameHLayout.addWidget(self.ecOwnerSaltGenerateQPushButton)
@@ -459,8 +481,8 @@ class Ui_MainWindow(object):
 
         self.ecSeedGenerateQPushButton = QPushButton(self.ecSeedAndGenerateContainerQFrame)
         self.ecSeedGenerateQPushButton.setObjectName(u"ecSeedGenerateQPushButton")
-        sizePolicy.setHeightForWidth(self.ecSeedGenerateQPushButton.sizePolicy().hasHeightForWidth())
-        self.ecSeedGenerateQPushButton.setSizePolicy(sizePolicy)
+        sizePolicy2.setHeightForWidth(self.ecSeedGenerateQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecSeedGenerateQPushButton.setSizePolicy(sizePolicy2)
         self.ecSeedGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecSeedAndGenerateContainerQFrameHLayout.addWidget(self.ecSeedGenerateQPushButton)
@@ -610,8 +632,8 @@ class Ui_MainWindow(object):
 
         self.ecIPassphraseGenerateQPushButton = QPushButton(self.ecIPassphraseAndGenerateContainerQFrameHLayout)
         self.ecIPassphraseGenerateQPushButton.setObjectName(u"ecIPassphraseGenerateQPushButton")
-        sizePolicy.setHeightForWidth(self.ecIPassphraseGenerateQPushButton.sizePolicy().hasHeightForWidth())
-        self.ecIPassphraseGenerateQPushButton.setSizePolicy(sizePolicy)
+        sizePolicy2.setHeightForWidth(self.ecIPassphraseGenerateQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecIPassphraseGenerateQPushButton.setSizePolicy(sizePolicy2)
         self.ecIPassphraseGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecIntermediatePassphraseAndGenerateHLayout.addWidget(self.ecIPassphraseGenerateQPushButton)
@@ -661,8 +683,8 @@ class Ui_MainWindow(object):
 
         self.ecConfirmCodeVerifyQPushButton = QPushButton(self.ecConfirmCodeAndVerifyContainerQFrame)
         self.ecConfirmCodeVerifyQPushButton.setObjectName(u"ecConfirmCodeVerifyQPushButton")
-        sizePolicy.setHeightForWidth(self.ecConfirmCodeVerifyQPushButton.sizePolicy().hasHeightForWidth())
-        self.ecConfirmCodeVerifyQPushButton.setSizePolicy(sizePolicy)
+        sizePolicy2.setHeightForWidth(self.ecConfirmCodeVerifyQPushButton.sizePolicy().hasHeightForWidth())
+        self.ecConfirmCodeVerifyQPushButton.setSizePolicy(sizePolicy2)
         self.ecConfirmCodeVerifyQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.ecConfirmCodeAndVerifyContainerQFrameHLayout.addWidget(self.ecConfirmCodeVerifyQPushButton)
@@ -725,6 +747,7 @@ class Ui_MainWindow(object):
         self.decryptWIFTypeContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.decryptWIFTypeContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.decryptWIFTypeContainerQFrameVLayout = QVBoxLayout(self.decryptWIFTypeContainerQFrame)
+        self.decryptWIFTypeContainerQFrameVLayout.setSpacing(5)
         self.decryptWIFTypeContainerQFrameVLayout.setObjectName(u"decryptWIFTypeContainerQFrameVLayout")
         self.decryptWIFTypeContainerQFrameVLayout.setContentsMargins(0, 0, 0, 0)
         self.wifTypeLableContainerQFrame = QFrame(self.decryptWIFTypeContainerQFrame)
@@ -782,8 +805,8 @@ class Ui_MainWindow(object):
 
         self.decryptWIFQPushButton = QPushButton(self.decryptWIFButtonsQFrame)
         self.decryptWIFQPushButton.setObjectName(u"decryptWIFQPushButton")
-        sizePolicy.setHeightForWidth(self.decryptWIFQPushButton.sizePolicy().hasHeightForWidth())
-        self.decryptWIFQPushButton.setSizePolicy(sizePolicy)
+        sizePolicy2.setHeightForWidth(self.decryptWIFQPushButton.sizePolicy().hasHeightForWidth())
+        self.decryptWIFQPushButton.setSizePolicy(sizePolicy2)
         self.decryptWIFQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.decryptWIFButtonsQFrameHLayout.addWidget(self.decryptWIFQPushButton)
@@ -797,23 +820,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.decryptWIFAndButtonsContainerQFrame)
 
-        self.outputQGroupBox = QGroupBox(self.bip38ContainerQFrame)
-        self.outputQGroupBox.setObjectName(u"outputQGroupBox")
-        self.outputGroupBoxVLayout = QVBoxLayout(self.outputQGroupBox)
-        self.outputGroupBoxVLayout.setSpacing(0)
-        self.outputGroupBoxVLayout.setObjectName(u"outputGroupBoxVLayout")
-        self.outputGroupBoxVLayout.setContentsMargins(0, 5, 0, 0)
-        self.outputQTextEdit = QTextEdit(self.outputQGroupBox)
+
+        self.centeralWidgetLayout.addWidget(self.bip38ContainerQFrame)
+
+        self.outputQTextEdit = QTextEdit(self.centralwidget)
         self.outputQTextEdit.setObjectName(u"outputQTextEdit")
         self.outputQTextEdit.setReadOnly(True)
 
-        self.outputGroupBoxVLayout.addWidget(self.outputQTextEdit)
-
-
-        self.verticalLayout.addWidget(self.outputQGroupBox)
-
-
-        self.centeralWidgetLayout.addWidget(self.bip38ContainerQFrame)
+        self.centeralWidgetLayout.addWidget(self.outputQTextEdit)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -857,7 +871,6 @@ class Ui_MainWindow(object):
         self.createEncryptedWIFTypeQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.createEncryptedWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Create", None))
         self.decryptWIFQPushButton.setText(QCoreApplication.translate("MainWindow", u"Decrypt", None))
-        self.outputQGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Output", None))
         self.outputQTextEdit.setPlaceholderText("")
     # retranslateUi
 
