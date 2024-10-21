@@ -6,6 +6,8 @@
 
 from typing import Optional
 
+import json
+
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QStackedWidget,
     QFrame, QComboBox
@@ -19,7 +21,8 @@ from PySide6.QtGui import (
 
 from desktop.utils import resolve_path
 from desktop.ui.ui_bip38 import Ui_MainWindow
-
+from desktop.info import __version__ as desktop_ver
+from bip38.info import __version__ as library_ver
 
 class Application(QMainWindow):
     _instance: Optional['Application'] = None
@@ -72,6 +75,13 @@ class Application(QMainWindow):
         self.theme_watcher.fileChanged.connect(lambda: self.load_stylesheet(css_path))
         QFontDatabase.addApplicationFont(resolve_path("desktop/ui/font/HDWallet.ttf"))
         self.load_stylesheet(css_path)
+
+        info = {
+            "library": library_ver,
+            "desktop": desktop_ver
+        }
+        self.ui.outputQTextEdit.setPlaceholderText(json.dumps(info, indent=4))
+
 
     def load_stylesheet(self, path: str) -> None:
         """
