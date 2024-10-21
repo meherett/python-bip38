@@ -13,7 +13,6 @@ from desktop.main import BIP38Application
 
 def main() -> None:
     qapp: QApplication = QApplication(sys.argv)
-    qapp.setStyle("WindowsVista")
     main_application: BIP38Application = BIP38Application()
     main_application.app.show()
     sys.exit(qapp.exec())
