@@ -100,7 +100,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
-           <number>15</number>
+           <number>10</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -439,7 +439,7 @@
              </property>
              <layout class="QHBoxLayout" name="noECPrivateKeyAndWifTypeContainerHLayout_2">
               <property name="spacing">
-               <number>15</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -763,7 +763,7 @@
                    </property>
                    <layout class="QHBoxLayout" name="noECWIFContainerVLayout">
                     <property name="spacing">
-                     <number>15</number>
+                     <number>10</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -834,7 +834,7 @@
              </property>
              <layout class="QHBoxLayout" name="ecOwnerSaltMainContainerHLayout">
               <property name="spacing">
-               <number>15</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -917,7 +917,7 @@
                    </property>
                    <layout class="QHBoxLayout" name="ecOwnerSaltAndGenerateContainerQFrameHLayout">
                     <property name="spacing">
-                     <number>15</number>
+                     <number>10</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -1025,7 +1025,7 @@
                    </property>
                    <layout class="QHBoxLayout" name="ecSeedAndGenerateContainerQFrameHLayout">
                     <property name="spacing">
-                     <number>15</number>
+                     <number>10</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -1287,7 +1287,7 @@
              </property>
              <layout class="QHBoxLayout" name="ecIntermidatMainContainerQFrameHLayout">
               <property name="spacing">
-               <number>15</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -1370,7 +1370,7 @@
                    </property>
                    <layout class="QHBoxLayout" name="ecIntermediatePassphraseAndGenerateHLayout">
                     <property name="spacing">
-                     <number>15</number>
+                     <number>10</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -1478,7 +1478,7 @@
                    </property>
                    <layout class="QHBoxLayout" name="ecConfirmCodeAndVerifyContainerQFrameHLayout">
                     <property name="spacing">
-                     <number>15</number>
+                     <number>10</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -1528,7 +1528,7 @@
         <widget class="QFrame" name="decryptWIFAndButtonsContainerQFrame">
          <layout class="QHBoxLayout" name="decryptWIFAndButtonsQFrameHLayout">
           <property name="spacing">
-           <number>15</number>
+           <number>10</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -1741,7 +1741,7 @@
                </property>
                <layout class="QHBoxLayout" name="decryptWIFButtonsQFrameHLayout">
                 <property name="spacing">
-                 <number>15</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>

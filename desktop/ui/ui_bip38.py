@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'bip38yuvTyc.ui'
-##
-## Created by: Qt User Interface Compiler version 6.7.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -60,7 +52,7 @@ class Ui_MainWindow(object):
         self.cryptoAndNetworkContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.cryptoAndNetworkContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout = QHBoxLayout(self.cryptoAndNetworkContainerQFrame)
-        self.horizontalLayout.setSpacing(15)
+        self.horizontalLayout.setSpacing(10)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.cryptocurrencyContainerQFrame = QFrame(self.cryptoAndNetworkContainerQFrame)
@@ -210,7 +202,7 @@ class Ui_MainWindow(object):
         self.noECPrivateKeyAndWifTypeContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.noECPrivateKeyAndWifTypeContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.noECPrivateKeyAndWifTypeContainerHLayout_2 = QHBoxLayout(self.noECPrivateKeyAndWifTypeContainerQFrame)
-        self.noECPrivateKeyAndWifTypeContainerHLayout_2.setSpacing(15)
+        self.noECPrivateKeyAndWifTypeContainerHLayout_2.setSpacing(10)
         self.noECPrivateKeyAndWifTypeContainerHLayout_2.setObjectName(u"noECPrivateKeyAndWifTypeContainerHLayout_2")
         self.noECPrivateKeyAndWifTypeContainerHLayout_2.setContentsMargins(0, 0, 0, 0)
         self.noECPrivateKeyContainerQFrame = QFrame(self.noECPrivateKeyAndWifTypeContainerQFrame)
@@ -348,7 +340,7 @@ class Ui_MainWindow(object):
         self.noECWIFAndEncyptContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.noECWIFAndEncyptContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.noECWIFContainerVLayout = QHBoxLayout(self.noECWIFAndEncyptContainerQFrame)
-        self.noECWIFContainerVLayout.setSpacing(15)
+        self.noECWIFContainerVLayout.setSpacing(10)
         self.noECWIFContainerVLayout.setObjectName(u"noECWIFContainerVLayout")
         self.noECWIFContainerVLayout.setContentsMargins(0, 0, 0, 0)
         self.noECWIFQLineEdit = QLineEdit(self.noECWIFAndEncyptContainerQFrame)
@@ -388,7 +380,7 @@ class Ui_MainWindow(object):
         self.ecSaltMainContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.ecSaltMainContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.ecOwnerSaltMainContainerHLayout = QHBoxLayout(self.ecSaltMainContainerQFrame)
-        self.ecOwnerSaltMainContainerHLayout.setSpacing(15)
+        self.ecOwnerSaltMainContainerHLayout.setSpacing(10)
         self.ecOwnerSaltMainContainerHLayout.setObjectName(u"ecOwnerSaltMainContainerHLayout")
         self.ecOwnerSaltMainContainerHLayout.setContentsMargins(0, 0, 0, 0)
         self.ecOwnerSaltContainerQFrame = QFrame(self.ecSaltMainContainerQFrame)
@@ -420,7 +412,7 @@ class Ui_MainWindow(object):
         self.ecOwnerSaltAndGenerateContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.ecOwnerSaltAndGenerateContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.ecOwnerSaltAndGenerateContainerQFrameHLayout = QHBoxLayout(self.ecOwnerSaltAndGenerateContainerQFrame)
-        self.ecOwnerSaltAndGenerateContainerQFrameHLayout.setSpacing(15)
+        self.ecOwnerSaltAndGenerateContainerQFrameHLayout.setSpacing(10)
         self.ecOwnerSaltAndGenerateContainerQFrameHLayout.setObjectName(u"ecOwnerSaltAndGenerateContainerQFrameHLayout")
         self.ecOwnerSaltAndGenerateContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
         self.ecOwnerSaltQLineEdit = QLineEdit(self.ecOwnerSaltAndGenerateContainerQFrame)
@@ -471,7 +463,7 @@ class Ui_MainWindow(object):
         self.ecSeedAndGenerateContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.ecSeedAndGenerateContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.ecSeedAndGenerateContainerQFrameHLayout = QHBoxLayout(self.ecSeedAndGenerateContainerQFrame)
-        self.ecSeedAndGenerateContainerQFrameHLayout.setSpacing(15)
+        self.ecSeedAndGenerateContainerQFrameHLayout.setSpacing(10)
         self.ecSeedAndGenerateContainerQFrameHLayout.setObjectName(u"ecSeedAndGenerateContainerQFrameHLayout")
         self.ecSeedAndGenerateContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
         self.ecSeedQLineEdit = QLineEdit(self.ecSeedAndGenerateContainerQFrame)
@@ -590,7 +582,7 @@ class Ui_MainWindow(object):
         self.ecIPAndConfirmMainContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.ecIPAndConfirmMainContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.ecIntermidatMainContainerQFrameHLayout = QHBoxLayout(self.ecIPAndConfirmMainContainerQFrame)
-        self.ecIntermidatMainContainerQFrameHLayout.setSpacing(15)
+        self.ecIntermidatMainContainerQFrameHLayout.setSpacing(10)
         self.ecIntermidatMainContainerQFrameHLayout.setObjectName(u"ecIntermidatMainContainerQFrameHLayout")
         self.ecIntermidatMainContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
         self.ecIPassphraseContainerQFrame = QFrame(self.ecIPAndConfirmMainContainerQFrame)
@@ -622,7 +614,7 @@ class Ui_MainWindow(object):
         self.ecIPassphraseAndGenerateContainerQFrameHLayout.setFrameShape(QFrame.Shape.StyledPanel)
         self.ecIPassphraseAndGenerateContainerQFrameHLayout.setFrameShadow(QFrame.Shadow.Raised)
         self.ecIntermediatePassphraseAndGenerateHLayout = QHBoxLayout(self.ecIPassphraseAndGenerateContainerQFrameHLayout)
-        self.ecIntermediatePassphraseAndGenerateHLayout.setSpacing(15)
+        self.ecIntermediatePassphraseAndGenerateHLayout.setSpacing(10)
         self.ecIntermediatePassphraseAndGenerateHLayout.setObjectName(u"ecIntermediatePassphraseAndGenerateHLayout")
         self.ecIntermediatePassphraseAndGenerateHLayout.setContentsMargins(0, 0, 0, 0)
         self.ecIPassphraseQLineEdit = QLineEdit(self.ecIPassphraseAndGenerateContainerQFrameHLayout)
@@ -673,7 +665,7 @@ class Ui_MainWindow(object):
         self.ecConfirmCodeAndVerifyContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.ecConfirmCodeAndVerifyContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.ecConfirmCodeAndVerifyContainerQFrameHLayout = QHBoxLayout(self.ecConfirmCodeAndVerifyContainerQFrame)
-        self.ecConfirmCodeAndVerifyContainerQFrameHLayout.setSpacing(15)
+        self.ecConfirmCodeAndVerifyContainerQFrameHLayout.setSpacing(10)
         self.ecConfirmCodeAndVerifyContainerQFrameHLayout.setObjectName(u"ecConfirmCodeAndVerifyContainerQFrameHLayout")
         self.ecConfirmCodeAndVerifyContainerQFrameHLayout.setContentsMargins(0, 0, 0, 0)
         self.ecConfirmCodeQLineEdit = QLineEdit(self.ecConfirmCodeAndVerifyContainerQFrame)
@@ -705,7 +697,7 @@ class Ui_MainWindow(object):
         self.decryptWIFAndButtonsContainerQFrame = QFrame(self.bip38ContainerQFrame)
         self.decryptWIFAndButtonsContainerQFrame.setObjectName(u"decryptWIFAndButtonsContainerQFrame")
         self.decryptWIFAndButtonsQFrameHLayout = QHBoxLayout(self.decryptWIFAndButtonsContainerQFrame)
-        self.decryptWIFAndButtonsQFrameHLayout.setSpacing(15)
+        self.decryptWIFAndButtonsQFrameHLayout.setSpacing(10)
         self.decryptWIFAndButtonsQFrameHLayout.setObjectName(u"decryptWIFAndButtonsQFrameHLayout")
         self.decryptWIFAndButtonsQFrameHLayout.setContentsMargins(0, 0, 0, 0)
         self.decryptWIFContainerQFrame = QFrame(self.decryptWIFAndButtonsContainerQFrame)
@@ -794,7 +786,7 @@ class Ui_MainWindow(object):
         self.decryptWIFButtonsQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.decryptWIFButtonsQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.decryptWIFButtonsQFrameHLayout = QHBoxLayout(self.decryptWIFButtonsQFrame)
-        self.decryptWIFButtonsQFrameHLayout.setSpacing(15)
+        self.decryptWIFButtonsQFrameHLayout.setSpacing(10)
         self.decryptWIFButtonsQFrameHLayout.setObjectName(u"decryptWIFButtonsQFrameHLayout")
         self.decryptWIFButtonsQFrameHLayout.setContentsMargins(0, 0, 0, 0)
         self.createEncryptedWIFQPushButton = QPushButton(self.decryptWIFButtonsQFrame)
