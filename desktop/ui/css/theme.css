@@ -123,7 +123,8 @@ QComboBox QAbstractItemView::item:hover {
 }
 
 QComboBox QAbstractItemView::item:selected {
-    background-color: rgb(16, 21, 27);
+    background-color: #11111b;
+    color: white;
     selection-background-color: white;
     outline: none;
 }
@@ -157,7 +158,7 @@ QTextEdit {
     background-color: black;
     border-color: rgb(25, 30, 36);
     color: rgb(255, 255, 255);
-    padding: 5;
+    padding: 0 5px;
     selection-color: #DDD;
     selection-background-color: #65619c;
 }
@@ -176,4 +177,53 @@ QPushButton {
 
 QPushButton:hover{
     background-color: rgba(28, 28, 37, 0.7);
+}
+
+/* QMENU */
+
+QMenu {
+    background-color: #11111b; 
+    color: white; 
+    border: 1px solid rgba(128, 128, 128, 0.25); 
+    padding: 5px;  
+    border-radius: 4px;  
+}
+
+QMenu::item {
+    background-color: transparent;  
+    padding: 5px 15px;  
+    color: white;
+    qproperty-icon: none;  
+}
+
+QMenu::item:selected {
+    background:  rgb(25, 30, 36);  
+    color: #65619c; 
+    border-radius: 3px;  
+}
+
+QMenu::item:hover {
+    background-color: rgb(25, 30, 36);
+    color: #65619c;
+    border-radius: 3px; 
+}
+
+QMenu::item:disabled {  
+    background-color: transparent; 
+    color: rgba(255, 255, 255, 0.5);
+}
+
+QMenu::item:disabled:selected {
+    color: rgba(255, 255, 255, 0.5);  
+    background-color: transparent; 
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.25);  
+    margin: 5px 0;  
+}
+
+QMenu:disabled {
+    color: rgba(255, 255, 255, 0.5);  
 }

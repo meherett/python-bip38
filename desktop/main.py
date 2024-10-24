@@ -14,7 +14,9 @@ from typing import (
 )
 
 from PySide6.QtCore import QRegularExpression
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import (
+    QWidget, QPushButton
+)
 from PySide6.QtGui import (
     QTextCharFormat, QTextCursor, QColor,
     QTextFormat, QTextOption, QRegularExpressionValidator
@@ -184,6 +186,12 @@ class BIP38Application:
         self.ui.noECPrivateKeyConvertQPushButton.clicked.connect(self.noec_convert_private_key)
         self.ui.noECEncryptQPushButton.clicked.connect(self.noec_encrypt)
 
+        self.ui.noECPrivateKeyGenerateQPushButton.clicked.connect(
+            lambda: self.ui.noECPrivateKeyQLineEdit.setText(
+                os.urandom(32).hex()
+            )
+        )
+
         self.ui.ecOwnerSaltGenerateQPushButton.clicked.connect(
             lambda: self.ui.ecOwnerSaltQLineEdit.setText(
                 os.urandom(8).hex()
@@ -206,6 +214,28 @@ class BIP38Application:
         # will update network combo too
         self.ui.cryptocurrencyQComboBox.setCurrentText("Bitcoin")
         self.ui.modeQComboBox.setCurrentIndex(0)
+
+        # Custom components
+
+        self.clear_button = QPushButton("Clear", self.app)
+        self.clear_button.setFixedWidth(60)
+        self.clear_button.clicked.connect(lambda: self.ui.outputQTextEdit.setText(None))
+        self.clear_button.clicked.connect(self.clean_all_required)
+
+        self.app.resized.connect(self.update_clear_button_position)
+        self.ui.outputQTextEdit.verticalScrollBar().rangeChanged.connect(self.update_clear_button_position)
+
+    def update_clear_button_position(self) -> None:
+        button_width = self.clear_button.sizeHint().width()
+        button_height = self.clear_button.sizeHint().height()
+        window_width = self.app.width()
+        window_height = self.app.height()
+
+        right_margin = 10
+        bottom_margin = 5
+        right_margin += 10 if self.ui.outputQTextEdit.verticalScrollBar().maximum() > 0 else 0
+
+        self.clear_button.move(window_width - button_width - right_margin, window_height - button_height - bottom_margin)
 
     def change_cryptocurrency(self, cryptocurrency: str) -> None:
         cryptocurrency_class: ICryptocurrency = self.cryptocurrencies[cryptocurrency]
@@ -281,7 +311,7 @@ class BIP38Application:
             if (lot and sequence is None) or (lot is None and sequence):
                 self.set_required(self.ui.ecLotQLineEdit, True)
                 self.set_required(self.ui.ecSequenceQLineEdit, True)
-                raise BIP38Application.ValidationError("'Lot' and 'Sequence' must both be set or both left blank.")
+                raise BIP38Application.ValidationError("Lot and Sequence must both be set or both left blank.")
 
             intermediate_passphrase: str = self.bip38().intermediate_code(
                 passphrase=passphrase,
@@ -409,21 +439,30 @@ class BIP38Application:
         def __init__(self, message):
             super().__init__(message)
 
+    def format_required(self, invalid_inputs):
+        if len(invalid_inputs) == 1:
+            return f"{invalid_inputs[0]} is required"
+        if len(invalid_inputs) == 2:
+            return f"{invalid_inputs[0]} and {invalid_inputs[1]} are required"
+
+        return f"{', '.join(invalid_inputs[:-1])}, and {invalid_inputs[-1]} are required"
+
     def validate_and_get(self, *args):
         self.clean_all_required() # forget old validations
         
         all_data = ()
-        valid_inputs = 0
+        invalid_inputs = []
 
         for input_key in args:
             input_data = self.inputs[input_key]
             text = input_data["input"].text()
 
             all_data += (text,)
-            valid_inputs += self.validate_input(input_key, text)
+            if not self.validate_input(input_key, text):
+                invalid_inputs.append(input_key)
 
-        if len(args) != valid_inputs:
-            raise BIP38Application.ValidationError("Please Fill All Required Fields!")
+        if invalid_inputs:
+            raise BIP38Application.ValidationError(self.format_required(invalid_inputs))
 
         return all_data
 
