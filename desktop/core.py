@@ -76,9 +76,10 @@ class Application(QMainWindow):
         put_svg(
             self.ui.bip38LogoHLayout,
             resolve_path("desktop/ui/images/svg/full-logo.svg"),
-            120,
-            63.47
+            84,
+            44
         )
+        self.ui.bip38LogoHLayout.setContentsMargins(0, 0, 10, 0)
 
         css_path = resolve_path("desktop/ui/css/theme.css")
         self.theme_watcher = QFileSystemWatcher([css_path])
