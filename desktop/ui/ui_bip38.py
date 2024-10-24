@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(900, 521)
+        MainWindow.resize(900, 491)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -39,12 +39,12 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.bip38ContainerQFrame.sizePolicy().hasHeightForWidth())
         self.bip38ContainerQFrame.setSizePolicy(sizePolicy1)
-        self.bip38ContainerQFrame.setMinimumSize(QSize(0, 290))
-        self.bip38ContainerQFrame.setMaximumSize(QSize(16777215, 290))
+        self.bip38ContainerQFrame.setMinimumSize(QSize(0, 280))
+        self.bip38ContainerQFrame.setMaximumSize(QSize(16777215, 280))
         self.bip38ContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.bip38ContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout = QVBoxLayout(self.bip38ContainerQFrame)
-        self.verticalLayout.setSpacing(10)
+        self.verticalLayout.setSpacing(7)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(15, 15, 15, 5)
         self.cryptoAndNetworkContainerQFrame = QFrame(self.bip38ContainerQFrame)
@@ -55,6 +55,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setSpacing(10)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.bip38LogoHLayout = QHBoxLayout()
+        self.bip38LogoHLayout.setSpacing(0)
+        self.bip38LogoHLayout.setObjectName(u"bip38LogoHLayout")
+
+        self.horizontalLayout.addLayout(self.bip38LogoHLayout)
+
         self.cryptocurrencyContainerQFrame = QFrame(self.cryptoAndNetworkContainerQFrame)
         self.cryptocurrencyContainerQFrame.setObjectName(u"cryptocurrencyContainerQFrame")
         self.cryptocurrencyContainerQFrame.setMaximumSize(QSize(150, 16777215))
@@ -194,7 +200,7 @@ class Ui_MainWindow(object):
         self.noECQWidget = QWidget()
         self.noECQWidget.setObjectName(u"noECQWidget")
         self.noECVLayout = QVBoxLayout(self.noECQWidget)
-        self.noECVLayout.setSpacing(10)
+        self.noECVLayout.setSpacing(7)
         self.noECVLayout.setObjectName(u"noECVLayout")
         self.noECVLayout.setContentsMargins(0, 0, 0, 0)
         self.noECPrivateKeyAndWifTypeContainerQFrame = QFrame(self.noECQWidget)
@@ -236,6 +242,26 @@ class Ui_MainWindow(object):
 
 
         self.noECPrivateKeyAndWifTypeContainerHLayout_2.addWidget(self.noECPrivateKeyContainerQFrame)
+
+        self.noECPrivateKeyGenerateButtonContainerQFrame = QFrame(self.noECPrivateKeyAndWifTypeContainerQFrame)
+        self.noECPrivateKeyGenerateButtonContainerQFrame.setObjectName(u"noECPrivateKeyGenerateButtonContainerQFrame")
+        self.noECPrivateKeyGenerateButtonContainerQFrame.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.noECPrivateKeyGenerateButtonHLayout = QVBoxLayout(self.noECPrivateKeyGenerateButtonContainerQFrame)
+        self.noECPrivateKeyGenerateButtonHLayout.setSpacing(5)
+        self.noECPrivateKeyGenerateButtonHLayout.setObjectName(u"noECPrivateKeyGenerateButtonHLayout")
+        self.noECPrivateKeyGenerateButtonHLayout.setContentsMargins(0, 0, 0, 0)
+        self.noECPrivateKeyGenerateButtonSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.noECPrivateKeyGenerateButtonHLayout.addItem(self.noECPrivateKeyGenerateButtonSpacer)
+
+        self.noECPrivateKeyGenerateQPushButton = QPushButton(self.noECPrivateKeyGenerateButtonContainerQFrame)
+        self.noECPrivateKeyGenerateQPushButton.setObjectName(u"noECPrivateKeyGenerateQPushButton")
+        self.noECPrivateKeyGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+
+        self.noECPrivateKeyGenerateButtonHLayout.addWidget(self.noECPrivateKeyGenerateQPushButton)
+
+
+        self.noECPrivateKeyAndWifTypeContainerHLayout_2.addWidget(self.noECPrivateKeyGenerateButtonContainerQFrame)
 
         self.noECWIFTypeContainerQFrame = QFrame(self.noECPrivateKeyAndWifTypeContainerQFrame)
         self.noECWIFTypeContainerQFrame.setObjectName(u"noECWIFTypeContainerQFrame")
@@ -372,7 +398,7 @@ class Ui_MainWindow(object):
         self.ecQWidget = QWidget()
         self.ecQWidget.setObjectName(u"ecQWidget")
         self.ecVLayout = QVBoxLayout(self.ecQWidget)
-        self.ecVLayout.setSpacing(10)
+        self.ecVLayout.setSpacing(7)
         self.ecVLayout.setObjectName(u"ecVLayout")
         self.ecVLayout.setContentsMargins(0, 0, 0, 0)
         self.ecSaltMainContainerQFrame = QFrame(self.ecQWidget)
@@ -736,6 +762,7 @@ class Ui_MainWindow(object):
 
         self.decryptWIFTypeContainerQFrame = QFrame(self.decryptWIFAndButtonsContainerQFrame)
         self.decryptWIFTypeContainerQFrame.setObjectName(u"decryptWIFTypeContainerQFrame")
+        self.decryptWIFTypeContainerQFrame.setMaximumSize(QSize(145, 16777215))
         self.decryptWIFTypeContainerQFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.decryptWIFTypeContainerQFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.decryptWIFTypeContainerQFrameVLayout = QVBoxLayout(self.decryptWIFTypeContainerQFrame)
@@ -825,7 +852,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.modeQStackedWidget.setCurrentIndex(1)
+        self.modeQStackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -841,10 +868,11 @@ class Ui_MainWindow(object):
         self.modeQLabel.setText(QCoreApplication.translate("MainWindow", u"Mode", None))
         self.modeQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.noECPrivateKeyQLabel.setText(QCoreApplication.translate("MainWindow", u"Private Key", None))
+        self.noECPrivateKeyGenerateQPushButton.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
         self.noECWIFTypeQLabel.setText(QCoreApplication.translate("MainWindow", u"WIF Type", None))
         self.noECWIFTypeQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.noECPrivateKeyConvertQPushButton.setText(QCoreApplication.translate("MainWindow", u"Convert", None))
-        self.noECWIFQLabel.setText(QCoreApplication.translate("MainWindow", u"WIF", None))
+        self.noECWIFQLabel.setText(QCoreApplication.translate("MainWindow", u"Wallet Important Format (WIF)", None))
         self.noECEncryptQPushButton.setText(QCoreApplication.translate("MainWindow", u"Encrypt", None))
         self.ecOwnerSaltQLabel.setText(QCoreApplication.translate("MainWindow", u"Owner Salt", None))
         self.ecOwnerSaltGenerateQPushButton.setText(QCoreApplication.translate("MainWindow", u"Generate", None))

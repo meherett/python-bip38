@@ -13,13 +13,15 @@ from PySide6.QtWidgets import (
     QFrame, QComboBox
 )
 from PySide6.QtCore import (
-    Qt, QFileSystemWatcher
+    Qt, QFileSystemWatcher, Signal
 )
 from PySide6.QtGui import (
     QFontDatabase, QIcon
 )
 
-from desktop.utils import resolve_path
+from desktop.utils import (
+    resolve_path, put_svg
+)
 from desktop.ui.ui_bip38 import Ui_MainWindow
 from desktop.info import __version__ as desktop_ver
 from bip38.info import __version__ as library_ver
@@ -28,6 +30,7 @@ class Application(QMainWindow):
     _instance: Optional['Application'] = None
     ui: Ui_MainWindow = None
     theme_watcher: QFileSystemWatcher = None
+    resized: Signal = Signal(object)
 
     def __new__(cls, *args, **kwargs) -> 'Application':
         """
@@ -69,6 +72,13 @@ class Application(QMainWindow):
         self.setWindowTitle("Bitcoin Improvement Proposal - 0038")
         self.bip38_icon = QIcon(resolve_path("desktop/ui/images/icon/icon.ico"))
         self.setWindowIcon(self.bip38_icon)
+        
+        put_svg(
+            self.ui.bip38LogoHLayout,
+            resolve_path("desktop/ui/images/svg/full-logo.svg"),
+            120,
+            63.47
+        )
 
         css_path = resolve_path("desktop/ui/css/theme.css")
         self.theme_watcher = QFileSystemWatcher([css_path])
@@ -82,7 +92,6 @@ class Application(QMainWindow):
         }
         self.ui.outputQTextEdit.setPlaceholderText(json.dumps(info, indent=4))
 
-
     def load_stylesheet(self, path: str) -> None:
         """
         Load and apply a stylesheet from the specified path.
@@ -95,3 +104,7 @@ class Application(QMainWindow):
                 self.setStyleSheet(stylesheet)
         except Exception as e:
             print(f"Failed to load stylesheet: {e}")
+
+    def resizeEvent(self, event) -> None:
+        super().resizeEvent(event)
+        self.resized.emit(event)

@@ -6,7 +6,8 @@
 
 import os
 from PySide6.QtWidgets import QLayout
-
+from PySide6.QtSvgWidgets import QSvgWidget
+from PySide6.QtCore import QSize
 
 def clear_layout(layout: QLayout, delete: bool = True) -> None:
     """
@@ -35,3 +36,22 @@ def resolve_path(path: str) -> str:
     :rtype: str
     """
     return os.path.abspath(os.path.join(os.path.dirname(__file__), "../", path))
+
+
+def put_svg(layout: QLayout, path: str, width: int, height: int) -> QSvgWidget:
+    """
+    Add an SVG widget to a layout.
+
+    :param layout: The layout to add the SVG widget to.
+    :param path: The path to the SVG file.
+    :param width: The width of the SVG widget.
+    :param height: The height of the SVG widget.
+    :return: The SVG widget.
+    """
+    clear_layout(layout)
+    svg = QSvgWidget(path)
+    svg.setMinimumSize(QSize(width, height))
+    svg.setMaximumSize(QSize(width, height))
+    svg.setStyleSheet("background: transparent")
+    layout.addWidget(svg)
+    return svg
