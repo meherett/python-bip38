@@ -7,6 +7,7 @@
 from cx_Freeze import setup, Executable
 
 from desktop.info import __version__ as version  
+from bip38.info import __author__ as author
 
 app_name  = "BIP38"
 icon_path = "desktop/ui/images/icon/icon.ico"
@@ -66,6 +67,7 @@ executables = [
 
 setup(
     name=app_name,
+    author=author,
     version=version,
     executables=executables,
     options={
