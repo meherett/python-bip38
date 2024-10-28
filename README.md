@@ -1,6 +1,6 @@
-<img align="right" height="132" src="./docs/static/svg/bip38.svg">
-
 # Bitcoin Improvement Proposal - 0038
+
+<img align="right" height="132" src="./docs/static/svg/bip38.svg">
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml)](https://github.com/meherett/python-bip38/actions/workflows/build.yml)
 [![PyPI Version](https://img.shields.io/pypi/v/bip38.svg?color=blue)](https://pypi.org/project/bip38)
