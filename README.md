@@ -1,6 +1,6 @@
 # Bitcoin Improvement Proposal - 0038
 
-<img align="right" height="100" src="./docs/static/svg/bip38.svg">
+<img align="right" height="100" src="docs/static/svg/bip38.svg">
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml)](https://github.com/meherett/python-bip38/actions/workflows/build.yml)
 [![PyPI Version](https://img.shields.io/pypi/v/bip38.svg?color=blue)](https://pypi.org/project/bip38)
@@ -13,7 +13,7 @@ A Python library for the implementation of Bitcoin Improvement Proposal - 0038 /
 This library supports both [No EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-flag-is-not-used) and [EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-mode-is-used) modes and is compatible with over 150+ cryptocurrencies.
 It's specifically tailored for Pay-to-PubKey-Hash (P2PKH) address types.
 
-![BIP38 Desktop Application](docs/static/videos/bip38.gif)
+![Desktop Application](docs/static/videos/bip38.gif)
 
 For more info see the [Passphrase-protected private key - BIP38](https://en.bitcoin.it/wiki/BIP_0038) spec.
 
