@@ -13,7 +13,7 @@ from PySide6.QtWidgets import (
     QFrame, QComboBox
 )
 from PySide6.QtCore import (
-    Qt, QFileSystemWatcher, Signal
+    Qt, QFileSystemWatcher, Signal, QSize
 )
 from PySide6.QtGui import (
     QFontDatabase, QIcon
@@ -79,7 +79,8 @@ class Application(QMainWindow):
             84,
             44
         )
-        self.ui.bip38LogoHLayout.setContentsMargins(0, 0, 10, 0)
+        self.ui.bip38LogoHLayout.setContentsMargins(0, 0, 5, 0)
+        self.ui.outputQTextEdit.setMinimumSize(QSize(0, 200))
 
         css_path = resolve_path("desktop/ui/css/theme.css")
         self.theme_watcher = QFileSystemWatcher([css_path])

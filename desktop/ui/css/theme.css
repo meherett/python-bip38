@@ -158,7 +158,7 @@ QTextEdit {
     background-color: black;
     border-color: rgb(25, 30, 36);
     color: rgb(255, 255, 255);
-    padding: 0 5px;
+    padding: 5px;
     selection-color: #DDD;
     selection-background-color: #65619c;
 }

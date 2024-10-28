@@ -29,7 +29,9 @@ from bip38.exceptions import (
     Error, PassphraseError, WIFError
 )
 from bip38.cryptocurrencies import ICryptocurrency
-from bip38.wif import private_key_to_wif
+from bip38.wif import (
+     get_wif_type, private_key_to_wif
+)
 
 from desktop.core import Application
 
@@ -258,14 +260,14 @@ class BIP38Application:
         cryptocurrency: ICryptocurrency = self.cryptocurrencies[cryptocurrency_name]
         return cryptocurrency
 
-    def netowrk(self):
+    def network(self):
         return self.ui.networkQComboBox.currentText().lower()
 
 
     def bip38(self):
         return BIP38(
             cryptocurrency=self.cryptocurrency(),
-            network=self.netowrk()
+            network=self.network()
         )
 
     def noec_convert_private_key(self):   
@@ -275,10 +277,20 @@ class BIP38Application:
             wif: str = private_key_to_wif(
                 private_key=private_key,
                 cryptocurrency=self.cryptocurrency(),
-                network=self.netowrk(),
+                network=self.network(),
                 wif_type=self.ui.noECWIFTypeQComboBox.currentText()
             )
             self.ui.noECWIFQLineEdit.setText(wif)
+
+            output = {
+                "cryptocurrency": self.ui.cryptocurrencyQComboBox.currentText(),
+                "network": self.network(),
+                "wif_type": self.ui.noECWIFTypeQComboBox.currentText(),
+                "private_key": private_key,
+                "wif": wif
+            }
+            self.log(output)
+
         except (Error, BIP38Application.ValidationError) as e:
             self.logerr(e)
 
@@ -291,7 +303,18 @@ class BIP38Application:
                 passphrase=passphrase
             )
             self.ui.decryptWIFQLineEdit.setText(encrypted_wif)
-            self.log(encrypted_wif)
+
+            wif_type = get_wif_type(wif=wif, cryptocurrency=self.cryptocurrency(), network=self.network())
+
+            output = {
+                "cryptocurrency": self.ui.cryptocurrencyQComboBox.currentText(),
+                "network": self.network(),
+                "passphrase": passphrase,
+                "wif": wif,
+                "wif_type": wif_type,
+                "encrypted_wif": encrypted_wif
+            }
+            self.log(output)
         except WIFError as we:
             self.set_required(self.ui.noECWIFQLineEdit, True)
             self.logerr(we)
@@ -320,7 +343,17 @@ class BIP38Application:
                 sequence=sequence
             )
             self.ui.ecIPassphraseQLineEdit.setText(intermediate_passphrase)
-            self.log(intermediate_passphrase)
+
+            output = {
+                "cryptocurrency": self.ui.cryptocurrencyQComboBox.currentText(),
+                "network": self.network(),
+                "passphrase": passphrase,
+                "owner_salt": owner_salt,
+                "lot": lot,
+                "sequence": sequence,
+                "intermediate_passphrase": intermediate_passphrase
+            }
+            self.log(output)
         except (Error, BIP38Application.ValidationError) as e:
             self.logerr(e)
 
@@ -458,7 +491,7 @@ class BIP38Application:
             text = input_data["input"].text()
 
             all_data += (text,)
-            if not self.validate_input(input_key, text):
+            if not self.validate_input(input_key, text, validate_optional=True):
                 invalid_inputs.append(input_key)
 
         if invalid_inputs:
@@ -466,11 +499,11 @@ class BIP38Application:
 
         return all_data
 
-    def validate_input(self, input_key, text):
+    def validate_input(self, input_key, text, validate_optional=False):
         input_data = self.inputs[input_key]
 
         qt_input = input_data["input"]
-        optional = input_data["optional"]
+        optional = input_data["optional"] if validate_optional else True # threat all fields as optional if validate_optional is true
         min_length = input_data["min_length"]
 
         is_valid = len(text) >= min_length or (optional and len(text) == 0)
