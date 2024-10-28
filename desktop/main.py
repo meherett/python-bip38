@@ -188,12 +188,6 @@ class BIP38Application:
         self.ui.noECPrivateKeyConvertQPushButton.clicked.connect(self.noec_convert_private_key)
         self.ui.noECEncryptQPushButton.clicked.connect(self.noec_encrypt)
 
-        self.ui.noECPrivateKeyGenerateQPushButton.clicked.connect(
-            lambda: self.ui.noECPrivateKeyQLineEdit.setText(
-                os.urandom(32).hex()
-            )
-        )
-
         self.ui.ecOwnerSaltGenerateQPushButton.clicked.connect(
             lambda: self.ui.ecOwnerSaltQLineEdit.setText(
                 os.urandom(8).hex()
@@ -233,9 +227,9 @@ class BIP38Application:
         window_width = self.app.width()
         window_height = self.app.height()
 
-        right_margin = 10
-        bottom_margin = 5
-        right_margin += 10 if self.ui.outputQTextEdit.verticalScrollBar().maximum() > 0 else 0
+        right_margin = 15
+        bottom_margin = 10
+        right_margin += 5 if self.ui.outputQTextEdit.verticalScrollBar().maximum() > 0 else 0
 
         self.clear_button.move(window_width - button_width - right_margin, window_height - button_height - bottom_margin)
 

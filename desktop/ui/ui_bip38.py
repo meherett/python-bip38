@@ -243,26 +243,6 @@ class Ui_MainWindow(object):
 
         self.noECPrivateKeyAndWifTypeContainerHLayout_2.addWidget(self.noECPrivateKeyContainerQFrame)
 
-        self.noECPrivateKeyGenerateButtonContainerQFrame = QFrame(self.noECPrivateKeyAndWifTypeContainerQFrame)
-        self.noECPrivateKeyGenerateButtonContainerQFrame.setObjectName(u"noECPrivateKeyGenerateButtonContainerQFrame")
-        self.noECPrivateKeyGenerateButtonContainerQFrame.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.noECPrivateKeyGenerateButtonHLayout = QVBoxLayout(self.noECPrivateKeyGenerateButtonContainerQFrame)
-        self.noECPrivateKeyGenerateButtonHLayout.setSpacing(5)
-        self.noECPrivateKeyGenerateButtonHLayout.setObjectName(u"noECPrivateKeyGenerateButtonHLayout")
-        self.noECPrivateKeyGenerateButtonHLayout.setContentsMargins(0, 0, 0, 0)
-        self.noECPrivateKeyGenerateButtonSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.noECPrivateKeyGenerateButtonHLayout.addItem(self.noECPrivateKeyGenerateButtonSpacer)
-
-        self.noECPrivateKeyGenerateQPushButton = QPushButton(self.noECPrivateKeyGenerateButtonContainerQFrame)
-        self.noECPrivateKeyGenerateQPushButton.setObjectName(u"noECPrivateKeyGenerateQPushButton")
-        self.noECPrivateKeyGenerateQPushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-
-        self.noECPrivateKeyGenerateButtonHLayout.addWidget(self.noECPrivateKeyGenerateQPushButton)
-
-
-        self.noECPrivateKeyAndWifTypeContainerHLayout_2.addWidget(self.noECPrivateKeyGenerateButtonContainerQFrame)
-
         self.noECWIFTypeContainerQFrame = QFrame(self.noECPrivateKeyAndWifTypeContainerQFrame)
         self.noECWIFTypeContainerQFrame.setObjectName(u"noECWIFTypeContainerQFrame")
         self.noECWIFTypeContainerQFrame.setMaximumSize(QSize(145, 16777215))
@@ -844,6 +824,7 @@ class Ui_MainWindow(object):
 
         self.outputQTextEdit = QTextEdit(self.centralwidget)
         self.outputQTextEdit.setObjectName(u"outputQTextEdit")
+        self.outputQTextEdit.setMinimumSize(QSize(0, 200))
         self.outputQTextEdit.setReadOnly(True)
 
         self.centeralWidgetLayout.addWidget(self.outputQTextEdit)
@@ -868,7 +849,6 @@ class Ui_MainWindow(object):
         self.modeQLabel.setText(QCoreApplication.translate("MainWindow", u"Mode", None))
         self.modeQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.noECPrivateKeyQLabel.setText(QCoreApplication.translate("MainWindow", u"Private Key", None))
-        self.noECPrivateKeyGenerateQPushButton.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
         self.noECWIFTypeQLabel.setText(QCoreApplication.translate("MainWindow", u"WIF Type", None))
         self.noECWIFTypeQComboBox.setPlaceholderText(QCoreApplication.translate("MainWindow", u"(Select)", None))
         self.noECPrivateKeyConvertQPushButton.setText(QCoreApplication.translate("MainWindow", u"Convert", None))

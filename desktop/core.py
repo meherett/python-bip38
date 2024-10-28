@@ -80,7 +80,6 @@ class Application(QMainWindow):
             44
         )
         self.ui.bip38LogoHLayout.setContentsMargins(0, 0, 5, 0)
-        self.ui.outputQTextEdit.setMinimumSize(QSize(0, 200))
 
         css_path = resolve_path("desktop/ui/css/theme.css")
         self.theme_watcher = QFileSystemWatcher([css_path])
