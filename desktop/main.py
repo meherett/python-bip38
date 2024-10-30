@@ -497,7 +497,7 @@ class BIP38Application:
         input_data = self.inputs[input_key]
 
         qt_input = input_data["input"]
-        optional = input_data["optional"] if validate_optional else True # threat all fields as optional if validate_optional is true
+        optional = input_data["optional"] if validate_optional else True # Handle all fields as optional if validate_optional is true.
         min_length = input_data["min_length"]
 
         is_valid = len(text) >= min_length or (optional and len(text) == 0)
