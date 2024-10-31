@@ -455,7 +455,7 @@ We welcome pull requests. To get started, just fork this `github repository <htt
 
 ::
 
-    pip install -e .[tests,docs]
+    pip install -e .[desktop,tests,docs]
 
 
 Testing
