@@ -93,6 +93,10 @@ class Application(QMainWindow):
         }
         self.ui.outputQTextEdit.setPlaceholderText(json.dumps(info, indent=4))
 
+        # remove combo box shadow
+        for qComboBox in self.findChildren(QComboBox):
+            qComboBox.findChild(QFrame).setWindowFlags(Qt.Popup | Qt.NoDropShadowWindowHint)
+
     def load_stylesheet(self, path: str) -> None:
         """
         Load and apply a stylesheet from the specified path.

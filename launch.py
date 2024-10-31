@@ -20,6 +20,7 @@ def main() -> None:
     palette.setColor(QPalette.Active, QPalette.Text, QColor(255, 255, 255))
     palette.setColor(QPalette.Disabled, QPalette.Text, QColor(170, 170, 170))
     qapp.setPalette(palette)
+    qapp.setStyle("Windows")
 
     main_application: BIP38Application = BIP38Application()
     main_application.app.show()
