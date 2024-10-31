@@ -1,6 +1,8 @@
-# Bitcoin Improvement Proposal - 0038
+<h1 align="center" style="border-bottom: none">
+    <img height="100" alt="BIP38" src="docs/static/svg/bip38.svg"><br>Bitcoin Improvement Proposal - 0038
+</h1>
 
-<img align="right" height="100" src="docs/static/svg/bip38.svg">
+<div align="center">
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml)](https://github.com/meherett/python-bip38/actions/workflows/build.yml)
 [![PyPI Version](https://img.shields.io/pypi/v/bip38.svg?color=blue)](https://pypi.org/project/bip38)
@@ -8,6 +10,8 @@
 [![PyPI License](https://img.shields.io/pypi/l/bip38?color=black)](https://pypi.org/project/bip38)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/bip38.svg)](https://pypi.org/project/bip38)
 [![Coverage Status](https://coveralls.io/repos/github/meherett/python-bip38/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-bip38)
+
+</div>
 
 A Python library for the implementation of Bitcoin Improvement Proposal - 0038 / (BIP38) protocol.
 This library supports both [No EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-flag-is-not-used) and [EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-mode-is-used) modes and is compatible with over 150+ cryptocurrencies.
@@ -421,7 +425,7 @@ BIP38 Decrypted: {
 To get started, just fork this repo, clone it locally, and run:
 
 ```
-pip install -e .[tests,docs]
+pip install -e .[desktop,tests,docs]
 ```
 
 ## Testing
@@ -454,9 +458,8 @@ This module supports more than 150+ cryptocurrencies, including the following:
 
 Buy me a coffee if You found this tool helpful:
 
-- **Bitcoin** - 12uaGVdX1t86FXLQ4yYPrRQDCK7xGGu82r
-- **Ethereum / Tether** - 0xCCAad7A87fd81553d0F93F743Fb4Fc6B213b228B
-- **Bitcoin / Ethereum / Tether** - With Unstoppable [hd.wallet](https://ud.me/hd.wallet)
+- **Bitcoin** - 16c7ajUwHEMaafrceuYSrd35SDjmfVdjoS
+- **Ethereum / ERC20** - 0xD3cbCB0B6F82A03C715D665b72dC44CEf54e6D9B
 
 Thank you very much for your support.
 
