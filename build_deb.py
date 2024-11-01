@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+# Copyright © 2020-2024, Meheret Tesfaye Batu <meherett.batu@gmail.com>
+#             2024, Abenezer Lulseged Wube <itsm3abena@gmail.com>
+#             2024, Eyoel Tadesse <eyoel_tadesse@proton.me>
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or https://opensource.org/license/mit
+
 from pathlib import Path
 from glob import glob
 
