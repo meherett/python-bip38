@@ -6,11 +6,17 @@
 
 from cx_Freeze import setup, Executable
 
+import platform
+
 from desktop.info import __version__ as version  
 from bip38.info import __author__ as author
 
 app_name  = "BIP38"
-icon_path = "desktop/ui/images/icon/icon.ico"
+
+if platform.system() == "Windows":
+    icon_path = "desktop/ui/images/icon/icon.ico"
+else:
+    icon_path = "desktop/ui/images/svg/logo.svg"
 
 msi_shortcut_table = [
     (
