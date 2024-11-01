@@ -3,6 +3,7 @@ QMainWindow {
 }
 
 QWidget {
+    outline: none;
     color: white;
     font: 10pt "Segoe UI";
 }
