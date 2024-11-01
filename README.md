@@ -2,6 +2,10 @@
     <img height="100" alt="BIP38" src="docs/static/svg/bip38.svg"><br>Bitcoin Improvement Proposal - 0038
 </h1>
 
+<p align="center">
+    <a href="https://github.com/meherett/python-bip38/releases" target="_blank">Releases</a> · <a href="https://talonlab.gitbook.io/bip38/manual" target="_blank">Manual</a> · <a href="https://bip38.readthedocs.io" target="_blank">API Docs</a> · <a href="#donations">Donation</a>
+</p>
+
 <div align="center">
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml)](https://github.com/meherett/python-bip38/actions/workflows/build.yml)
