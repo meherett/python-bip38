@@ -49,7 +49,13 @@ bdist_msi_opt = {
 
 build_exe_opt = {
     "packages": ["_scrypt"],
-    "excludes": ["tkinter"],
+    "excludes": ["tkinter", "PySide6.QtNetwork", "PySide6.translations"],
+    "bin_excludes": [
+        "Qt6Network.dll", "Qt6OpenGL.dll", "Qt6Pdf.dll", "Qt6Qml.dll", "Qt6QmlMeta.dll",
+        "Qt6QmlModels.dll", "Qt6QmlWorkerScript.dll", "Qt6Quick.dll", "Qt6VirtualKeyboard.dll",
+        "qgif.dll", "qicns.dll", "qjpeg.dll", "qpdf.dll", "qtga.dll", "qtiff.dll", "qwbmp.dll", "qwebp.dll",
+        "qtvirtualkeyboardplugin.dll", "qtuiotouchplugin.dll", "qdirect2d.dll", "qoffscreen.dll", "qminimal.dll"
+    ],
     "include_msvcr": True
 }
 
