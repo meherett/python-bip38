@@ -17,15 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-name: [
-          "Python 3.9", "Python 3.10", "Python 3.11", "Python 3.12"
-        ]
         python-version: [
           "3.9", "3.10", "3.11", "3.12"
         ]
     steps:
     - uses: actions/checkout@master
-    - name: Set up ${{ matrix.python-name }}
+    - name: Set up ${{ matrix.python-version }}
       uses: actions/setup-python@master
       with:
         python-version: ${{ matrix.python-version }}
