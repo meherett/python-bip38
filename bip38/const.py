@@ -11,7 +11,7 @@ from typing import (
 # non-EC-multiplied & EC-multiplied private key prefixes
 NO_EC_MULTIPLIED_PRIVATE_KEY_PREFIX: int = 0x0142
 EC_MULTIPLIED_PRIVATE_KEY_PREFIX: int = 0x0143
-# non-EC-multiplied Wallet Important Format (WIF) flags
+# non-EC-multiplied Wallet Import Format (WIF) flags
 NO_EC_MULTIPLIED_WIF_FLAG: int = 0xc0
 NO_EC_MULTIPLIED_WIF_COMPRESSED_FLAG: int = 0xe0
 # Magic bytes for lot and sequence and non lot and sequence
@@ -40,7 +40,7 @@ ODD_COMPRESSED_PUBLIC_KEY_PREFIX: int = 0x03
 UNCOMPRESSED_PUBLIC_KEY_PREFIX: int = 0x04
 # Checksum byte length
 CHECKSUM_BYTE_LENGTH: int = 4
-# Wallet Important Format (WIF) types
+# Wallet Import Format (WIF) types
 WIF_TYPES = ["wif", "wif-compressed"]
 # Public Key types
 PUBLIC_KEY_TYPES = ["uncompressed", "compressed"]

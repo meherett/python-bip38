@@ -1,7 +1,7 @@
 :orphan:
 
 =======================
-Wallet Important Format
+Wallet Import Format
 =======================
 
 .. automodule:: bip38.wif

@@ -66,7 +66,7 @@ DETAIL: bool = True
 bip38: BIP38 = BIP38(
     cryptocurrency=Cryptocurrency, network=NETWORK
 )
-# Wallet Important Format's
+# Wallet Import Format's
 WIFs: List[str] = [
     private_key_to_wif(
         private_key=PRIVATE_KEY, cryptocurrency=Cryptocurrency, network=NETWORK, wif_type="wif"

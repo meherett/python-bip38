@@ -73,7 +73,7 @@ def decode_wif(
 
     raw: bytes = decode(wif)
     if not raw.startswith(integer_to_bytes(wif_prefix)):
-        raise WIFError(f"Invalid Wallet Important Format (WIF)")
+        raise WIFError(f"Invalid Wallet Import Format (WIF)")
 
     prefix_length: int = len(integer_to_bytes(wif_prefix))
     prefix_got: bytes = raw[:prefix_length]
@@ -86,7 +86,7 @@ def decode_wif(
     wif_type: str = "wif"
 
     if len(private_key) not in [33, 32]:
-        raise WIFError(f"Invalid Wallet Important Format (WIF)")
+        raise WIFError(f"Invalid Wallet Import Format (WIF)")
     elif len(private_key) == 33:
         private_key = private_key[:-len(integer_to_bytes(COMPRESSED_PRIVATE_KEY_PREFIX))]
         wif_type = "wif-compressed"

@@ -299,7 +299,7 @@ class BIP38:
 
         factor_b: bytes = double_sha256(seed_b)
         if not 0 < bytes_to_integer(factor_b) < N:
-            raise Error("Invalid EC encrypted WIF (Wallet Important Format)")
+            raise Error("Invalid EC encrypted WIF (Wallet Import Format)")
 
         public_key: PublicKey = PublicKey.from_point(
             PublicKey.from_bytes(pass_point).point() * bytes_to_integer(factor_b)
@@ -416,7 +416,7 @@ class BIP38:
         if lot_and_sequence:
             pass_factor: bytes = double_sha256(pass_factor + owner_entropy)
         if bytes_to_integer(pass_factor) == 0 or bytes_to_integer(pass_factor) >= N:
-            raise Error("Invalid EC encrypted WIF (Wallet Important Format)")
+            raise Error("Invalid EC encrypted WIF (Wallet Import Format)")
 
         pass_point: bytes = PrivateKey.from_bytes(pass_factor).public_key().raw_compressed()
         salt: bytes = address_hash + owner_entropy
@@ -544,7 +544,7 @@ class BIP38:
                 bytes_to_integer(decrypted_half_1 + decrypted_half_2) ^ bytes_to_integer(derived_half_1)
             )
             if bytes_to_integer(private_key) == 0 or bytes_to_integer(private_key) >= N:
-                raise Error("Invalid Non-EC encrypted WIF (Wallet Important Format)")
+                raise Error("Invalid Non-EC encrypted WIF (Wallet Import Format)")
 
             public_key: PublicKey = PrivateKey.from_bytes(private_key).public_key()
             address: str = P2PKHAddress.encode(
@@ -588,7 +588,7 @@ class BIP38:
             if lot_and_sequence:
                 pass_factor: bytes = double_sha256(pass_factor + owner_entropy)
             if bytes_to_integer(pass_factor) == 0 or bytes_to_integer(pass_factor) >= N:
-                raise Error("Invalid EC encrypted WIF (Wallet Important Format)")
+                raise Error("Invalid EC encrypted WIF (Wallet Import Format)")
 
             pre_public_key: PublicKey = PrivateKey.from_bytes(pass_factor).public_key()
             salt = address_hash + owner_entropy
@@ -610,7 +610,7 @@ class BIP38:
 
             factor_b: bytes = double_sha256(seed_b)
             if bytes_to_integer(factor_b) == 0 or bytes_to_integer(factor_b) >= N:
-                raise Error("Invalid EC encrypted WIF (Wallet Important Format)")
+                raise Error("Invalid EC encrypted WIF (Wallet Import Format)")
 
             # multiply private key
             private_key: bytes = integer_to_bytes(
