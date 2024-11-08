@@ -50,8 +50,7 @@ setup(
     include_package_data=True,
     extras_require=dict(
         docs=get_requirements(name="requirements/docs"),
-        tests=get_requirements(name="requirements/tests"),
-        desktop=get_requirements(name="requirements/desktop")
+        tests=get_requirements(name="requirements/tests")
     ),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
