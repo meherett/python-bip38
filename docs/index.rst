@@ -4,8 +4,8 @@ Bitcoin Improvement Proposal - 0038 / BIP38
 
 |Build Status| |PyPI Version| |Documentation Status| |PyPI License| |PyPI Python Version| |Coverage Status|
 
-.. |Build Status| image:: https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml
-   :target: https://github.com/meherett/python-bip38/actions/workflows/build.yml
+.. |Build Status| image:: https://img.shields.io/github/actions/workflow/status/talonlab/python-bip38/build.yml
+   :target: https://github.com/talonlab/python-bip38/actions/workflows/build.yml
 
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/bip38.svg?color=blue
    :target: https://pypi.org/project/bip38
@@ -19,8 +19,8 @@ Bitcoin Improvement Proposal - 0038 / BIP38
 .. |PyPI Python Version| image:: https://img.shields.io/pypi/pyversions/bip38.svg
    :target: https://pypi.org/project/bip38
 
-.. |Coverage Status| image:: https://coveralls.io/repos/github/meherett/python-bip38/badge.svg?branch=master
-   :target: https://coveralls.io/github/meherett/python-bip38?branch=master
+.. |Coverage Status| image:: https://coveralls.io/repos/github/talonlab/python-bip38/badge.svg?branch=master
+   :target: https://coveralls.io/github/talonlab/python-bip38?branch=master
 
 A Python library for the implementation of Bitcoin Improvement Proposal - 0038 / (BIP38) protocol.
 This library supports both `No EC-multiply <https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-flag-is-not-used>`_ and `EC-multiply <https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-mode-is-used>`_ modes and is compatible with over 150+ cryptocurrencies.
@@ -42,10 +42,10 @@ If you want to run the latest version of the code, you can install from git:
 
 ::
 
-    pip install git+git://github.com/meherett/python-bip38.git
+    pip install git+ssh://github.com/talonlab/python-bip38.git
 
 
-For the versions available, see the `tags on this repository <https://github.com/meherett/python-bip38/tags>`_.
+For the versions available, see the `tags on this repository <https://github.com/talonlab/python-bip38/tags>`_.
 
 Quick Usage
 ===========
@@ -451,11 +451,11 @@ EC multiply:
 Development
 ===========
 
-We welcome pull requests. To get started, just fork this `github repository <https://github.com/meherett/python-bip38>`_, clone it locally, and run:
+We welcome pull requests. To get started, just fork this `github repository <https://github.com/talonlab/python-bip38>`_, clone it locally, and run:
 
 ::
 
-    pip install -e .[desktop,tests,docs]
+    pip install -e .[tests,docs]
 
 
 Testing
@@ -475,21 +475,20 @@ tests against a specific version of Python.
 Contributing
 ============
 
-Feel free to open an `issue <https://github.com/meherett/python-bip38/issues>`_ if you find a problem,
+Feel free to open an `issue <https://github.com/talonlab/python-bip38/issues>`_ if you find a problem,
 or a pull request if you've solved an issue. And also any help in testing, development,
 documentation and other tasks is highly appreciated and useful to the project.
 There are tasks for contributors of all experience levels.
 
-For more information, see the `CONTRIBUTING.md <https://github.com/meherett/python-bip38/blob/master/CONTRIBUTING.md>`_ file.
+For more information, see the `CONTRIBUTING.md <https://github.com/talonlab/python-bip38/blob/master/CONTRIBUTING.md>`_ file.
 
 Donations
 =========
 
 Buy me a coffee if You found this tool helpful:
 
-- **Bitcoin** - 12uaGVdX1t86FXLQ4yYPrRQDCK7xGGu82r
-- **Ethereum / Tether** - 0xCCAad7A87fd81553d0F93F743Fb4Fc6B213b228B
-- **Bitcoin / Ethereum / Tether** - With Unstoppable `hd.wallet <https://ud.me/hd.wallet>`_
+- **Bitcoin** - 16c7ajUwHEMaafrceuYSrd35SDjmfVdjoS
+- **Ethereum / Tether** - 0xD3cbCB0B6F82A03C715D665b72dC44CEf54e6D9B
 
 Thank you very much for your support.
 
@@ -497,4 +496,4 @@ Thank you very much for your support.
 License
 =======
 
-Distributed under the `MIT <https://github.com/meherett/python-bip38/blob/master/LICENSE>`_ license. See **LICENSE** for more information.
+Distributed under the `MIT <https://github.com/talonlab/python-bip38/blob/master/LICENSE>`_ license. See **LICENSE** for more information.

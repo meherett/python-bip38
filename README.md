@@ -1,27 +1,15 @@
-<h1 align="center" style="border-bottom: none">
-    <img height="100" alt="BIP38" src="docs/static/svg/bip38.svg"><br>Bitcoin Improvement Proposal - 0038
-</h1>
+# Bitcoin Improvement Proposal - 0038 / BIP38
 
-<p align="center">
-    <a href="https://github.com/meherett/python-bip38/releases" target="_blank">Releases</a> · <a href="https://talonlab.gitbook.io/bip38/manual" target="_blank">Manual</a> · <a href="https://bip38.readthedocs.io" target="_blank">API Docs</a> · <a href="#donations">Donation</a>
-</p>
-
-<div align="center">
-
-[![Build Status](https://img.shields.io/github/actions/workflow/status/meherett/python-bip38/build.yml)](https://github.com/meherett/python-bip38/actions/workflows/build.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/talonlab/python-bip38/build.yml)](https://github.com/talonlab/python-bip38/actions/workflows/build.yml)
 [![PyPI Version](https://img.shields.io/pypi/v/bip38.svg?color=blue)](https://pypi.org/project/bip38)
 [![Documentation Status](https://readthedocs.org/projects/bip38/badge/?version=master)](https://bip38.readthedocs.io)
 [![PyPI License](https://img.shields.io/pypi/l/bip38?color=black)](https://pypi.org/project/bip38)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/bip38.svg)](https://pypi.org/project/bip38)
-[![Coverage Status](https://coveralls.io/repos/github/meherett/python-bip38/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-bip38)
-
-</div>
+[![Coverage Status](https://coveralls.io/repos/github/talonlab/python-bip38/badge.svg?branch=master)](https://coveralls.io/github/talonlab/python-bip38)
 
 A Python library for the implementation of Bitcoin Improvement Proposal - 0038 / (BIP38) protocol.
 This library supports both [No EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-flag-is-not-used) and [EC-multiply](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki#encryption-when-ec-multiply-mode-is-used) modes and is compatible with over 150+ cryptocurrencies.
 It's specifically tailored for Pay-to-PubKey-Hash (P2PKH) address types.
-
-![Desktop Application](docs/static/gif/bip38.gif)
 
 For more info see the [Passphrase-protected private key - BIP38](https://en.bitcoin.it/wiki/BIP_0038) spec.
 
@@ -36,7 +24,7 @@ pip install bip38
 If you want to run the latest version of the code, you can install from the git:
 
 ```
-pip install git+git://github.com/meherett/python-bip38.git
+pip install git+ssh://github.com/talonlab/python-bip38.git
 ```
 
 ## Quick Usage
@@ -429,7 +417,7 @@ BIP38 Decrypted: {
 To get started, just fork this repo, clone it locally, and run:
 
 ```
-pip install -e .[desktop,tests,docs]
+pip install -e .[tests,docs]
 ```
 
 ## Testing
@@ -445,12 +433,12 @@ tests against a specific version of Python.
 
 ## Contributing
 
-Feel free to open an [issue](https://github.com/meherett/python-bip38/issues) if you find a problem,
+Feel free to open an [issue](https://github.com/talonlab/python-bip38/issues) if you find a problem,
 or a pull request if you've solved an issue. And also any help in testing, development,
 documentation and other tasks is highly appreciated and useful to the project.
 There are tasks for contributors of all experience levels.
 
-For more information, see the [CONTRIBUTING.md](https://github.com/meherett/python-bip38/blob/master/CONTRIBUTING.md) file.
+For more information, see the [CONTRIBUTING.md](https://github.com/talonlab/python-bip38/blob/master/CONTRIBUTING.md) file.
 
 ## Supported Cryptocurrencies
 
@@ -469,4 +457,4 @@ Thank you very much for your support.
 
 ## License
 
-Distributed under the [MIT](https://github.com/meherett/python-bip38/blob/master/LICENSE) license. See ``LICENSE`` for more information.
+Distributed under the [MIT](https://github.com/talonlab/python-bip38/blob/master/LICENSE) license. See ``LICENSE`` for more information.
