@@ -6,7 +6,7 @@ BIP38
     :maxdepth: 3
 
     Overview <index.rst>
-    Cryptocurrencies <cryptocurrencies.rst>
+    Supported Cryptocurrencies <cryptocurrencies.rst>
 
 .. toctree::
     :maxdepth: 3

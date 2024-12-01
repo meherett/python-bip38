@@ -489,6 +489,7 @@ Buy me a coffee if You found this tool helpful:
 
 - **Bitcoin** - 16c7ajUwHEMaafrceuYSrd35SDjmfVdjoS
 - **Ethereum / Tether** - 0xD3cbCB0B6F82A03C715D665b72dC44CEf54e6D9B
+- **Solana** - 9cVoan5GvnpVvysEkFWEFR4k9cpTdWKmqQ6Gi7nwM5ES
 
 Thank you very much for your support.
 

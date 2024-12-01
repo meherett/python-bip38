@@ -15,3 +15,13 @@ td, th {
 .name {
     text-align: left;
 }
+
+.sidebar-logo-container img {
+    width: 100px;
+    height: auto;
+}
+
+.sidebar-brand-text {
+    text-align: center;
+    font-size: 19px;
+}

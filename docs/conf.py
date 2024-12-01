@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "BIP38"
-copyright = f"{datetime.datetime.now().year}, {__author__}"
+copyright = f"2023-{datetime.datetime.now().year}, {__author__}"
 author = __author__
 
 # The full version, including alpha/beta/rc tags
@@ -55,7 +55,7 @@ exclude_patterns = []
 # a list of builtin themes.
 html_theme = "furo"
 # Product logo name
-# html_logo = "static/png/hdwallet.png"
+html_logo = "static/svg/bip38-logo.svg"
 # Theme options
 html_theme_options = {
     # "canonical_url": "",
@@ -87,6 +87,9 @@ html_theme_options = {
     # "navigation_with_keys": True,
     # "announcement": "<em>Import</em> announcement!",
 }
+
+# Set a minimal HTML title
+html_title = release
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

@@ -1,8 +1,8 @@
 :orphan:
 
-==========================
-Supported Cryptocurrencies
-==========================
+================
+Cryptocurrencies
+================
 
 This module supports more than 150+ cryptocurrencies, including the following:
 
