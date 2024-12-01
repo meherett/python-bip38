@@ -13,8 +13,14 @@ __author__: str = "Meheret Tesfaye Batu"
 __email__: str = "meherett.batu@gmail.com"
 __documentation__: str = "https://bip38.readthedocs.com"
 __description__: str = "A Python library for implementation of Bitcoin Improvement Proposal - 0038 / BIP38 protocol."
-__url__: str = "https://github.com/meherett/python-bip38"
+__source__: str = "https://github.com/talonlab/python-bip38"
+__url__: str = __source__
 __tracker__: str = f"{__url__}/issues"
 __keywords__: List[str] = [
     "bip38", "bitcoin", "private-key", "hdwallet", "encrypt", "decrypt", "passphrase", "wif", "bip-0038"
+]
+__websites__: List[str] = [
+    "https://talonlab.org",
+    "https://talonlab.gitbook.io/bip38",
+    __documentation__
 ]

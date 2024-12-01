@@ -41,6 +41,7 @@ setup(
     url=info.__url__,
     project_urls={
         "Tracker": info.__tracker__,
+        "Source": info.__source__,
         "Documentation": info.__documentation__
     },
     keywords=info.__keywords__,
