@@ -1,4 +1,7 @@
-<img height="100" alt="BIP38" src="https://raw.githubusercontent.com/talonlab/python-bip38/refs/heads/master/docs/static/svg/bip38-logo.svg">
+<div>
+    <a target="_blank" href="https://github.com/talonlab/bip38-desktop"><img align="right" height="25" alt="Desktop" src="https://img.shields.io/badge/desktop-65619c"></a>
+    <img height="100" alt="BIP38" src="https://raw.githubusercontent.com/talonlab/python-bip38/refs/heads/master/docs/static/svg/bip38-logo.svg">
+</div>
 
 # Bitcoin Improvement Proposal - 0038 / BIP38
 
