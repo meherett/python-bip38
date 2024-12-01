@@ -2,7 +2,7 @@
 
 First off, thanks for taking the time to contribute and
 when contributing to this repository, please first discuss 
-the change you wish to make via [issue](https://github.com/meherett/bip38/issues) 
+the change you wish to make via [issue](https://github.com/talonlab/python-bip38/issues) 
 with the owners of this repository before making a change.
 
 ## Development
@@ -44,7 +44,13 @@ GitHub's documentation for working on pull requests is [available here](https://
 You can run the tests with:
 
 ```
-pytest
+coverage run -m pytest
+```
+
+To see the coverage:
+
+```
+coverage report
 ```
 
 Or use `tox` to run the complete suite against the full set of build targets, or pytest to run specific 
@@ -52,4 +58,4 @@ tests against a specific version of Python.
 
 ## License
 
-Distributed under the [MIT](https://github.com/meherett/python-bip38/blob/master/LICENSE) license. See ``LICENSE`` for more information.
+Distributed under the [MIT](https://github.com/talonlab/python-bip38/blob/master/LICENSE) license. See ``LICENSE`` for more information.

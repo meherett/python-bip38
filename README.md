@@ -1,3 +1,5 @@
+<img height="100" alt="BIP38" src="https://raw.githubusercontent.com/talonlab/python-bip38/refs/heads/master/docs/static/svg/bip38-logo.svg">
+
 # Bitcoin Improvement Proposal - 0038 / BIP38
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/talonlab/python-bip38/build.yml)](https://github.com/talonlab/python-bip38/actions/workflows/build.yml)
@@ -425,7 +427,13 @@ pip install -e .[tests,docs]
 You can run the tests with:
 
 ```
-pytest
+coverage run -m pytest
+```
+
+To see the coverage:
+
+```
+coverage report
 ```
 
 Or use `tox` to run the complete suite against the full set of build targets, or pytest to run specific 
@@ -452,6 +460,7 @@ Buy me a coffee if You found this tool helpful:
 
 - **Bitcoin** - 16c7ajUwHEMaafrceuYSrd35SDjmfVdjoS
 - **Ethereum / ERC20** - 0xD3cbCB0B6F82A03C715D665b72dC44CEf54e6D9B
+- **Solana** - 9cVoan5GvnpVvysEkFWEFR4k9cpTdWKmqQ6Gi7nwM5ES
 
 Thank you very much for your support.
 
