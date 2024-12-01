@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         python-version: [
-          "3.9", "3.10", "3.11", "3.12"
+          "3.9", "3.10", "3.11", "3.12", "3.13"
         ]
     steps:
     - uses: actions/checkout@master
@@ -34,6 +34,3 @@ jobs:
       run: |
         coverage run -m pytest
         coverage report
-    - name: Submit Coverage Report to Coveralls
-      if: ${{ matrix.python-version == 3.12 }}
-      run: coveralls
